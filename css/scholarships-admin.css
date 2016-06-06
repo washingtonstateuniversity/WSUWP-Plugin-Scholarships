@@ -1,0 +1,18 @@
+.wsuwp-scholarship-textarea {
+	height: 100px;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+.wsuwp-scholarship-textarea + p {
+	margin-top: 0;
+}
+.wsuwp-scholarship-fieldset {
+	display: flex;
+	margin-bottom: 1rem;
+}
+.wsuwp-scholarship-fieldset input + input {
+	margin-left: 1rem;
+}
+[name^=wsuwp_scholarship]:not(:focus):invalid {
+	border-color: #c60c30;
+}
