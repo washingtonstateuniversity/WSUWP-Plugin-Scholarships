@@ -70,7 +70,6 @@ class WSUWP_Scholarships {
 			'menu_icon' => 'dashicons-awards',
 			'supports' => array(
 				'title',
-				'author',
 			),
 			'taxonomies' => array(
 				'wsuwp_university_org'
