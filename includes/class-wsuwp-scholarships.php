@@ -64,7 +64,7 @@ class WSUWP_Scholarships {
 
 		$args = array(
 			'labels' => $labels,
-			'description' => "Aid granted to a student to support his or her education.",
+			'description' => 'Aid granted to a student to support his or her education.',
 			'public' => true,
 			'menu_position' => 5,
 			'menu_icon' => 'dashicons-awards',
@@ -112,11 +112,11 @@ class WSUWP_Scholarships {
 	 * Enqueue the styles for the scholarship information metabox.
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) && $this->content_type_slug !== get_current_screen()->id ) {
+		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) && get_current_screen()->id !== $this->content_type_slug ) {
 			return;
 		}
 
-		wp_enqueue_style(  'wsuwp-scholarship-admin', plugins_url( 'css/scholarships-admin.css', dirname( __FILE__ ) ) );
+		wp_enqueue_style( 'wsuwp-scholarship-admin', plugins_url( 'css/scholarships-admin.css', dirname( __FILE__ ) ) );
 	}
 
 	/**
