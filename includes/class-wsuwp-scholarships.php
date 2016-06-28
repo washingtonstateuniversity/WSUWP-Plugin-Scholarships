@@ -41,7 +41,7 @@ class WSUWP_Scholarships {
 		add_action( 'init', array( $this, 'register_content_type' ), 12 );
 		add_action( 'init', array( $this, 'register_taxonomy' ), 15 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10 );
-		add_action( 'add_meta_boxes_scholarship', array( $this, 'add_meta_boxes' ), 10 );
+		add_action( 'add_meta_boxes_' . $this->content_type_slug, array( $this, 'add_meta_boxes' ), 10 );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 	}
 
@@ -81,27 +81,27 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * Register a scholarship eligibility taxonomy that will be attached to the scholarship content types.
+	 * Register a scholarship eligibility taxonomy that will be attached to the scholarship content type.
 	 */
 	public function register_taxonomy() {
 		$labels = array(
-			'name'          => 'Eligibility',
+			'name' => 'Eligibility',
 			'singular_name' => 'Criteria',
-			'all_items'     => 'All Criteria',
-			'edit_item'     => 'Edit Criteria',
-			'view_item'     => 'View Criteria',
-			'update_item'   => 'Update Criteria',
-			'add_new_item'  => 'Add New Criteria',
+			'all_items' => 'All Criteria',
+			'edit_item' => 'Edit Criteria',
+			'view_item' => 'View Criteria',
+			'update_item' => 'Update Criteria',
+			'add_new_item' => 'Add New Criteria',
 			'new_item_name' => 'New Criteria Name',
-			'parent_item'   => 'Parent Criteria',
-			'search_items'  => 'Search Criteria',
-			'not_found'     => 'No criteria found',
+			'parent_item' => 'Parent Criteria',
+			'search_items' => 'Search Criteria',
+			'not_found' => 'No criteria found',
 		);
 		$args = array(
-			'labels'            => $labels,
-			'description'       => 'Scholarship eligibility requirements.',
-			'public'            => true,
-			'hierarchical'      => true,
+			'labels' => $labels,
+			'description' => 'Scholarship eligibility requirements.',
+			'public' => true,
+			'hierarchical' => true,
 			'show_admin_column' => true,
 		);
 		register_taxonomy( $this->taxonomy_slug, $this->content_type_slug, $args );
@@ -183,9 +183,9 @@ class WSUWP_Scholarships {
 
 		<p>Application availability</p>
 
-		<label><input value="1" type="checkbox" name="wsuwp_scholarship_application_paper"<?php checked( $paper, 1 ); ?>> Paper</label><br />
+		<label><input value="1" type="checkbox" name="wsuwp_scholarship_application_paper"<?php checked( $paper, 1 ); ?> /> Paper</label><br />
 
-		<label><input value="1" type="checkbox" name="wsuwp_scholarship_application_online"<?php checked( $online, 1 ); ?>> Online</label>
+		<label><input value="1" type="checkbox" name="wsuwp_scholarship_application_online"<?php checked( $online, 1 ); ?> /> Online</label>
 
 		<p>Contact</p>
 
