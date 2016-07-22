@@ -1,9 +1,7 @@
-.wsuwp-scholarship-textarea {
-	height: 100px;
-	width: 100%;
+.wp-editor-wrap {
 	margin-bottom: 1rem;
 }
-.wsuwp-scholarship-textarea + p {
+.wp-editor-wrap + p {
 	margin-top: 0;
 }
 .wsuwp-scholarship-fieldset {

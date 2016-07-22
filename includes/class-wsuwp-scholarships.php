@@ -156,6 +156,10 @@ class WSUWP_Scholarships {
 		$org_email = get_post_meta( $post->ID, '_wsuwp_scholarship_org_email', true );
 		$org_phone = get_post_meta( $post->ID, '_wsuwp_scholarship_org_phone', true );
 
+		$wp_editor_settings = array(
+			'textarea_rows' => 7,
+		);
+
 		wp_nonce_field( 'save-wsu-scholarship-meta', '_wsu_scholarship_meta_nonce' );
 
 		?>
@@ -170,8 +174,7 @@ class WSUWP_Scholarships {
 		</div>
 
 		<p>Specific Eligibility Details</p>
-
-		<textarea class="wsuwp-scholarship-textarea" name="wsuwp_scholarship_eligibility"><?php echo esc_textarea( $eligibility ); ?></textarea>
+		<?php wp_editor( $eligibility, 'wsuwp_scholarship_eligibility', $wp_editor_settings ); ?>
 
 		<div class="wsuwp-scholarship-fieldset">
 
@@ -202,12 +205,10 @@ class WSUWP_Scholarships {
 		</div>
 
 		<p>More Details</p>
-
-		<textarea class="wsuwp-scholarship-textarea" name="wsuwp_scholarship_details"><?php echo esc_textarea( $details ); ?></textarea>
+		<?php wp_editor( $details, 'wsuwp_scholarship_details', $wp_editor_settings ); ?>
 
 		<p>About the organization</p>
-
-		<textarea class="wsuwp-scholarship-textarea" name="wsuwp_scholarship_org"><?php echo esc_textarea( $org ); ?></textarea>
+		<?php wp_editor( $org, 'wsuwp_scholarship_org', $wp_editor_settings ); ?>
 
 		<p>Organization Contact</p>
 
