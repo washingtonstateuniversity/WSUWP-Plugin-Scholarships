@@ -49,8 +49,8 @@
 		});
 
 		if (selected.length > 0) {
-			scholarships.not(selected.join(',')).hide('fast');
-			scholarships.filter(selected.join(',')).show('fast');
+			scholarships.not(selected.join('')).hide('fast');
+			scholarships.filter(selected.join('')).show('fast');
 		} else {
 			scholarships.show('fast');
 		}
