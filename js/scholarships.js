@@ -23,4 +23,19 @@
 			$('.wsuwp-scholarships').html(response);
 		} );
 	});
+
+	// Sort scholarships.
+	$('[name=wsuwp-scholarships-sortby]').on('change', function () {
+		var scholarships = $('.wsuwp-scholarships article'),
+			selected = $(this).val();
+
+		scholarships.sort(function (a,b) {
+			var an = a.getAttribute('data-' + selected),
+				bn = b.getAttribute('data-' + selected);
+
+			return bn - an;
+		});
+
+		scholarships.detach().appendTo($('.wsuwp-scholarships'));
+	});
 }(jQuery));

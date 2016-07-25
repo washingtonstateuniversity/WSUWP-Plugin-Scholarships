@@ -411,8 +411,10 @@ class WSUWP_Scholarships {
 			<div class="column one gutterless wsuwp-scholarships-filters">
 
 				<p>Sort scholarships by:</p>
-				<p><label><input type="radio" name="wsuwp-scholarships-sortby" value="amount"> Amount</label></p>
-				<p><label><input type="radio" name="wsuwp-scholarships-sortby" value="deadline"> Deadline</label></p>
+				<ul>
+					<li><label><input type="radio" name="wsuwp-scholarships-sortby" value="amount"> Amount</label></li>
+					<li><label><input type="radio" name="wsuwp-scholarships-sortby" value="deadline"> Deadline</label></li>
+				</ul>
 
 				<?php
 				$eligibility = get_terms( array(
@@ -423,11 +425,11 @@ class WSUWP_Scholarships {
 				?>
 					<p>Only show me scholarships with the following requirements</h2>
 					<ul class="wsuwp-scholarship-eligibility">
-					<?php foreach ( $eligibility as $term ) { ?>
+					<?php foreach ( $eligibility as $criteria ) { ?>
 						<li>
             				<label>
-            					<input type="checkbox" data-filter="location" value="<?php echo esc_attr( $term->slug ); ?>" />
-            					<span><?php echo esc_attr( $term->name ); ?></span>
+            					<input type="checkbox" value="<?php echo esc_attr( $criteria->slug ); ?>" />
+            					<span><?php echo esc_attr( $criteria->name ); ?></span>
             				</label>
 						</li>
 					<?php } ?>
@@ -538,23 +540,56 @@ class WSUWP_Scholarships {
 		if ( $scholarships_query->have_posts() ) {
 			while ( $scholarships_query->have_posts() ) {
 				$scholarships_query->the_post();
-				$min = ( $min = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_min', true ) ) ? $min : '';
-				$max = ( $max = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_max', true ) ) ? $max : '';
-				$gpa = ( $gpa = get_post_meta( get_the_ID(), '_wsuwp_scholarship_gpa', true ) ) ? $gpa : '';
+				$age_min = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_min', true );
+				$age_max = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_max', true );
+				$gpa = get_post_meta( get_the_ID(), '_wsuwp_scholarship_gpa', true );
+				$eligibility = get_post_meta( get_the_ID(), '_wsuwp_scholarship_eligibility', true );
+				$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
+				$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
+				$paper = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_paper', true );
+				$online = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_online', true );
+				$site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_site', true );
+				$email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_email', true );
+				$phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_phone', true );
+				$address = get_post_meta( get_the_ID(), '_wsuwp_scholarship_address', true );
+				$details = get_post_meta( get_the_ID(), '_wsuwp_scholarship_details', true );
+				$org = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org', true );
+				$org_site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_site', true );
+				$org_email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_email', true );
+				$org_phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_phone', true );
+
+				// Parse Amount value for javascript sorting.
+				$numeric_amount = str_replace( ',', '', $amount);
+				$amount_data_value = ( is_numeric( $numeric_amount ) ) ? $numeric_amount : 0;
+
+				// Parse Deadline value for javascript sorting.
+				$deadline_parts = explode( '/', $deadline );
+				$deadline_data_value = ( is_array( $deadline_parts ) ) ? $deadline_parts[2] . $deadline_parts[0] . $deadline_parts[1] : 0;
 				?>
-				<article <?php post_class(); ?>>
+				<article <?php post_class(); ?> data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>">
 					<header>
 						<strong><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></strong>
 					</header>
 					<?php
-					if ( $min ) {
-					?><p>Minimum age: <?php echo esc_html( $min ); ?></p><?php
+					if ( $age_min ) {
+					?><p>Minimum age: <?php echo esc_html( $age_min ); ?></p><?php
 					}
-					if ( $max ) {
-					?><p>Maximum age: <?php echo esc_html( $max ); ?></p><?php
+
+					if ( $age_max ) {
+					?><p>Maximum age: <?php echo esc_html( $age_max ); ?></p><?php
 					}
+
 					if ( $gpa ) {
 					?><p>Minimum GPA: <?php echo esc_html( $gpa ); ?></p><?php
+					}
+
+					if ( $deadline ) {
+					?><p>Deadline: <?php echo esc_html( $deadline ); ?></p><?php
+					}
+
+					if ( $amount ) {
+						$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
+					?><p>Amount: <?php echo esc_html( $prepend . $amount )  ?></p><?php
 					}
 					?>
 				</article>
