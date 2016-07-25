@@ -1,0 +1,52 @@
+.row .wsuwp-scholarships-filters {
+	display: none;
+	padding: 2rem  0 0 2rem;
+}
+
+.wsuwp-scholarships {
+	padding: 2rem 2rem 0 0;
+}
+
+.wsuwp-scholarships:empty {
+	padding: 0;
+}
+
+.wsuwp-scholarships article {
+	padding-bottom: 1rem;
+}
+
+.wsuwp-scholarships article p:last-of-type {
+	padding-bottom: 0;
+}
+
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+.wsuwp-scholarships-loading {
+	-webkit-animation: spin 1s infinite linear;
+	animation: spin 1s infinite linear;
+	border: 0.25rem solid rgba(113,113,113,0.5);
+	border-radius: 50%;
+	border-top-color: #981e32;
+	height: 2rem;
+	margin: 0 auto;
+	width: 2rem;
+}
