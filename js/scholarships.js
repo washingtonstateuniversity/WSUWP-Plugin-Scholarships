@@ -2,11 +2,13 @@
 
 	'use strict';
 
+	$('.wsuwp-scholarships-header').hide();
+
 	// Retrieve a list of scholarships.
 	$('.wsuwp-scholarships-form').on('submit', function (e) {
 		e.preventDefault();
 
-		$('.wsuwp-scholarships-form').after('<div class="wsuwp-scholarships-loading"></div>');
+		$('.wsuwp-scholarships').html('<div class="wsuwp-scholarships-loading"></div>');
 
 		var data = {
 				action: 'set_scholarships',
@@ -18,7 +20,15 @@
 			};
 
 		$.post(scholarships.ajax_url, data, function (response) {
-			$('.wsuwp-scholarships-loading').after('<p>Based on the information you entered, you should be eligible for the following scholarships. Some may have additional requirements, so please be sure to read the details for a scholarship before applying.</p>').remove();
+			if ($('[name=wsuwp-scholarship-enrolled]').is(':checked')) {
+				$('#enrolled').closest('li').hide();
+			}
+
+			if ($('[name=wsuwp-scholarship-resident]').is(':checked')) {
+				$('#resident').closest('li').hide();
+			}
+
+			$('.wsuwp-scholarships-header').show();
 			$('.wsuwp-scholarships-filters').show();
 			$('.wsuwp-scholarships').html(response);
 		});

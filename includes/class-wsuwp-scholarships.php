@@ -375,7 +375,7 @@ class WSUWP_Scholarships {
 	public function display_wsuwp_scholarships() {
 		ob_start();
 		?>
-		<p>Tell us about yourself using the form below, or <a href="<?php echo esc_url( get_post_type_archive_link( $this->content_type_slug ) ); ?>">browse all scholarships &raquo;</a></p>
+		<p>Tell us about yourself using the form below to help us find scholarships you might be eligible for, or <a href="<?php echo esc_url( get_post_type_archive_link( $this->content_type_slug ) ); ?>">browse all scholarships &raquo;</a></p>
 
 		<p>All fields are optional.</p>
 		<form class="wsuwp-scholarships-form">
@@ -387,11 +387,11 @@ class WSUWP_Scholarships {
 
 			<p>
 				<label for="wsuwp-scholarship-gpa">G.P.A.</label><br />
-				<input type="text" value="" id="wsuwp-scholarship-gpa">
+				<input type="text" value="" id="wsuwp-scholarship-gpa" maxlength="4">
 			</p>
 
 			<p>
-				Are you currently enrolled?<br />
+				Are you enrolled at WSU?<br />
 				<label><input type="radio" name="wsuwp-scholarship-enrolled" value="yes"> Yes</label>
 				<label><input type="radio" name="wsuwp-scholarship-enrolled" value="no"> No</label>
 			</p>
@@ -406,43 +406,43 @@ class WSUWP_Scholarships {
 
 		</form>
 
-		<div class="row side-left reverse">
+		<div class="wsuwp-scholarships-filters">
 
-			<div class="column one gutterless wsuwp-scholarships-filters">
+			<?php
+			$eligibility = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug,
+			) );
 
-				<p>Sort scholarships by:</p>
-				<ul>
-					<li><label><input type="radio" name="wsuwp-scholarships-sortby" value="amount"> Amount</label></li>
-					<li><label><input type="radio" name="wsuwp-scholarships-sortby" value="deadline"> Deadline</label></li>
+			if ( ! empty( $eligibility ) ) {
+			?>
+				<p>Only show me scholarships with the following requirements</p>
+				<ul class="wsuwp-scholarship-eligibility">
+				<?php foreach ( $eligibility as $criteria ) { ?>
+					<li>
+						<input type="checkbox" value="<?php echo esc_attr( $criteria->slug ); ?>" id="<?php echo esc_attr( $criteria->slug ); ?>" />
+						<label for="<?php echo esc_attr( $criteria->slug ); ?>"><?php echo esc_html( $criteria->name ); ?></label>
+					</li>
+				<?php } ?>
 				</ul>
-
-				<?php
-				$eligibility = get_terms( array(
-					'taxonomy' => $this->taxonomy_slug,
-				) );
-
-				if ( ! empty( $eligibility ) ) {
-				?>
-					<p>Only show me scholarships with the following requirements</h2>
-					<ul class="wsuwp-scholarship-eligibility">
-					<?php foreach ( $eligibility as $criteria ) { ?>
-						<li>
-            				<label>
-            					<input type="checkbox" value="<?php echo esc_attr( $criteria->slug ); ?>" />
-            					<span><?php echo esc_attr( $criteria->name ); ?></span>
-            				</label>
-						</li>
-					<?php } ?>
-					</ul>
-				<?php
-				}
-				?>
-
-			</div>
-
-			<div class="column two gutterless wsuwp-scholarships"></div>
+			<?php
+			}
+			?>
 
 		</div>
+
+		<div class="wsuwp-scholarships-header">
+			<div>Scholarship</div>
+			<div class="amount">
+				<input type="radio" name="wsuwp-scholarships-sortby" value="amount" id="wsuwp-scholarships-sortby-amount">
+				<label for="wsuwp-scholarships-sortby-amount">Amount</label>
+			</div>
+			<div class="deadline">
+				<input type="radio" name="wsuwp-scholarships-sortby" value="deadline" id="wsuwp-scholarships-sortby-deadline">
+				<label for="wsuwp-scholarships-sortby-deadline">Deadline</label>
+			</div>
+		</div>
+
+		<div class="wsuwp-scholarships"></div>
 		<?php
 		$html = ob_get_contents();
 
@@ -540,9 +540,9 @@ class WSUWP_Scholarships {
 		if ( $scholarships_query->have_posts() ) {
 			while ( $scholarships_query->have_posts() ) {
 				$scholarships_query->the_post();
-				$age_min = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_min', true );
-				$age_max = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_max', true );
-				$gpa = get_post_meta( get_the_ID(), '_wsuwp_scholarship_gpa', true );
+				/*$min = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_min', true );
+				$max = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_max', true );
+				$gpa = get_post_meta( get_the_ID(), '_wsuwp_scholarship_gpa', true );*/
 				$eligibility = get_post_meta( get_the_ID(), '_wsuwp_scholarship_eligibility', true );
 				$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
 				$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
@@ -559,7 +559,7 @@ class WSUWP_Scholarships {
 				$org_phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_phone', true );
 
 				// Parse Amount value for javascript sorting.
-				$numeric_amount = str_replace( ',', '', $amount);
+				$numeric_amount = str_replace( ',', '', $amount );
 				$amount_data_value = ( is_numeric( $numeric_amount ) ) ? $numeric_amount : 0;
 
 				// Parse Deadline value for javascript sorting.
@@ -568,29 +568,29 @@ class WSUWP_Scholarships {
 				?>
 				<article <?php post_class(); ?> data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>">
 					<header>
-						<strong><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></strong>
+						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 					</header>
-					<?php
-					if ( $age_min ) {
-					?><p>Minimum age: <?php echo esc_html( $age_min ); ?></p><?php
-					}
-
-					if ( $age_max ) {
-					?><p>Maximum age: <?php echo esc_html( $age_max ); ?></p><?php
-					}
-
-					if ( $gpa ) {
-					?><p>Minimum GPA: <?php echo esc_html( $gpa ); ?></p><?php
-					}
-
-					if ( $deadline ) {
-					?><p>Deadline: <?php echo esc_html( $deadline ); ?></p><?php
-					}
-
+					<div class="amount"><?php
 					if ( $amount ) {
 						$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
-					?><p>Amount: <?php echo esc_html( $prepend . $amount )  ?></p><?php
+						echo esc_html( $prepend . $amount );
 					}
+					?></div>
+					<div class="deadline"><?php
+					if ( $deadline ) {
+						echo esc_html( $deadline );
+					}
+					?></div>
+					<?php
+					/*if ( $eligibility ) {
+						echo '<div class="elgibility"><p>Eligibility</p>' . wpautop( wp_kses_post( $eligibility ) ) . '</div>';
+					}
+					if ( $details ) {
+						echo '<div class="elgibility"><p>Details</p>' . wpautop( wp_kses_post( $details ) ) . '</div>';
+					}
+					if ( $org ) {
+						echo '<div class="elgibility"><p>Organization</p>' . wpautop( wp_kses_post( $org ) ) . '</div>';
+					}*/
 					?>
 				</article>
 				<?php
@@ -598,7 +598,7 @@ class WSUWP_Scholarships {
 
 			wp_reset_postdata();
 		} else {
-			echo '<p>Sorry, no scholarships were found. Please try <a href="#">browsing all scholarships &raquo;</a></p>';
+			echo '<p>Sorry, no scholarships were found. Please try changing your search or <a href="#">browsing all scholarships &raquo;</a></p>';
 		}
 
 		exit();
