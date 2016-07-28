@@ -514,7 +514,7 @@ class WSUWP_Scholarships {
 				array(
 					'key' => '_wsuwp_scholarship_gpa',
 					'value' => sanitize_text_field( $_POST['gpa'] ),
-					'type' => 'numeric', // One would think 'decimal' would be appropriate here, but it doesn't seem to work.
+					'type' => 'DECIMAL(10,2)',
 					'compare' => '<=',
 				),
 				array(
