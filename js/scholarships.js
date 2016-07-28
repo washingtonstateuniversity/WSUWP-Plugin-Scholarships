@@ -35,13 +35,32 @@
 	});
 
 	// Sort scholarships.
-	$('[name=wsuwp-scholarships-sortby]').on('change', function () {
-		var scholarships = $('.wsuwp-scholarships article'),
-			selected = $(this).val();
+	$('.wsuwp-scholarships-header a').on('click', function (e) {
+		e.preventDefault();
+
+		var link = $(this),
+			scholarships = $('.wsuwp-scholarships article'),
+			selected = link.html().toLowerCase();
+
+		if (link.hasClass('sorted')) {
+			link.toggleClass('asc');
+		} else {
+			$('.wsuwp-scholarships-header a').removeClass('sorted asc');
+			link.addClass('sorted');
+		}
 
 		scholarships.sort(function (a, b) {
 			var an = a.getAttribute('data-' + selected),
 				bn = b.getAttribute('data-' + selected);
+
+			if ('scholarship' === selected) {
+				an = b.getAttribute('data-' + selected);
+				bn = a.getAttribute('data-' + selected);
+			}
+
+			if (link.hasClass('asc')) {
+				return an - bn;
+			}
 
 			return bn - an;
 		});

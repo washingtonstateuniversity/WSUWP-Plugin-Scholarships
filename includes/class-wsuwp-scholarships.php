@@ -431,14 +431,14 @@ class WSUWP_Scholarships {
 		</div>
 
 		<div class="wsuwp-scholarships-header">
-			<div>Scholarship</div>
+			<div class="name">
+				<a href="#" class="sorted">Scholarship</a>
+			</div>
 			<div class="amount">
-				<input type="radio" name="wsuwp-scholarships-sortby" value="amount" id="wsuwp-scholarships-sortby-amount">
-				<label for="wsuwp-scholarships-sortby-amount">Amount</label>
+				<a href="#">Amount</a>
 			</div>
 			<div class="deadline">
-				<input type="radio" name="wsuwp-scholarships-sortby" value="deadline" id="wsuwp-scholarships-sortby-deadline">
-				<label for="wsuwp-scholarships-sortby-deadline">Deadline</label>
+				<a href="#">Deadline</a>
 			</div>
 		</div>
 
@@ -546,6 +546,7 @@ class WSUWP_Scholarships {
 		$scholarships_query = new WP_Query( $scholarships_query_args );
 
 		if ( $scholarships_query->have_posts() ) {
+			$i = 0;
 			while ( $scholarships_query->have_posts() ) {
 				$scholarships_query->the_post();
 				$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
@@ -558,7 +559,7 @@ class WSUWP_Scholarships {
 				// Parse Deadline value for javascript sorting.
 				$deadline_data_value = ( $deadline ) ? str_replace( '-', '', $deadline ) : 0;
 				?>
-				<article <?php post_class(); ?> data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>">
+				<article <?php post_class(); ?> data-scholarship="<?php echo esc_html( $i ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>" data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>">
 					<header>
 						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 					</header>
@@ -575,6 +576,7 @@ class WSUWP_Scholarships {
 					?></div>
 				</article>
 				<?php
+				$i++;
 			}
 
 			wp_reset_postdata();
