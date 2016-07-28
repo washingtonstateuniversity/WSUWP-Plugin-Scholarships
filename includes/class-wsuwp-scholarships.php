@@ -182,7 +182,7 @@ class WSUWP_Scholarships {
 
 		<div class="wsuwp-scholarship-fieldset">
 
-			<input type="text" class="widefat" name="wsuwp_scholarship_deadline" placeholder="Deadline (mm/dd/yyy)" value="<?php echo esc_attr( $deadline ); ?>" pattern="\d{2}/\d{2}/\d{4}" />
+			<input type="text" class="widefat" name="wsuwp_scholarship_deadline" placeholder="Deadline (yyyy-mm-dd)" value="<?php echo esc_attr( $deadline ); ?>" pattern="\d{4}-\d{2}-\d{2}" />
 
 			<input type="text" class="widefat" name="wsuwp_scholarship_amount" placeholder="Amount" value="<?php echo esc_attr( $amount ); ?>" />
 
@@ -465,6 +465,14 @@ class WSUWP_Scholarships {
 			'order' => 'ASC',
 			'posts_per_page' => -1,
 			'post_type' => $this->content_type_slug,
+			'meta_query' => array(
+				array(
+					'key' => '_wsuwp_scholarship_deadline',
+					'value' => date( 'Y-m-d' ),
+					'type' => 'date',
+					'compare' => '>=',
+				),
+			),
 		);
 
 		// Age parameters.
@@ -540,31 +548,15 @@ class WSUWP_Scholarships {
 		if ( $scholarships_query->have_posts() ) {
 			while ( $scholarships_query->have_posts() ) {
 				$scholarships_query->the_post();
-				/*$min = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_min', true );
-				$max = get_post_meta( get_the_ID(), '_wsuwp_scholarship_age_max', true );
-				$gpa = get_post_meta( get_the_ID(), '_wsuwp_scholarship_gpa', true );*/
-				$eligibility = get_post_meta( get_the_ID(), '_wsuwp_scholarship_eligibility', true );
 				$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
 				$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
-				$paper = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_paper', true );
-				$online = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_online', true );
-				$site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_site', true );
-				$email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_email', true );
-				$phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_phone', true );
-				$address = get_post_meta( get_the_ID(), '_wsuwp_scholarship_address', true );
-				$details = get_post_meta( get_the_ID(), '_wsuwp_scholarship_details', true );
-				$org = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org', true );
-				$org_site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_site', true );
-				$org_email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_email', true );
-				$org_phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_phone', true );
 
 				// Parse Amount value for javascript sorting.
 				$numeric_amount = str_replace( ',', '', $amount );
-				$amount_data_value = ( is_numeric( $numeric_amount ) ) ? $numeric_amount : 0;
+				$amount_data_value = ( $amount && is_numeric( $numeric_amount ) ) ? $numeric_amount : 0;
 
 				// Parse Deadline value for javascript sorting.
-				$deadline_parts = explode( '/', $deadline );
-				$deadline_data_value = ( is_array( $deadline_parts ) ) ? $deadline_parts[2] . $deadline_parts[0] . $deadline_parts[1] : 0;
+				$deadline_data_value = ( $deadline ) ? str_replace( '-', '', $deadline ) : 0;
 				?>
 				<article <?php post_class(); ?> data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>">
 					<header>
@@ -581,17 +573,6 @@ class WSUWP_Scholarships {
 						echo esc_html( $deadline );
 					}
 					?></div>
-					<?php
-					/*if ( $eligibility ) {
-						echo '<div class="elgibility"><p>Eligibility</p>' . wpautop( wp_kses_post( $eligibility ) ) . '</div>';
-					}
-					if ( $details ) {
-						echo '<div class="elgibility"><p>Details</p>' . wpautop( wp_kses_post( $details ) ) . '</div>';
-					}
-					if ( $org ) {
-						echo '<div class="elgibility"><p>Organization</p>' . wpautop( wp_kses_post( $org ) ) . '</div>';
-					}*/
-					?>
 				</article>
 				<?php
 			}
