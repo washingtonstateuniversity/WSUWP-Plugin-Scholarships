@@ -466,11 +466,16 @@ class WSUWP_Scholarships {
 			'posts_per_page' => -1,
 			'post_type' => $this->content_type_slug,
 			'meta_query' => array(
+				'relation' => 'OR',
 				array(
 					'key' => '_wsuwp_scholarship_deadline',
 					'value' => date( 'Y-m-d' ),
 					'type' => 'date',
 					'compare' => '>=',
+				),
+				array(
+					'key' => '_wsuwp_scholarship_deadline',
+					'compare' => 'NOT EXISTS',
 				),
 			),
 		);
