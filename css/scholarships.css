@@ -103,7 +103,8 @@
 
 .amount,
 .deadline {
-	width: 100px;
+	padding-left: 0.5rem;
+	width: 110px;
 }
 
 .wsuwp-scholarships-header a:hover:after,

@@ -540,7 +540,8 @@ class WSUWP_Scholarships {
 				$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
 
 				// Parse Amount value for javascript sorting.
-				$numeric_amount = str_replace( ',', '', $amount );
+				$amount_pieces =  explode( '-', $amount );
+				$numeric_amount = str_replace( ',', '', $amount_pieces[0] );
 				$amount_data_value = ( $amount && is_numeric( $numeric_amount ) ) ? $numeric_amount : 0;
 
 				// Parse Deadline value for javascript sorting.
