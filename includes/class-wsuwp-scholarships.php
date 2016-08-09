@@ -74,9 +74,11 @@ class WSUWP_Scholarships {
 			'menu_icon' => 'dashicons-awards',
 			'supports' => array(
 				'title',
+				'editor',
 			),
 			'taxonomies' => array(
-				'wsuwp_university_org'
+				'wsuwp_university_org',
+				'post_tag',
 			),
 			'has_archive' => true,
 		);
