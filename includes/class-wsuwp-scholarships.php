@@ -147,7 +147,6 @@ class WSUWP_Scholarships {
 		$gpa = get_post_meta( $post->ID, '_wsuwp_scholarship_gpa', true );
 		$age_min = get_post_meta( $post->ID, '_wsuwp_scholarship_age_min', true );
 		$age_max = get_post_meta( $post->ID, '_wsuwp_scholarship_age_max', true );
-		$eligibility = get_post_meta( $post->ID, '_wsuwp_scholarship_eligibility', true );
 		$deadline = get_post_meta( $post->ID, '_wsuwp_scholarship_deadline', true );
 		$amount = get_post_meta( $post->ID, '_wsuwp_scholarship_amount', true );
 		$paper = get_post_meta( $post->ID, '_wsuwp_scholarship_application_paper', true );
@@ -156,7 +155,6 @@ class WSUWP_Scholarships {
 		$email = get_post_meta( $post->ID, '_wsuwp_scholarship_email', true );
 		$phone = get_post_meta( $post->ID, '_wsuwp_scholarship_phone', true );
 		$address = get_post_meta( $post->ID, '_wsuwp_scholarship_address', true );
-		$details = get_post_meta( $post->ID, '_wsuwp_scholarship_details', true );
 		$org = get_post_meta( $post->ID, '_wsuwp_scholarship_org', true );
 		$org_site = get_post_meta( $post->ID, '_wsuwp_scholarship_org_site', true );
 		$org_email = get_post_meta( $post->ID, '_wsuwp_scholarship_org_email', true );
@@ -178,9 +176,6 @@ class WSUWP_Scholarships {
 			<input type="number" class="widefat" name="wsuwp_scholarship_age_max" placeholder="Maximum Age" value="<?php echo esc_attr( $age_max ); ?>" />
 
 		</div>
-
-		<p>Specific Eligibility Details</p>
-		<?php wp_editor( $eligibility, 'wsuwp_scholarship_eligibility', $wp_editor_settings ); ?>
 
 		<div class="wsuwp-scholarship-fieldset">
 
@@ -209,9 +204,6 @@ class WSUWP_Scholarships {
 			<input type="text" class="widefat" name="wsuwp_scholarship_address" placeholder="Address" value="<?php echo esc_attr( $address ); ?>" />
 
 		</div>
-
-		<p>More Details</p>
-		<?php wp_editor( $details, 'wsuwp_scholarship_details', $wp_editor_settings ); ?>
 
 		<p>About the organization</p>
 		<?php wp_editor( $org, 'wsuwp_scholarship_org', $wp_editor_settings ); ?>
@@ -271,12 +263,6 @@ class WSUWP_Scholarships {
 			delete_post_meta( $post_id, '_wsuwp_scholarship_age_max' );
 		}
 
-		if ( isset( $_POST['wsuwp_scholarship_eligibility'] ) && ! empty( trim( $_POST['wsuwp_scholarship_eligibility'] ) ) ) {
-			update_post_meta( $post_id, '_wsuwp_scholarship_eligibility', wp_kses_post( $_POST['wsuwp_scholarship_eligibility'] ) );
-		} else {
-			delete_post_meta( $post_id, '_wsuwp_scholarship_eligibility' );
-		}
-
 		if ( isset( $_POST['wsuwp_scholarship_deadline'] ) && ! empty( trim( $_POST['wsuwp_scholarship_deadline'] ) ) ) {
 			update_post_meta( $post_id, '_wsuwp_scholarship_deadline', sanitize_text_field( $_POST['wsuwp_scholarship_deadline'] ) );
 		} else {
@@ -323,12 +309,6 @@ class WSUWP_Scholarships {
 			update_post_meta( $post_id, '_wsuwp_scholarship_address', sanitize_text_field( $_POST['wsuwp_scholarship_address'] ) );
 		} else {
 			delete_post_meta( $post_id, '_wsuwp_scholarship_address' );
-		}
-
-		if ( isset( $_POST['wsuwp_scholarship_details'] ) && ! empty( trim( $_POST['wsuwp_scholarship_details'] ) ) ) {
-			update_post_meta( $post_id, '_wsuwp_scholarship_details', wp_kses_post( $_POST['wsuwp_scholarship_details'] ) );
-		} else {
-			delete_post_meta( $post_id, '_wsuwp_scholarship_details' );
 		}
 
 		if ( isset( $_POST['wsuwp_scholarship_org'] ) && ! empty( trim( $_POST['wsuwp_scholarship_org'] ) ) ) {
