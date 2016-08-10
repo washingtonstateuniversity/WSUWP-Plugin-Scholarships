@@ -47,6 +47,8 @@ class WSUWP_Scholarships {
 		add_shortcode( 'wsuwp_scholarships', array( $this, 'display_wsuwp_scholarships' ) );
 		add_action( 'wp_ajax_nopriv_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_action( 'wp_ajax_set_scholarships', array( $this, 'ajax_callback' ) );
+		add_filter( 'the_content', array( $this, 'add_scholarship_content' ), 999, 1 );
+
 	}
 
 	/**
@@ -341,6 +343,7 @@ class WSUWP_Scholarships {
 	 */
 	public function wp_enqueue_scripts() {
 		$post = get_post();
+
 		if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'wsuwp_scholarships' ) ) {
 			wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
 			wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), false, true );
@@ -348,6 +351,10 @@ class WSUWP_Scholarships {
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce' => wp_create_nonce( 'wsuwp-scholarships' ),
 			) );
+		}
+
+		if ( is_singular( $this->content_type_slug ) ) {
+			wp_enqueue_style( 'wsuwp-scholarship', plugins_url( 'css/scholarship.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
 		}
 	}
 
@@ -577,5 +584,100 @@ class WSUWP_Scholarships {
 		}
 
 		exit();
+	}
+
+	/**
+	 * Add content areas for custom meta data when the Scholarship content type is being displayed.
+	 *
+	 * @param string $content Current object content.
+	 *
+	 * @return string Modified content.
+	 */
+	public function add_scholarship_content( $content ) {
+		if ( false === is_singular( $this->content_type_slug ) ) {
+			return $content;
+		}
+
+		$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
+		$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
+		$paper = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_paper', true );
+		$online = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_online', true );
+		$site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_site', true );
+		$email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_email', true );
+		$phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_phone', true );
+		$address = get_post_meta( get_the_ID(), '_wsuwp_scholarship_address', true );
+		$org = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org', true );
+		$org_site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_site', true );
+		$org_email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_email', true );
+		$org_phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_phone', true );
+		$added_html = '';
+
+		if ( $deadline ) {
+			$deadline_pieces = explode( '-', $deadline );
+			$us_notation_deadline = $deadline_pieces[1] . '/' . $deadline_pieces[2] . '/' . $deadline_pieces[0];
+			$added_html .= '<p><strong>Deadline:</strong> ' . esc_html( $us_notation_deadline ) . '</p>';
+		}
+
+		if ( $amount ) {
+			$amount_pieces =  explode( '-', $amount );
+			$numeric_amount = str_replace( ',', '', $amount_pieces[0] );
+			$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
+			$added_html .= '<p><strong>Scholarship Amount:</strong> ' . esc_html( $prepend . $amount ) . '</p>';
+		}
+
+		$paper_application = ( $paper ) ? 'Yes' : 'No';
+		$added_html .= '<p><strong>Paper Application Available:</strong> ' . esc_html( $paper_application ) . '</p>';
+
+		$online_application = ( $online ) ? 'Yes' : 'No';
+		$added_html .= '<p><strong>Online Application Available:</strong> ' . esc_html( $online_application ) . '</p>';
+
+		if ( $site || $email || $phone || $address ) {
+			$added_html .= '<p><strong>Scholarship contact information:</strong></p>';
+			$added_html .= '<ul>';
+
+			if ( $site ) {
+				$added_html .= '<li><strong>Web:</strong> <a href="' . esc_url( $site ) . '">' . esc_html( $site ) . '</a></li>';
+			}
+
+			if ( $email ) {
+				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></li>';
+			}
+
+			if ( $phone ) {
+				$added_html .= '<li><strong>Phone:</strong> ' . esc_html( $phone ) . '</li>';
+			}
+
+			if ( $address ) {
+				$added_html .= '<li><strong>Address:</strong> ' . esc_html( $address ) . '</li>';
+			}
+
+			$added_html .= '</ul>';
+		}
+
+		if ( $org || $org_site || $org_email || $org_phone ) {
+			$added_html .= '<p><strong>Organization information:</strong></p>';
+
+			if ( $org ) {
+				$added_html .= wpautop( wp_kses_post( $org ) );
+			}
+
+			$added_html .= '<ul>';
+
+			if ( $org_site ) {
+				$added_html .= '<li><strong>Web:</strong> <a href="' . esc_url( $org_site ) . '">' . esc_html( $org_site ) . '</a></li>';
+			}
+
+			if ( $org_email ) {
+				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $org_email ) . '">' . esc_html( $org_email ) . '</li>';
+			}
+
+			if ( $org_phone ) {
+				$added_html .= '<li><strong>Phone:</strong> ' . esc_html( $org_phone ) . '</li>';
+			}
+
+			$added_html .= '</ul>';
+		}
+
+		return $content . $added_html;
 	}
 }
