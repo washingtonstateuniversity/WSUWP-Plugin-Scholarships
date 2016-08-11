@@ -37,6 +37,32 @@ class WSUWP_Scholarships {
 	public $taxonomy_slug_ethnicity = 'ethnicity';
 
 	/**
+	 * @var array A list of post meta keys associated with scholarships.
+	 */
+	var $post_meta_keys = array(
+		'scholarship_gpa',
+		'scholarship_age_min',
+		'scholarship_age_max',
+		'scholarship_deadline',
+		'scholarship_amount',
+		'scholarship_essay',
+		'scholarship_enrolled',
+		'scholarship_year',
+		'scholarship_state',
+		'scholarship_app_paper',
+		'scholarship_app_online',
+		'scholarship_site',
+		'scholarship_email',
+		'scholarship_phone',
+		'scholarship_address',
+		'scholarship_org_name',
+		'scholarship_org',
+		'scholarship_org_site',
+		'scholarship_org_email',
+		'scholarship_org_phone',
+	);
+
+	/**
 	 * Maintain and return the one instance. Initiate hooks when
 	 * called the first time.
 	 *
@@ -60,6 +86,7 @@ class WSUWP_Scholarships {
 	public function setup_hooks() {
 		add_action( 'init', array( $this, 'register_content_type' ), 12 );
 		add_action( 'init', array( $this, 'register_taxonomies' ), 12 );
+		add_action( 'init', array( $this, 'register_meta' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10 );
 		add_action( 'add_meta_boxes_' . $this->content_type_slug, array( $this, 'add_meta_boxes' ), 10 );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
@@ -108,30 +135,228 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * Register a scholarship eligibility taxonomy that will be attached to the scholarship content type.
+	 * Register taxonomies that will be attached to the scholarship content type.
 	 */
-	public function register_taxonomy() {
+	public function register_taxonomies() {
 		$labels = array(
-			'name' => 'Eligibility',
-			'singular_name' => 'Criteria',
-			'all_items' => 'All Criteria',
-			'edit_item' => 'Edit Criteria',
-			'view_item' => 'View Criteria',
-			'update_item' => 'Update Criteria',
-			'add_new_item' => 'Add New Criteria',
-			'new_item_name' => 'New Criteria Name',
-			'parent_item' => 'Parent Criteria',
-			'search_items' => 'Search Criteria',
-			'not_found' => 'No criteria found',
+			'name' => 'Major',
+			'singular_name' => 'Major',
+			'all_items' => 'All Majors',
+			'edit_item' => 'Edit Major',
+			'view_item' => 'View Major',
+			'update_item' => 'Update Major',
+			'add_new_item' => 'Add New Major',
+			'new_item_name' => 'New Major Name',
+			'search_items' => 'Search Majors',
+			'popular_items' => 'Popular Majors',
+			'separate_items_with_commas' => 'Separate majors with commas',
+			'add_or_remove_items' => 'Add or remove majors',
+			'choose_from_most_used' => 'Choose from the most used majors',
+			'not_found' => 'No majors found',
 		);
+
 		$args = array(
 			'labels' => $labels,
-			'description' => 'Scholarship eligibility requirements.',
+			'description' => 'Scholarship major criteria.',
 			'public' => true,
-			'hierarchical' => true,
+			'hierarchical' => false,
 			'show_admin_column' => true,
 		);
-		register_taxonomy( $this->taxonomy_slug, $this->content_type_slug, $args );
+
+		register_taxonomy( $this->taxonomy_slug_major, $this->content_type_slug, $args );
+
+		$labels = array(
+			'name' => 'Citizenship',
+			'singular_name' => 'Citizenship',
+			'all_items' => 'All Citizenship',
+			'edit_item' => 'Edit Citizenship',
+			'view_item' => 'View Citizenship',
+			'update_item' => 'Update Citizenship',
+			'add_new_item' => 'Add New Citizenship',
+			'new_item_name' => 'New Citizenship Name',
+			'search_items' => 'Search Citizenship',
+			'popular_items' => 'Popular Citizenships',
+			'separate_items_with_commas' => 'Separate citizenships with commas',
+			'add_or_remove_items' => 'Add or remove citizenships',
+			'choose_from_most_used' => 'Choose from the most used citizenships',
+			'not_found' => 'No citizenship found',
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'description' => 'Scholarship citizenship criteria.',
+			'public' => true,
+			'hierarchical' => false,
+			'show_admin_column' => true,
+		);
+
+		register_taxonomy( $this->taxonomy_slug_citizenship, $this->content_type_slug, $args );
+
+		$labels = array(
+			'name' => 'Gender Identity',
+			'singular_name' => 'Gender Identity',
+			'all_items' => 'All Gender Identities',
+			'edit_item' => 'Edit Gender Identity',
+			'view_item' => 'View Gender Identity',
+			'update_item' => 'Update Gender Identity',
+			'add_new_item' => 'Add New Gender Identity',
+			'new_item_name' => 'New Gender Identity Name',
+			'search_items' => 'Search Gender Identities',
+			'popular_items' => 'Popular Gender Identities',
+			'separate_items_with_commas' => 'Separate gender identities with commas',
+			'add_or_remove_items' => 'Add or remove gender identities',
+			'choose_from_most_used' => 'Choose from the most used gender identities',
+			'not_found' => 'No gender identities found',
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'description' => 'Scholarship gender identity criteria.',
+			'public' => true,
+			'hierarchical' => false,
+			'show_admin_column' => true,
+		);
+
+		register_taxonomy( $this->taxonomy_slug_gender, $this->content_type_slug, $args );
+
+		$labels = array(
+			'name' => 'Ethicity',
+			'singular_name' => 'Ethicity',
+			'all_items' => 'All Ethicities',
+			'edit_item' => 'Edit Ethicity',
+			'view_item' => 'View Ethicity',
+			'update_item' => 'Update Ethicity',
+			'add_new_item' => 'Add New Ethicity',
+			'new_item_name' => 'New Ethicity Name',
+			'search_items' => 'Search Ethicities',
+			'popular_items' => 'Popular Gender Ethnicities',
+			'separate_items_with_commas' => 'Separate ethnicities with commas',
+			'add_or_remove_items' => 'Add or remove ethnicities',
+			'choose_from_most_used' => 'Choose from the most used ethnicities',
+			'not_found' => 'No ethnicities found',
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'description' => 'Scholarship ethnicity criteria.',
+			'public' => true,
+			'hierarchical' => false,
+			'show_admin_column' => true,
+		);
+
+		register_taxonomy( $this->taxonomy_slug_ethnicity, $this->content_type_slug, $args );
+	}
+
+	/**
+	 * Register the degree program factsheet post type.
+	 *
+	 * @since 0.0.1
+	 */
+	public function register_meta() {
+		$args = array(
+			'show_in_rest' => true,
+			'single' => true,
+		);
+
+		$args['description'] = 'Minimum GPA';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_gpa', $args );
+
+		$args['description'] = 'Minimum age';
+		$args['type'] = 'int';
+		$args['sanitize_callback'] = 'absint';
+		register_meta( 'post', 'scholarship_age_min', $args );
+
+		$args['description'] = 'Maximum age';
+		$args['type'] = 'int';
+		$args['sanitize_callback'] = 'absint';
+		register_meta( 'post', 'scholarship_age_max', $args );
+
+		$args['description'] = 'Scholarship application deadline';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_deadline', $args );
+
+		$args['description'] = 'Scholarship amount';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_amount', $args );
+
+		$args['description'] = 'Essay requirement';
+		$args['type'] = '';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
+		register_meta( 'post', 'scholarship_essay', $args );
+
+		$args['description'] = 'Applicant must be enrolled';
+		$args['type'] = '';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
+		register_meta( 'post', 'scholarship_enrolled', $args );
+
+		$args['description'] = "Applicant's year in school";
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_year_in_school';
+		register_meta( 'post', 'scholarship_year', $args );
+
+		$args['description'] = "Applicant's state of residence";
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_state';
+		register_meta( 'post', 'scholarship_state', $args );
+
+		$args['description'] = 'Paper application availability';
+		$args['type'] = '';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
+		register_meta( 'post', 'scholarship_app_paper', $args );
+
+		$args['description'] = 'Online application availability';
+		$args['type'] = '';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
+		register_meta( 'post', 'scholarship_app_online', $args );
+
+		$args['description'] = 'Scholarship website';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'esc_url_raw';
+		register_meta( 'post', 'scholarship_site', $args );
+
+		$args['description'] = 'Scholarship email address';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_email';
+		register_meta( 'post', 'scholarship_email', $args );
+
+		$args['description'] = 'Scholarship phone number';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_phone', $args );
+
+		$args['description'] = 'Scholarship mailing address';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_address', $args );
+
+		$args['description'] = 'Granting organization name';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_org_name', $args );
+
+		$args['description'] = 'About the granting organization';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'wp_kses_post';
+		register_meta( 'post', 'scholarship_org', $args );
+
+		$args['description'] = 'Granting organization website';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'esc_url_raw';
+		register_meta( 'post', 'scholarship_org_site', $args );
+
+		$args['description'] = 'Granting organization email address';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_email';
+		register_meta( 'post', 'scholarship_org_email', $args );
+
+		$args['description'] = 'Granting organization phone number';
+		$args['type'] = 'string';
+		$args['sanitize_callback'] = 'sanitize_text_field';
+		register_meta( 'post', 'scholarship_org_phone', $args );
 	}
 
 	/**
