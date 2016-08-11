@@ -1,39 +1,28 @@
 /* Form */
-.wsuwp-scholarships-form {
-	display: flex;
-	justify-content: space-between;
-}
-
-.wsuwp-scholarships-form p {
-	padding: 0;
-	text-align: center;
-}
-
-.wsuwp-scholarships-form label {
-	font-size: 1em;
-	font-weight: normal;
-}
-
-.wsuwp-scholarships-form p:last-of-type label,
-.wsuwp-scholarships-form p:nth-last-of-type(2) label {
-	display: inline-block;
-	padding: 0.5rem 1rem;
-}
-
-.wsuwp-scholarships-form input[type=text],
-.wsuwp-scholarships-form input[type=number] {
-	background: #fff;
+.wsuwp-scholarships-form input,
+.wsuwp-scholarships-form input:focus,
+.wsuwp-scholarships-form select {
 	border-radius: 0;
-	border: 1px solid rgba(113,113,113,0.25);
-	box-sizing: border-box;
+	border: 2px solid #d7dadb;
+	box-shadow: none;
 	color: #717171;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size: 1em;
-	line-height: 1.4;
+	font-family: inherit;
+	font-size: 0.9em;
+	font-weight: 400;
+	letter-spacing: 2px;
 	margin: 0;
-	padding: 0.5rem 0.75rem;
-	width: 4rem;
-	-webkit-appearance: textfield;
+	padding: 9px;
+	text-transform: uppercase;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.wsuwp-scholarships-form input {
+	width: 4.5rem;
+}
+
+.wsuwp-scholarships-form input[type=number] {
+	-moz-appearance: textfield;
 }
 
 .wsuwp-scholarships-form input[type=number]::-webkit-inner-spin-button,
@@ -42,17 +31,52 @@
 	margin: 0;
 }
 
+.wsuwp-scholarships-form .wsuwp-scholarship-select {
+	display: inline-block;
+	position: relative;
+}
+
+.wsuwp-scholarships-form .wsuwp-scholarship-select:before,
+.wsuwp-scholarships-form .wsuwp-scholarship-select:after {
+	border: solid transparent;
+	border-width: 0.6em 0.4em;
+	box-sizing: border-box;
+	content: '';
+	height: 1.2em;
+	position: absolute;
+	right: 0.6em;
+}
+
+.wsuwp-scholarships-form .wsuwp-scholarship-select:before {
+	border-bottom-color: #d7dadb;
+	top: 0;
+}
+
+.wsuwp-scholarships-form .wsuwp-scholarship-select:after {
+	border-top-color: #d7dadb;
+	bottom: 0;
+}
+
+.wsuwp-scholarships-form select {
+	background: none;
+	cursor: pointer;
+	padding-right: 21px;
+	position: relative;
+	z-index: 1;
+}
+
 .wsuwp-scholarships-form input[type=submit] {
-	background: #981e32;
-	border-radius: 0;
-	border: 0;
-	color: #fff;
-	font-size: 1em;
-	margin-top: 22px;
+	background: none;
+	border: 2px solid #981e32;
+	color: #981e32;
+	font-weight: 600;
+	transition: color 0.4s, background 0.4s;
+	vertical-align: baseline;
 }
 
 .wsuwp-scholarships-form input[type=submit]:hover {
-	background: #c60c30;
+	background: #981e32;
+	color: #fff;
 }
 
 /* Filters */
@@ -99,6 +123,10 @@
 .wsuwp-scholarships-header div:first-of-type,
 .wsuwp-scholarships article header {
 	flex: 1;
+}
+
+.wsuwp-scholarships-header {
+	font-weight: 700;
 }
 
 .amount,
