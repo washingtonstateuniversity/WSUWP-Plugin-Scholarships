@@ -555,8 +555,8 @@ class WSUWP_Scholarships {
 				$deadline_data_value = ( $deadline ) ? str_replace( '-', '', $deadline ) : 0;
 
 				// Parse deadline for display
-				$deadline_pieces = explode( '-', $deadline );
-				$us_notation_deadline = $deadline_pieces[1] . '/' . $deadline_pieces[2] . '/' . $deadline_pieces[0];
+				$date = DateTime::createFromFormat( 'Y-m-d', $deadline );
+				$deadline_display = ( $date instanceof DateTime ) ? $date->format('m/d/Y') : $deadline;
 				?>
 				<article <?php post_class(); ?> data-scholarship="<?php echo esc_html( $i ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>" data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>">
 					<header>
@@ -570,7 +570,7 @@ class WSUWP_Scholarships {
 					?></div>
 					<div class="deadline"><?php
 					if ( $deadline ) {
-						echo esc_html( $us_notation_deadline );
+						echo esc_html( $deadline_display );
 					}
 					?></div>
 				</article>
@@ -613,9 +613,9 @@ class WSUWP_Scholarships {
 		$added_html = '';
 
 		if ( $deadline ) {
-			$deadline_pieces = explode( '-', $deadline );
-			$us_notation_deadline = $deadline_pieces[1] . '/' . $deadline_pieces[2] . '/' . $deadline_pieces[0];
-			$added_html .= '<p><strong>Deadline:</strong> ' . esc_html( $us_notation_deadline ) . '</p>';
+			$date = DateTime::createFromFormat( 'Y-m-d', $deadline );
+			$deadline_display = ( $date instanceof DateTime ) ? $date->format('m/d/Y') : $deadline;
+			$added_html .= '<p><strong>Deadline:</strong> ' . esc_html( $deadline_display ) . '</p>';
 		}
 
 		if ( $amount ) {
