@@ -2,8 +2,18 @@
 	display: flex;
 	margin-bottom: 1rem;
 }
-.wsuwp-scholarship-fieldset input + input {
+.wsuwp-scholarship-fieldset * + * {
 	margin-left: 1rem;
+}
+.wsuwp-scholarship-fieldset div {
+	flex: 1;
+}
+.wsuwp-scholarship-fieldset select {
+	font-size: 1em;
+	margin-top: 0.5em;
+}
+#wp-scholarship_org-wrap {
+	margin-top: 1em;
 }
 [name^=wsuwp_scholarship]:not(:focus):invalid {
 	border-color: #c60c30;
