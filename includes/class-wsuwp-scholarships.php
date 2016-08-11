@@ -17,6 +17,26 @@ class WSUWP_Scholarships {
 	public $taxonomy_slug = 'eligibility';
 
 	/**
+	 * @var string Slug for tracking the Major taxonomy.
+	 */
+	public $taxonomy_slug_major = 'major';
+
+	/**
+	 * @var string Slug for tracking the Citizenship taxonomy.
+	 */
+	public $taxonomy_slug_citizenship = 'citizenship';
+
+	/**
+	 * @var string Slug for tracking the Gender Identity taxonomy.
+	 */
+	public $taxonomy_slug_gender = 'gender-identity';
+
+	/**
+	 * @var string Slug for tracking the Gender Identity taxonomy.
+	 */
+	public $taxonomy_slug_ethnicity = 'ethnicity';
+
+	/**
 	 * Maintain and return the one instance. Initiate hooks when
 	 * called the first time.
 	 *
@@ -39,7 +59,7 @@ class WSUWP_Scholarships {
 	 */
 	public function setup_hooks() {
 		add_action( 'init', array( $this, 'register_content_type' ), 12 );
-		add_action( 'init', array( $this, 'register_taxonomy' ), 15 );
+		add_action( 'init', array( $this, 'register_taxonomies' ), 12 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10 );
 		add_action( 'add_meta_boxes_' . $this->content_type_slug, array( $this, 'add_meta_boxes' ), 10 );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
@@ -79,7 +99,6 @@ class WSUWP_Scholarships {
 				'editor',
 			),
 			'taxonomies' => array(
-				'wsuwp_university_org',
 				'post_tag',
 			),
 			'has_archive' => true,
