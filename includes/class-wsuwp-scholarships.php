@@ -925,18 +925,19 @@ class WSUWP_Scholarships {
 			return $content;
 		}
 
-		$deadline = get_post_meta( get_the_ID(), '_wsuwp_scholarship_deadline', true );
-		$amount = get_post_meta( get_the_ID(), '_wsuwp_scholarship_amount', true );
-		$paper = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_paper', true );
-		$online = get_post_meta( get_the_ID(), '_wsuwp_scholarship_application_online', true );
-		$site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_site', true );
-		$email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_email', true );
-		$phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_phone', true );
-		$address = get_post_meta( get_the_ID(), '_wsuwp_scholarship_address', true );
-		$org = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org', true );
-		$org_site = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_site', true );
-		$org_email = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_email', true );
-		$org_phone = get_post_meta( get_the_ID(), '_wsuwp_scholarship_org_phone', true );
+		$deadline = get_post_meta( get_the_ID(), 'scholarship_deadline', true );
+		$amount = get_post_meta( get_the_ID(), 'scholarship_amount', true );
+		$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
+		$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
+		$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
+		$email = get_post_meta( get_the_ID(), 'scholarship_email', true );
+		$phone = get_post_meta( get_the_ID(), 'scholarship_phone', true );
+		$address = get_post_meta( get_the_ID(), 'scholarship_address', true );
+		$org_name = get_post_meta( get_the_ID(), 'scholarship_org_name', true );
+		$org = get_post_meta( get_the_ID(), 'scholarship_org', true );
+		$org_site = get_post_meta( get_the_ID(), 'scholarship_org_site', true );
+		$org_email = get_post_meta( get_the_ID(), 'scholarship_org_email', true );
+		$org_phone = get_post_meta( get_the_ID(), 'scholarship_org_phone', true );
 		$added_html = '';
 
 		if ( $deadline ) {
@@ -949,40 +950,43 @@ class WSUWP_Scholarships {
 			$amount_pieces =  explode( '-', $amount );
 			$numeric_amount = str_replace( ',', '', $amount_pieces[0] );
 			$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
-			$added_html .= '<p><strong>Scholarship Amount:</strong> ' . esc_html( $prepend . $amount ) . '</p>';
+			$added_html .= '<p><strong>Amount:</strong> ' . esc_html( $prepend . $amount ) . '</p>';
 		}
 
-		$paper_application = ( $paper ) ? 'Yes' : 'No';
-		$added_html .= '<p><strong>Paper Application Available:</strong> ' . esc_html( $paper_application ) . '</p>';
+		if ( $paper ) {
+			$added_html .= '<p><strong>Paper Application Available</strong></p>';
+		}
 
-		$online_application = ( $online ) ? 'Yes' : 'No';
-		$added_html .= '<p><strong>Online Application Available:</strong> ' . esc_html( $online_application ) . '</p>';
+		if ( $online ) {
+			$added_html .= '<p><strong>Online Application Available</strong></p>';
+		}
 
 		if ( $site || $email || $phone || $address ) {
-			$added_html .= '<p><strong>Scholarship contact information:</strong></p>';
+			$added_html .= '<p><strong>Contact information:</strong></p>';
 			$added_html .= '<ul>';
 
 			if ( $site ) {
-				$added_html .= '<li><strong>Web:</strong> <a href="' . esc_url( $site ) . '">' . esc_html( $site ) . '</a></li>';
+				$added_html .= '<li><a href="' . esc_url( $site ) . '">' . esc_html( $site ) . '</a></li>';
 			}
 
 			if ( $email ) {
-				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></li>';
+				$added_html .= '<li><a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></li>';
 			}
 
 			if ( $phone ) {
-				$added_html .= '<li><strong>Phone:</strong> ' . esc_html( $phone ) . '</li>';
+				$added_html .= '<li>' . esc_html( $phone ) . '</li>';
 			}
 
 			if ( $address ) {
-				$added_html .= '<li><strong>Address:</strong> ' . esc_html( $address ) . '</li>';
+				$added_html .= '<li>' . esc_html( $address ) . '</li>';
 			}
 
 			$added_html .= '</ul>';
 		}
 
-		if ( $org || $org_site || $org_email || $org_phone ) {
-			$added_html .= '<p><strong>Organization information:</strong></p>';
+		if ( $org_name || $org || $org_site || $org_email || $org_phone ) {
+			$granter = ( $org_name && $org ) ? $org_name : 'the granter';
+			$added_html .= '<p><strong>About ' . esc_html( $granter ) . '</strong></p>';
 
 			if ( $org ) {
 				$added_html .= wpautop( wp_kses_post( $org ) );
