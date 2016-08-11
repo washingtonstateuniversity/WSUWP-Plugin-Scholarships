@@ -160,8 +160,8 @@ class WSUWP_Scholarships {
 		add_shortcode( 'wsuwp_scholarships', array( $this, 'display_wsuwp_scholarships' ) );
 		add_action( 'wp_ajax_nopriv_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_action( 'wp_ajax_set_scholarships', array( $this, 'ajax_callback' ) );
+		add_filter( 'body_class', array( $this, 'body_class' ) );
 		add_filter( 'the_content', array( $this, 'add_scholarship_content' ), 999, 1 );
-
 	}
 
 	/**
@@ -1010,5 +1010,21 @@ class WSUWP_Scholarships {
 		}
 
 		return $content . $added_html;
+	}
+
+	/**
+	 * Add body classes for the site domain and path to help with targeting on multiple
+	 * sites using this theme.
+	 *
+	 * @param array $classes
+	 *
+	 * @return array
+	 */
+	public function body_class( $classes ) {
+		if ( is_singular( $this->content_type_slug ) ) {
+			$classes[] = 'tagged-blue';
+		}
+
+		return $classes;
 	}
 }

@@ -1,3 +1,9 @@
+.main-header sup a {
+	border-bottom: none;
+	color: #fff;
+	pointer-events: none;
+}
+
 hgroup.source,
 .article-footer,
 .main-footer {
