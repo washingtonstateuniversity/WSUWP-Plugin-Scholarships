@@ -985,7 +985,7 @@ class WSUWP_Scholarships {
 		}
 
 		if ( $org_name || $org || $org_site || $org_email || $org_phone ) {
-			$granter = ( $org_name && $org ) ? $org_name : 'the granter';
+			$granter = ( $org_name ) ? $org_name : 'the granter';
 			$added_html .= '<p><strong>About ' . esc_html( $granter ) . '</strong></p>';
 
 			if ( $org ) {
@@ -999,7 +999,7 @@ class WSUWP_Scholarships {
 			}
 
 			if ( $org_email ) {
-				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $org_email ) . '">' . esc_html( $org_email ) . '</li>';
+				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $org_email ) . '">' . esc_html( $org_email ) . '</a></li>';
 			}
 
 			if ( $org_phone ) {
