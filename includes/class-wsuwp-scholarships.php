@@ -657,7 +657,7 @@ class WSUWP_Scholarships {
 		$keys = get_registered_meta_keys( 'post' );
 
 		foreach ( $this->post_meta_keys as $key ) {
-			if ( isset( $_POST[ $key ] ) && isset( $keys[ $key ] ) && isset( $keys[ $key ][ 'sanitize_callback'] ) ) {
+			if ( isset( $_POST[ $key ] ) && '' !== $_POST[ $key ] && isset( $keys[ $key ] ) && isset( $keys[ $key ][ 'sanitize_callback'] ) ) {
 				update_post_meta( $post_id, $key, $_POST[ $key ] );
 			} else {
 				delete_post_meta( $post_id, $key );
