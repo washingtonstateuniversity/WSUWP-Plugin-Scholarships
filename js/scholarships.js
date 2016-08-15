@@ -15,8 +15,13 @@
 				nonce: scholarships.nonce,
 				age: $('#wsuwp-scholarship-age').val(),
 				gpa: $('#wsuwp-scholarship-gpa').val(),
-				enrolled: $('[name=wsuwp-scholarship-enrolled]:checked').val(),
-				resident: $('[name=wsuwp-scholarship-resident]:checked').val()
+				enrollment: $('#wsuwp-scholarship-enrolled').val(),
+				major: $('#wsuwp-scholarship-enrolled').val(),
+				year: $('#wsuwp-scholarship-school-year').val(),
+				citizenship: $('#wsuwp-scholarship-citizenship').val(),
+				gender: $('#wsuwp-scholarship-gender').val(),
+				state: $('#wsuwp-scholarship-state').val(),
+				ethnicity: $('#wsuwp-scholarship-ethnicity').val()
 			};
 
 		$.post(scholarships.ajax_url, data, function (response) {
