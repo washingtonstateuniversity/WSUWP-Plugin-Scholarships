@@ -91,34 +91,54 @@
 
 /* Filters */
 .wsuwp-scholarships-filters {
-	display: none;
+	display: flex;
+	flex-wrap: wrap;
 	padding-bottom: 1rem;
 }
 
-.wsuwp-scholarship-eligibility,
-.wsuwp-scholarship-eligibility li {
+.wsuwp-scholarships-filters div {
+	background-color: #d7dadb;
+	background-clip: content-box;
+	flex: 1;
+	max-width: 50%;
+	padding: 0 0.5rem 1rem;
+}
+
+.wsuwp-scholarships-filters p {
+	background-color: #fff;
+}
+
+.wsuwp-scholarships-filters ul {
+	box-sizing: border-box;
+	max-height: 200px;
+	overflow: scroll;
+	padding: 0;
+}
+
+.wsuwp-scholarships-filters li {
+	font-size: 0.9em;
 	list-style: none;
 	padding: 0;
 }
 
-.wsuwp-scholarship-eligibility input {
+.wsuwp-scholarships-filters input {
 	display: none;
 }
 
-.wsuwp-scholarship-eligibility label {
-	background: rgba(113,113,113,0.15);
+.wsuwp-scholarships-filters label {
 	display: block;
 	font-size: 1em;
 	font-weight: normal;
 	padding: 0.25rem 0.5rem;
 }
 
-.wsuwp-scholarship-eligibility label:hover {
-	background: rgba(113,113,113,0.5);
+.wsuwp-scholarships-filters label:hover {
+	background: #717171;
+	color: #fff;
 	cursor: pointer;
 }
 
-.wsuwp-scholarship-eligibility input:checked + label {
+.wsuwp-scholarships-filters input:checked + label {
 	background: #981e32;
 	color: #fff;
 }
@@ -135,8 +155,13 @@
 	flex: 1;
 }
 
-.wsuwp-scholarships-header {
-	font-weight: 700;
+.wsuwp-scholarships-header a {
+	border-bottom: none;
+	font-size: 0.9em;
+	font-weight: 400;
+	letter-spacing: 1px;
+	position: relative;
+	text-transform: uppercase;
 }
 
 .amount,
@@ -208,17 +233,37 @@
 	width: 2rem;
 }
 
-@media only screen and (max-width: 693px) {
-	.wsuwp-scholarships-form {
-		flex-wrap: wrap;
+@media screen and (max-width: 791px) {
+	.wsuwp-scholarships-filters div {
+		box-sizing: border-box;
+		flex: auto 0;
+		width: calc(100% / 3);
 	}
+}
 
-	.wsuwp-scholarships-form p {
-		padding-bottom: 1rem;
+@media only screen and (max-width: 530px) {
+	.wsuwp-scholarships-filters div {
 		width: 50%;
 	}
+}
 
-	.wsuwp-scholarships-form input[type=submit] {
-		margin-top: 0;
+@media only screen and (max-width: 425px) {
+	.wsuwp-scholarships article {
+		justify-content: flex-end;
+	}
+
+	.wsuwp-scholarships article header {
+		flex: 1 0 100%;
+	}
+
+	.wsuwp-scholarships-header div {
+		flex: 1 0 auto;
+		padding: 0 2rem 0 0;
+		width: auto;
+	}
+
+	.wsuwp-scholarships .amount,
+	.wsuwp-scholarships .deadline {
+		text-align: right;
 	}
 }

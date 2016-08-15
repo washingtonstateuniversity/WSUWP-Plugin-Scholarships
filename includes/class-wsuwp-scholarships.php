@@ -691,7 +691,7 @@ class WSUWP_Scholarships {
 	public function display_wsuwp_scholarships() {
 		ob_start();
 		?>
-		<p>Tell us about yourself using the form below to help us find scholarships you might be eligible for, or <a href="<?php echo esc_url( get_post_type_archive_link( $this->content_type_slug ) ); ?>">browse all scholarships &raquo;</a></p>
+		<p>Tell us about yourself using the form below to help us find scholarships you might be eligible for, or <a class="wsuwp-scholarships-all" href="#">browse all scholarships &raquo;</a></p>
 
 		<p>All fields are optional.</p>
 		<form class="wsuwp-scholarships-form">
@@ -812,26 +812,107 @@ class WSUWP_Scholarships {
 
 		<div class="wsuwp-scholarships-filters">
 
-			<?php
-			$eligibility = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug,
-			) );
-
-			if ( ! empty( $eligibility ) ) {
-			?>
-				<p>Only show me scholarships with the following requirements</p>
-				<ul class="wsuwp-scholarship-eligibility">
-				<?php foreach ( $eligibility as $criteria ) { ?>
+			<div class="wsuwp-scholarship-major">
+				<p>Only show scholarships with:</p>
+				<ul>
 					<li>
-						<input type="checkbox" value="<?php echo esc_attr( $criteria->slug ); ?>" id="<?php echo esc_attr( $criteria->slug ); ?>" />
-						<label for="<?php echo esc_attr( $criteria->slug ); ?>"><?php echo esc_html( $criteria->name ); ?></label>
+						<input type="checkbox" value=".meta-no-essay" id="no-essay" />
+						<label for="no-essay">No Essay requirement</label>
+					</li>
+					<li>
+						<input type="checkbox" value=".meta-no-enrollment" id="no-enrollment" />
+						<label for="no-enrollment">No Enrollment requirement</label>
+					</li>
+					<li>
+						<input type="checkbox" value=".meta-paper" id="paper" />
+						<label for="paper">Paper application form</label>
+					</li>
+					<li>
+						<input type="checkbox" value=".meta-online" id="online" />
+						<label for="online">Online application form</label>
+					</li>
+				</ul>
+			</div>
+
+			<?php if ( ! empty( $major ) ) { ?>
+				<div class="wsuwp-scholarship-major">
+					<p>Only show scholarships for the following majors:</p>
+					<ul>
+					<?php foreach ( $major as $major_option ) { ?>
+						<li>
+							<input type="checkbox" value=".major-<?php echo esc_attr( $major_option->slug ); ?>" id="<?php echo esc_attr( $major_option->slug ); ?>" />
+							<label for="<?php echo esc_attr( $major_option->slug ); ?>"><?php echo esc_html( $major_option->name ); ?></label>
+						</li>
+					<?php } ?>
+					</ul>
+				</div>
+			<?php } ?>
+
+			<div class="wsuwp-scholarship-school-year">
+				<p>Only show scholarships for:</p>
+				<ul>
+				<?php foreach ( $this->years as $year_option ) { ?>
+					<li>
+						<input type="checkbox" value=".meta-<?php echo esc_attr( $year_option ); ?>" id="<?php echo esc_attr( $year_option ); ?>" />
+						<label for="<?php echo esc_attr( $year_option ); ?>"><?php echo esc_html( $year_option ); ?></label>
 					</li>
 				<?php } ?>
 				</ul>
-			<?php
-			}
-			?>
+			</div>
 
+			<?php if ( ! empty( $citizenship ) ) { ?>
+				<div class="wsuwp-scholarship-citizenship">
+					<p>Only show scholarships for people who are:</p>
+					<ul>
+					<?php foreach ( $citizenship as $citizenship_option ) { ?>
+						<li>
+							<input type="checkbox" value=".citizenship-<?php echo esc_attr( $citizenship_option->slug ); ?>" id="<?php echo esc_attr( $citizenship_option->slug ); ?>" />
+							<label for="<?php echo esc_attr( $citizenship_option->slug ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></label>
+						</li>
+					<?php } ?>
+					</ul>
+				</div>
+			<?php } ?>
+
+			<?php if ( ! empty( $gender ) ) { ?>
+				<div class="wsuwp-scholarship-gender">
+					<p>Only show scholarships for people who identify as:</p>
+					<ul>
+					<?php foreach ( $gender as $gender_option ) { ?>
+						<li>
+							<input type="checkbox" value=".gender-identity-<?php echo esc_attr( $gender_option->slug ); ?>" id="<?php echo esc_attr( $gender_option->slug ); ?>" />
+							<label for="<?php echo esc_attr( $gender_option->slug ); ?>"><?php echo esc_html( $gender_option->name ); ?></label>
+						</li>
+					<?php } ?>
+					</ul>
+				</div>
+			<?php } ?>
+
+			<div class="wsuwp-scholarship-state">
+				<p>Only show scholarships for residents of:</p>
+				<ul>
+				<?php foreach ( $this->states as $state_option ) { ?>
+					<li>
+						<input type="checkbox" value=".meta-<?php echo esc_attr( $state_option ); ?>" id="<?php echo esc_attr( $state_option ); ?>" />
+						<label for="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></label>
+					</li>
+				<?php } ?>
+				</ul>
+			</div>
+
+			<?php if ( ! empty( $ethnicity ) ) { ?>
+				<div  class="wsuwp-scholarship-ethnicity">
+					<p>Only show scholarships for people who are:</p>
+					<ul>
+					<?php foreach ( $ethnicity as $ethnicity_option ) { ?>
+						<li>
+							<input type="checkbox" value=".ethnicity-<?php echo esc_attr( $ethnicity_option->slug ); ?>" id="<?php echo esc_attr( $ethnicity_option->slug ); ?>" />
+							<label for="<?php echo esc_attr( $ethnicity_option->slug ); ?>"><?php echo esc_html( $ethnicity_option->name ); ?></label>
+						</li>
+					<?php } ?>
+					</ul>
+				</div>
+			<?php } ?>
 		</div>
 
 		<div class="wsuwp-scholarships-header">
@@ -1096,6 +1177,12 @@ class WSUWP_Scholarships {
 				$scholarships_query->the_post();
 				$deadline = get_post_meta( get_the_ID(), 'scholarship_deadline', true );
 				$amount = get_post_meta( get_the_ID(), 'scholarship_amount', true );
+				$essay = get_post_meta( get_the_ID(), 'scholarship_essay', true );
+				$enrolled = get_post_meta( get_the_ID(), 'scholarship_enrolled', true );
+				$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
+				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
+				$year = get_post_meta( get_the_ID(), 'scholarship_year', true );
+				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
 
 				// Parse Amount value for javascript sorting.
 				$amount_pieces = explode( '-', $amount );
@@ -1105,11 +1192,39 @@ class WSUWP_Scholarships {
 				// Parse Deadline value for javascript sorting.
 				$deadline_data_value = ( $deadline ) ? str_replace( '-', '', $deadline ) : 0;
 
-				// Parse deadline for display
+				// Parse deadline for display.
 				$date = DateTime::createFromFormat( 'Y-m-d', $deadline );
 				$deadline_display = ( $date instanceof DateTime ) ? $date->format( 'm/d/Y' ) : $deadline;
+
+				// Additional classes for meta data.
+				$meta_classes = array();
+
+				if ( ! $essay ) {
+					$meta_classes[] = 'meta-no-essay';
+				}
+
+				if ( ! $enrolled ) {
+					$meta_classes[] = 'meta-no-enrollment';
+				}
+
+				if ( $paper ) {
+					$meta_classes[] = 'meta-paper';
+				}
+
+				if ( $online ) {
+					$meta_classes[] = 'meta-online';
+				}
+
+				if ( $year ) {
+					$meta_classes[] = 'meta-' . esc_attr( $year );
+				}
+
+				if ( $state ) {
+					$meta_classes[] = 'meta-' . esc_attr( $state );
+				}
 				?>
-				<article <?php post_class(); ?> data-scholarship="<?php echo esc_html( $i ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>" data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>">
+				<article <?php post_class( $meta_classes ); ?> data-scholarship="<?php echo esc_html( $i ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>" data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>">
+
 					<header>
 						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 					</header>
@@ -1120,11 +1235,13 @@ class WSUWP_Scholarships {
 						echo esc_html( $prepend . $amount );
 					}
 					?></div>
+
 					<div class="deadline"><?php
 					if ( $deadline ) {
 						echo esc_html( $deadline_display );
 					}
 					?></div>
+
 				</article>
 				<?php
 				$i++;
@@ -1132,7 +1249,7 @@ class WSUWP_Scholarships {
 
 			wp_reset_postdata();
 		} else {
-			echo '<p>Sorry, no scholarships were found. Please try changing your search or <a href="#">browsing all scholarships &raquo;</a></p>';
+			echo '<p>Sorry, no scholarships were found. Please try changing your search or <a class="wsuwp-scholarships-all" href="#">browsing all scholarships &raquo;</a></p>';
 		}
 
 		exit();
