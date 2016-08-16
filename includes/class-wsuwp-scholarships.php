@@ -12,11 +12,6 @@ class WSUWP_Scholarships {
 	public $content_type_slug = 'scholarship';
 
 	/**
-	 * @var string Slug for tracking the scholarship eligibility taxonomy.
-	 */
-	public $taxonomy_slug = 'eligibility';
-
-	/**
 	 * @var string Slug for tracking the Major taxonomy.
 	 */
 	public $taxonomy_slug_major = 'major';
