@@ -290,7 +290,7 @@ class WSUWP_Scholarships {
 			'add_new_item' => 'Add New Ethnicity',
 			'new_item_name' => 'New Ethnicity Name',
 			'search_items' => 'Search Ethnicities',
-			'popular_items' => 'Popular Gender Ethnicities',
+			'popular_items' => 'Popular Ethnicities',
 			'separate_items_with_commas' => 'Separate ethnicities with commas',
 			'add_or_remove_items' => 'Add or remove ethnicities',
 			'choose_from_most_used' => 'Choose from the most used ethnicities',
