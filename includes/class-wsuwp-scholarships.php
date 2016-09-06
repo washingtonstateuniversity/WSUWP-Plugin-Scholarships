@@ -422,6 +422,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Enqueue the styles for the scholarship information metabox.
+	 *
+	 * @param string $hook
 	 */
 	public function admin_enqueue_scripts( $hook ) {
 		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) && get_current_screen()->id !== $this->content_type_slug ) {
