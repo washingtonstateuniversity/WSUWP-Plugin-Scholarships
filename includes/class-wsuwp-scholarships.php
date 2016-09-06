@@ -599,14 +599,12 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * @param string $state The unsanitized Year in School value.
+	 * @param string $year The unsanitized Year in School value.
 	 *
 	 * @return string the sanitized Year in School value.
 	*/
 	public static function sanitize_year_in_school( $year ) {
-		if ( in_array( $year, $this->years, true ) ) {
-			$year = $year;
-		} else {
+		if ( false === in_array( $year, WSUWP_Scholarships()->years, true ) ) {
 			$year = false;
 		}
 
@@ -619,9 +617,7 @@ class WSUWP_Scholarships {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( in_array( $state, $this->states, true ) ) {
-			$state = $state;
-		} else {
+		if ( false === in_array( $state, WSUWP_Scholarships()->years, true ) ) {
 			$state = false;
 		}
 
