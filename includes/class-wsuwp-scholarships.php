@@ -935,8 +935,6 @@ class WSUWP_Scholarships {
 	public function ajax_callback() {
 		check_ajax_referer( 'wsuwp-scholarships', 'nonce' );
 
-		$scholarships = array();
-
 		// Initial scholarships query arguments.
 		$scholarships_query_args = array(
 			'orderby' => 'title',
