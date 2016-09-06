@@ -118,7 +118,7 @@ class WSUWP_Scholarships {
 	 */
 	var $years = array(
 		'Freshman',
-		'Sophmore',
+		'Sophomore',
 		'Junior',
 		'Senior',
 	);
