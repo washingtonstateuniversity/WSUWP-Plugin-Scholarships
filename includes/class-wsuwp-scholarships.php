@@ -1161,6 +1161,8 @@ class WSUWP_Scholarships {
 			}
 		}
 
+		$scholarships = array();
+
 		$scholarships_query = new WP_Query( $scholarships_query_args );
 
 		if ( $scholarships_query->have_posts() ) {
@@ -1214,35 +1216,39 @@ class WSUWP_Scholarships {
 				if ( $state ) {
 					$meta_classes[] = 'meta-' . esc_attr( $state );
 				}
-				?>
-				<article <?php post_class( $meta_classes ); ?> data-scholarship="<?php echo esc_html( $i ); ?>" data-amount="<?php echo esc_attr( $amount_data_value ); ?>" data-deadline="<?php echo esc_attr( $deadline_data_value ); ?>">
 
-					<header>
-						<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-					</header>
+				$classes = implode( get_post_class( $meta_classes ), ' ' );
 
-					<div class="amount"><?php
-					if ( $amount ) {
-						$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
-						echo esc_html( $prepend . $amount );
-					}
-					?></div>
+				$post = '<article class="' . esc_attr( $classes ) . '" data-scholarship="' . esc_attr( $i ) . '" data-amount="' . esc_attr( $amount_data_value ) . '" data-deadline="' . esc_attr( $deadline_data_value ) . '">';
+				$post .= '<header><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></header>';
+				$post .= '<div class="amount">';
 
-					<div class="deadline"><?php
-					if ( $deadline ) {
-						echo esc_html( $deadline_display );
-					}
-					?></div>
+				if ( $amount ) {
+					$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
+					$post .= esc_html( $prepend . $amount );
+				}
 
-				</article>
-				<?php
+				$post .= '</div>';
+				$post .= '<div class="deadline">';
+
+				if ( $deadline ) {
+					$post .= esc_html( $deadline_display );
+				}
+
+				$post .= '</div>';
+				$post .= '</article';
+
+				$scholarships[] = $post;
+
 				$i++;
 			}
 
 			wp_reset_postdata();
 		} else {
-			echo '<p>Sorry, no scholarships were found. Please try changing your search or <a class="wsuwp-scholarships-all" href="#">browsing all scholarships &raquo;</a></p>';
+			$scholarships = '<p>Sorry, no scholarships were found. Please try changing your search or <a class="wsuwp-scholarships-all" href="#">browsing all scholarships &raquo;</a></p>';
 		}
+
+		echo wp_json_encode( $scholarships );
 
 		exit();
 	}
