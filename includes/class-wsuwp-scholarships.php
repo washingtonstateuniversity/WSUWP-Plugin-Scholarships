@@ -1347,16 +1347,15 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * Add body classes for the site domain and path to help with targeting on multiple
-	 * sites using this theme.
+	 * Add 'section-scholarships' as a body class when individual scholarships are being displayed.
 	 *
-	 * @param array $classes
+	 * @param array $classes Current body classes.
 	 *
-	 * @return array
+	 * @return array Modified body classes.
 	 */
 	public function body_class( $classes ) {
 		if ( is_singular( $this->content_type_slug ) ) {
-			$classes[] = 'tagged-blue';
+			$classes[] = 'section-scholarships';
 		}
 
 		return $classes;
