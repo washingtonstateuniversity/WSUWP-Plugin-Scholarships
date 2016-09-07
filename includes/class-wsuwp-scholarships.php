@@ -118,7 +118,7 @@ class WSUWP_Scholarships {
 	 */
 	var $years = array(
 		'Freshman',
-		'Sophmore',
+		'Sophomore',
 		'Junior',
 		'Senior',
 	);
@@ -281,16 +281,16 @@ class WSUWP_Scholarships {
 		register_taxonomy( $this->taxonomy_slug_gender, $this->content_type_slug, $args );
 
 		$labels = array(
-			'name' => 'Ethicity',
-			'singular_name' => 'Ethicity',
-			'all_items' => 'All Ethicities',
-			'edit_item' => 'Edit Ethicity',
-			'view_item' => 'View Ethicity',
-			'update_item' => 'Update Ethicity',
-			'add_new_item' => 'Add New Ethicity',
-			'new_item_name' => 'New Ethicity Name',
-			'search_items' => 'Search Ethicities',
-			'popular_items' => 'Popular Gender Ethnicities',
+			'name' => 'Ethnicity',
+			'singular_name' => 'Ethnicity',
+			'all_items' => 'All Ethnicities',
+			'edit_item' => 'Edit Ethnicity',
+			'view_item' => 'View Ethnicity',
+			'update_item' => 'Update Ethnicity',
+			'add_new_item' => 'Add New Ethnicity',
+			'new_item_name' => 'New Ethnicity Name',
+			'search_items' => 'Search Ethnicities',
+			'popular_items' => 'Popular Ethnicities',
 			'separate_items_with_commas' => 'Separate ethnicities with commas',
 			'add_or_remove_items' => 'Add or remove ethnicities',
 			'choose_from_most_used' => 'Choose from the most used ethnicities',
@@ -422,6 +422,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Enqueue the styles for the scholarship information metabox.
+	 *
+	 * @param string $hook
 	 */
 	public function admin_enqueue_scripts( $hook ) {
 		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) && get_current_screen()->id !== $this->content_type_slug ) {
@@ -597,14 +599,12 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * @param string $state The unsanitized Year in School value.
+	 * @param string $year The unsanitized Year in School value.
 	 *
 	 * @return string the sanitized Year in School value.
 	*/
 	public static function sanitize_year_in_school( $year ) {
-		if ( in_array( $year, $this->years, true ) ) {
-			$year = $year;
-		} else {
+		if ( false === in_array( $year, WSUWP_Scholarships()->years, true ) ) {
 			$year = false;
 		}
 
@@ -617,9 +617,7 @@ class WSUWP_Scholarships {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( in_array( $state, $this->states, true ) ) {
-			$state = $state;
-		} else {
+		if ( false === in_array( $state, WSUWP_Scholarships()->years, true ) ) {
 			$state = false;
 		}
 
@@ -936,8 +934,6 @@ class WSUWP_Scholarships {
 	 */
 	public function ajax_callback() {
 		check_ajax_referer( 'wsuwp-scholarships', 'nonce' );
-
-		$scholarships = array();
 
 		// Initial scholarships query arguments.
 		$scholarships_query_args = array(
