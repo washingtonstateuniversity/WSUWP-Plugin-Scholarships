@@ -3,18 +3,23 @@
 	'use strict';
 
 	// Hide the show/hide options and column headings.
-	$('.wsuwp-scholarships-filters').hide();
-	$('.wsuwp-scholarships-header').hide();
+	var $scholarships_container = $('.wsuwp-scholarships'),
+		$scholarships = '',
+		$filters = $('.wsuwp-scholarships-filters'),
+		$header = $('.wsuwp-scholarships-header');
+
+	$filters.hide();
+	$header.hide();
 
 	// Retrieve and display a list of scholarships.
 	function scholarships_response(data) {
-		$('.wsuwp-scholarships-filters').hide().find('input:checkbox').removeAttr('checked');
+		$filters.hide().find('input:checkbox').removeAttr('checked');
 
-		$('.wsuwp-scholarships').html('<div class="wsuwp-scholarships-loading"></div>');
+		$scholarships_container.html('<div class="wsuwp-scholarships-loading"></div>');
 
 		$.post(scholarships.ajax_url, data, function (response) {
 			// Make all show/hide options available first, then hide them if they aren't needed.
-			$('.wsuwp-scholarships-filters div').show();
+			$filters.find('div').show();
 			$('.wsuwp-scholarship-major li').show();
 
 			if ($('#wsuwp-scholarship-enrolled').val()) {
@@ -46,11 +51,13 @@
 			}
 
 			// Display the show/hide options and column headings.
-			$('.wsuwp-scholarships-filters').show();
-			$('.wsuwp-scholarships-header').show();
+			$filters.show();
+			$header.show();
 
 			// Display the list of retrieved scholarships.
-			$('.wsuwp-scholarships').html(response);
+			$scholarships_container.html('').append(response);
+
+			$scholarships = $('.wsuwp-scholarships article');
 		});
 	}
 
@@ -92,22 +99,21 @@
 	});
 
 	// Sort scholarships.
-	$('.wsuwp-scholarships-header a').on('click', function (e) {
+	$header.on('click', 'a', function (e) {
 		e.preventDefault();
 
 		var link = $(this),
-			scholarships = $('.wsuwp-scholarships article'),
 			selected = link.html().toLowerCase();
 
 		// Add classes for showing which column the scholarships are being sorted by.
 		if (link.hasClass('sorted')) {
 			link.toggleClass('asc');
 		} else {
-			$('.wsuwp-scholarships-header a').removeClass('sorted asc');
+			$header.find('a').removeClass('sorted asc');
 			link.addClass('sorted');
 		}
 
-		scholarships.sort(function (a, b) {
+		$scholarships.sort(function (a, b) {
 			var an = a.getAttribute('data-' + selected),
 				bn = b.getAttribute('data-' + selected);
 
@@ -123,25 +129,25 @@
 			return bn - an;
 		});
 
-		scholarships.detach().appendTo($('.wsuwp-scholarships'));
+		$scholarships.detach().appendTo($scholarships_container);
 	});
 
 	// Show/hide scholarships.
-	$('.wsuwp-scholarships-filters').on('change', 'input:checkbox', function () {
-		var scholarships = $('.wsuwp-scholarships article'),
-			selected = [];
+	$filters.on('change', 'input:checkbox', function () {
+		var selected = [];
 
 		// Build the array of classes to look for.
-		$('.wsuwp-scholarships-filters input:checkbox:checked').each(function () {
+		$filters.find('input:checkbox:checked').each(function () {
 			selected.push($(this).val());
+
 		});
 
 		// Hide items that don't have the classes in the built array and show those that do.
 		if (selected.length > 0) {
-			scholarships.not(selected.join('')).hide('fast');
-			scholarships.filter(selected.join('')).show('fast');
+			$scholarships.not(selected.join('')).hide('fast');
+			$scholarships.filter(selected.join('')).show('fast');
 		} else {
-			scholarships.show('fast');
+			$scholarships.show('fast');
 		}
 	});
 }(jQuery));
