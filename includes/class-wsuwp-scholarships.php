@@ -157,6 +157,7 @@ class WSUWP_Scholarships {
 		add_action( 'wp_ajax_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_filter( 'body_class', array( $this, 'body_class' ) );
 		add_filter( 'the_content', array( $this, 'add_scholarship_content' ), 999, 1 );
+		add_filter( 'sfs_theme_header_elements', array( $this, 'header_elements' ) );
 	}
 
 	/**
@@ -1359,5 +1360,21 @@ class WSUWP_Scholarships {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Output custom page headers when viewing an individual scholarship.
+	 *
+	 * @param array $headers Current header element values.
+	 *
+	 * @return array Modified header element values.
+	 */
+	public function header_elements( $headers ) {
+		if ( is_singular( $this->content_type_slug ) ) {
+			$headers['page_sup'] = 'Scholarship';
+			$headers['page_sub'] = 'Details';
+		}
+
+		return $headers;
 	}
 }
