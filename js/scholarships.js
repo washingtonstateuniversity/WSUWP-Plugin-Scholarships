@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, scholarships) {
 
 	'use strict';
 
@@ -150,4 +150,4 @@
 			$scholarships.show('fast');
 		}
 	});
-}(jQuery));
+}(jQuery, scholarships));
