@@ -18,6 +18,8 @@
 		$scholarships_container.html('<div class="wsuwp-scholarships-loading"></div>');
 
 		$.post(scholarships.ajax_url, data, function (response) {
+			var response_data = $.parseJSON(response);
+
 			// Make all show/hide options available first, then hide them if they aren't needed.
 			$filters.find('div').show();
 			$('.wsuwp-scholarship-major li').show();
@@ -55,7 +57,7 @@
 			$header.show();
 
 			// Display the list of retrieved scholarships.
-			$scholarships_container.html('').append(response);
+			$scholarships_container.html('').append(response_data);
 
 			$scholarships = $('.wsuwp-scholarships article');
 		});
