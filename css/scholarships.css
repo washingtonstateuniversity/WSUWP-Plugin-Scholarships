@@ -99,9 +99,12 @@
 .wsuwp-scholarships-filters div {
 	background-color: #d7dadb;
 	background-clip: content-box;
+	display: flex;
 	flex: 1;
+	flex-direction: column;
+	max-height: 250px;
 	max-width: 50%;
-	padding: 0 0.5rem 1rem;
+	padding: 0 0.5rem;
 }
 
 .wsuwp-scholarships-filters p {
@@ -110,7 +113,7 @@
 
 .wsuwp-scholarships-filters ul {
 	box-sizing: border-box;
-	max-height: 200px;
+	flex: 1;
 	overflow: scroll;
 	padding: 0;
 }
@@ -147,12 +150,24 @@
 .wsuwp-scholarships-header,
 .wsuwp-scholarships article {
 	display: flex;
-	padding: 1rem 0;
+	flex-wrap: wrap;
 }
 
-.wsuwp-scholarships-header div:first-of-type,
-.wsuwp-scholarships article header {
+.name,
+.amount,
+.deadline {
+	box-sizing: border-box;
+	padding: 1rem;
+}
+
+.name {
 	flex: 1;
+}
+
+.amount,
+.deadline {
+	padding-left: 0;
+	width: 110px;
 }
 
 .wsuwp-scholarships-header a {
@@ -162,12 +177,6 @@
 	letter-spacing: 1px;
 	position: relative;
 	text-transform: uppercase;
-}
-
-.amount,
-.deadline {
-	padding-left: 0.5rem;
-	width: 110px;
 }
 
 .wsuwp-scholarships-header a:hover:after,
@@ -195,9 +204,8 @@
 	border-bottom-color: #c60c30;
 }
 
-.wsuwp-scholarships article {
-	border-top: 1px solid rgba(113,113,113,0.15);
-	flex-wrap: wrap;
+.wsuwp-scholarships article:nth-of-type(odd) {
+	background-color: #eff0f1;
 }
 
 /* Loading animation */
@@ -252,18 +260,20 @@
 		justify-content: flex-end;
 	}
 
-	.wsuwp-scholarships article header {
+	.name {
 		flex: 1 0 100%;
+		padding-bottom: 0.5rem;
 	}
 
-	.wsuwp-scholarships-header div {
-		flex: 1 0 auto;
-		padding: 0 2rem 0 0;
-		width: auto;
-	}
-
-	.wsuwp-scholarships .amount,
-	.wsuwp-scholarships .deadline {
+	.amount,
+	.deadline {
 		text-align: right;
+		width: 50%;
+		padding-top: 0.5rem;
+	}
+
+	.amount:empty,
+	.deadline:empty {
+		padding-bottom: 0;
 	}
 }

@@ -1220,7 +1220,7 @@ class WSUWP_Scholarships {
 				$classes = implode( get_post_class( $meta_classes ), ' ' );
 
 				$post = '<article class="' . esc_attr( $classes ) . '" data-scholarship="' . esc_attr( $i ) . '" data-amount="' . esc_attr( $amount_data_value ) . '" data-deadline="' . esc_attr( $deadline_data_value ) . '">';
-				$post .= '<header><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></header>';
+				$post .= '<header class="name"><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></header>';
 				$post .= '<div class="amount">';
 
 				if ( $amount ) {
