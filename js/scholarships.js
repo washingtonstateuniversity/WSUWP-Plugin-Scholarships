@@ -59,7 +59,7 @@
 			// Display the list of retrieved scholarships.
 			$scholarships_container.html('').append(response_data);
 
-			$scholarships = $('.wsuwp-scholarships article');
+			$scholarships = $scholarships_container.find('article');
 		});
 	}
 
@@ -100,56 +100,69 @@
 		scholarships_response(data);
 	});
 
-	// Sort scholarships.
-	$header.on('click', 'a', function (e) {
-		e.preventDefault();
+	function sorted_or_filtered(callback) {
 
-		var link = $(this),
-			selected = link.html().toLowerCase();
+		// Sort scholarships.
+		$header.on('click', 'a', function (e) {
+			e.preventDefault();
 
-		// Add classes for showing which column the scholarships are being sorted by.
-		if (link.hasClass('sorted')) {
-			link.toggleClass('asc');
-		} else {
-			$header.find('a').removeClass('sorted asc');
-			link.addClass('sorted');
-		}
+			var link = $(this),
+				selected = link.html().toLowerCase();
 
-		$scholarships.sort(function (a, b) {
-			var an = a.getAttribute('data-' + selected),
-				bn = b.getAttribute('data-' + selected);
-
-			if ('scholarship' === selected) {
-				an = b.getAttribute('data-' + selected);
-				bn = a.getAttribute('data-' + selected);
+			// Add classes for showing which column the scholarships are being sorted by.
+			if (link.hasClass('sorted')) {
+				link.toggleClass('asc');
+			} else {
+				$header.find('a').removeClass('sorted asc');
+				link.addClass('sorted');
 			}
 
-			if (link.hasClass('asc')) {
-				return an - bn;
+			$scholarships.sort(function (a, b) {
+				var an = a.getAttribute('data-' + selected),
+					bn = b.getAttribute('data-' + selected);
+
+				if ('scholarship' === selected) {
+					an = b.getAttribute('data-' + selected);
+					bn = a.getAttribute('data-' + selected);
+				}
+
+				if (link.hasClass('asc')) {
+					return an - bn;
+				}
+
+				return bn - an;
+			});
+
+			$scholarships.detach().appendTo($scholarships_container);
+
+			callback();
+		});
+
+		// Show/hide scholarships.
+		$filters.on('change', 'input:checkbox', function () {
+			var selected = [];
+
+			// Build the array of classes to look for.
+			$filters.find('input:checkbox:checked').each(function () {
+				selected.push($(this).val());
+
+			});
+
+			// Hide items that don't have the classes in the built array and show those that do.
+			if (selected.length > 0) {
+				$scholarships.not(selected.join('')).hide(0);
+				$scholarships.filter(selected.join('')).show(0);
+			} else {
+				$scholarships.show(0);
 			}
 
-			return bn - an;
+			callback();
 		});
+	}
 
-		$scholarships.detach().appendTo($scholarships_container);
-	});
-
-	// Show/hide scholarships.
-	$filters.on('change', 'input:checkbox', function () {
-		var selected = [];
-
-		// Build the array of classes to look for.
-		$filters.find('input:checkbox:checked').each(function () {
-			selected.push($(this).val());
-
-		});
-
-		// Hide items that don't have the classes in the built array and show those that do.
-		if (selected.length > 0) {
-			$scholarships.not(selected.join('')).hide('fast');
-			$scholarships.filter(selected.join('')).show('fast');
-		} else {
-			$scholarships.show('fast');
-		}
+	// Re-stripe after sorting or filtering.
+	sorted_or_filtered(function () {
+		$scholarships_container.find('article:visible:odd').css('background-color', '#fff');
+		$scholarships_container.find('article:visible:even').css('background-color', '#eff0f1');
 	});
 }(jQuery, scholarships));
