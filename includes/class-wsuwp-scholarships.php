@@ -156,7 +156,6 @@ class WSUWP_Scholarships {
 		add_action( 'wp_ajax_nopriv_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_action( 'wp_ajax_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_filter( 'body_class', array( $this, 'body_class' ) );
-		add_filter( 'the_content', array( $this, 'add_scholarship_content' ), 999, 1 );
 		add_filter( 'sfs_theme_header_elements', array( $this, 'header_elements' ) );
 	}
 
@@ -1251,105 +1250,6 @@ class WSUWP_Scholarships {
 		echo wp_json_encode( $scholarships );
 
 		exit();
-	}
-
-	/**
-	 * Add content areas for custom meta data when the Scholarship content type is being displayed.
-	 *
-	 * @param string $content Current object content.
-	 *
-	 * @return string Modified content.
-	 */
-	public function add_scholarship_content( $content ) {
-		if ( false === is_singular( $this->content_type_slug ) ) {
-			return $content;
-		}
-
-		$deadline = get_post_meta( get_the_ID(), 'scholarship_deadline', true );
-		$amount = get_post_meta( get_the_ID(), 'scholarship_amount', true );
-		$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
-		$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
-		$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
-		$email = get_post_meta( get_the_ID(), 'scholarship_email', true );
-		$phone = get_post_meta( get_the_ID(), 'scholarship_phone', true );
-		$address = get_post_meta( get_the_ID(), 'scholarship_address', true );
-		$org_name = get_post_meta( get_the_ID(), 'scholarship_org_name', true );
-		$org = get_post_meta( get_the_ID(), 'scholarship_org', true );
-		$org_site = get_post_meta( get_the_ID(), 'scholarship_org_site', true );
-		$org_email = get_post_meta( get_the_ID(), 'scholarship_org_email', true );
-		$org_phone = get_post_meta( get_the_ID(), 'scholarship_org_phone', true );
-		$added_html = '';
-
-		if ( $deadline ) {
-			$date = DateTime::createFromFormat( 'Y-m-d', $deadline );
-			$deadline_display = ( $date instanceof DateTime ) ? $date->format( 'm/d/Y' ) : $deadline;
-			$added_html .= '<p><strong>Deadline:</strong> ' . esc_html( $deadline_display ) . '</p>';
-		}
-
-		if ( $amount ) {
-			$amount_pieces = explode( '-', $amount );
-			$numeric_amount = str_replace( ',', '', $amount_pieces[0] );
-			$prepend = ( is_numeric( $numeric_amount ) ) ? '$' : '';
-			$added_html .= '<p><strong>Amount:</strong> ' . esc_html( $prepend . $amount ) . '</p>';
-		}
-
-		if ( $paper ) {
-			$added_html .= '<p><strong>Paper Application Available</strong></p>';
-		}
-
-		if ( $online ) {
-			$added_html .= '<p><strong>Online Application Available</strong></p>';
-		}
-
-		if ( $site || $email || $phone || $address ) {
-			$added_html .= '<p><strong>Contact information:</strong></p>';
-			$added_html .= '<ul>';
-
-			if ( $site ) {
-				$added_html .= '<li><a href="' . esc_url( $site ) . '">' . esc_html( $site ) . '</a></li>';
-			}
-
-			if ( $email ) {
-				$added_html .= '<li><a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></li>';
-			}
-
-			if ( $phone ) {
-				$added_html .= '<li>' . esc_html( $phone ) . '</li>';
-			}
-
-			if ( $address ) {
-				$added_html .= '<li>' . esc_html( $address ) . '</li>';
-			}
-
-			$added_html .= '</ul>';
-		}
-
-		if ( $org_name || $org || $org_site || $org_email || $org_phone ) {
-			$granter = ( $org_name ) ? $org_name : 'the granter';
-			$added_html .= '<p><strong>About ' . esc_html( $granter ) . '</strong></p>';
-
-			if ( $org ) {
-				$added_html .= wpautop( wp_kses_post( $org ) );
-			}
-
-			$added_html .= '<ul>';
-
-			if ( $org_site ) {
-				$added_html .= '<li><strong>Web:</strong> <a href="' . esc_url( $org_site ) . '">' . esc_html( $org_site ) . '</a></li>';
-			}
-
-			if ( $org_email ) {
-				$added_html .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $org_email ) . '">' . esc_html( $org_email ) . '</a></li>';
-			}
-
-			if ( $org_phone ) {
-				$added_html .= '<li><strong>Phone:</strong> ' . esc_html( $org_phone ) . '</li>';
-			}
-
-			$added_html .= '</ul>';
-		}
-
-		return $content . $added_html;
 	}
 
 	/**
