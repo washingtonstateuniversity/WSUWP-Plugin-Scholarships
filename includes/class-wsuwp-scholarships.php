@@ -1176,6 +1176,7 @@ class WSUWP_Scholarships {
 				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
 				$year = get_post_meta( get_the_ID(), 'scholarship_year', true );
 				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
+				$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
 
 				// Parse Amount value for javascript sorting.
 				$amount_pieces = explode( '-', $amount );
@@ -1235,6 +1236,15 @@ class WSUWP_Scholarships {
 				}
 
 				$post .= '</div>';
+
+				$post .= '<div class="apply">';
+
+				if ( $site ) {
+					$post .= '<a target="_blank" href="' . esc_url( $site ) . '">Apply</a>';
+				}
+
+				$post .= '</div>';
+
 				$post .= '</article';
 
 				$scholarships[] = $post;
