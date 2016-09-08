@@ -256,6 +256,7 @@
 }
 
 @media only screen and (max-width: 425px) {
+	.wsuwp-scholarships-header,
 	.wsuwp-scholarships article {
 		justify-content: flex-end;
 	}
@@ -275,5 +276,27 @@
 	.amount:empty,
 	.deadline:empty {
 		padding-bottom: 0;
+	}
+
+	.wsuwp-scholarships-header {
+		padding-bottom: 0.5rem;
+		position: relative;
+	}
+
+	.wsuwp-scholarships-header:before {
+		content: 'Sort by: ';
+		font-family: 'Open Sans', 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+		font-size: 0.9em;
+		font-weight: 400;
+		left: 1rem;
+		letter-spacing: 1px;
+		position: absolute;
+		text-transform: uppercase;
+	}
+
+	.wsuwp-scholarships-header div {
+		flex: 1 0 100%;
+		padding: 0 1rem 0.5rem;
+		text-align: right;
 	}
 }
