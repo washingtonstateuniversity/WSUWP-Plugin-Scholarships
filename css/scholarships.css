@@ -155,7 +155,8 @@
 
 .name,
 .amount,
-.deadline {
+.deadline,
+.apply {
 	box-sizing: border-box;
 	padding: 1rem;
 }
@@ -168,6 +169,19 @@
 .deadline {
 	padding-left: 0;
 	width: 110px;
+}
+
+.apply {
+	padding-left: 0;
+	width: 70px;
+}
+
+.apply a:after {
+	content: "\21AA";
+	font-family: Spine-Icons;
+	margin-left: 3px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .wsuwp-scholarships-header a {
@@ -249,13 +263,21 @@
 	}
 }
 
+@media only screen and (min-width: 531px) {
+	.wsuwp-scholarships-header .deadline {
+		margin-right: 70px;
+	}
+
+	.apply {
+		width: 70px;
+	}
+}
+
 @media only screen and (max-width: 530px) {
 	.wsuwp-scholarships-filters div {
 		width: 50%;
 	}
-}
 
-@media only screen and (max-width: 425px) {
 	.wsuwp-scholarships-header,
 	.wsuwp-scholarships article {
 		justify-content: flex-end;
@@ -263,18 +285,24 @@
 
 	.name {
 		flex: 1 0 100%;
-		padding-bottom: 0.5rem;
+		padding-bottom: 0.25rem;
 	}
 
 	.amount,
 	.deadline {
 		text-align: right;
 		width: 50%;
-		padding-top: 0.5rem;
+		padding-bottom: 0.25rem;
+		padding-top: 0.25rem;
+	}
+
+	.apply {
+		padding-top: 0.25rem;
 	}
 
 	.amount:empty,
-	.deadline:empty {
+	.deadline:empty,
+	.apply:empty {
 		padding-bottom: 0;
 	}
 
