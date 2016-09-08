@@ -1,11 +1,26 @@
-.main-header sup a {
-	border-bottom: none;
-	color: #fff;
-	pointer-events: none;
-}
-
-hgroup.source,
-.article-footer,
 .main-footer {
 	display: none;
+}
+
+.apply .cta-button {
+	min-width: 0;
+}
+
+.apply .cta-button:after {
+	content: "\21AA";
+	font-family: Spine-Icons;
+	margin-left: 3px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (min-width: 792px) {
+	.scholarship .article-header {
+		float: left;
+		width: calc(100% - 120px);
+	}
+
+	.apply {
+		float: right;
+	}
 }
