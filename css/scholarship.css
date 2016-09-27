@@ -2,6 +2,10 @@
 	display: none;
 }
 
+.apply {
+	padding-bottom: 0;
+}
+
 .apply .cta-button {
 	min-width: 0;
 }
@@ -14,10 +18,15 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.article-body {
+	clear: both;
+	padding-top: 1rem;
+}
+
 @media screen and (min-width: 792px) {
 	.scholarship .article-header {
 		float: left;
-		width: calc(100% - 120px);
+		width: calc(100% - 150px);
 	}
 
 	.apply {
