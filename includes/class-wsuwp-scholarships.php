@@ -151,12 +151,15 @@ class WSUWP_Scholarships {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10 );
 		add_action( 'add_meta_boxes_' . $this->content_type_slug, array( $this, 'add_meta_boxes' ), 10 );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 		add_shortcode( 'wsuwp_scholarships', array( $this, 'display_wsuwp_scholarships' ) );
 		add_action( 'wp_ajax_nopriv_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_action( 'wp_ajax_set_scholarships', array( $this, 'ajax_callback' ) );
 		add_filter( 'body_class', array( $this, 'body_class' ) );
 		add_filter( 'sfs_theme_header_elements', array( $this, 'header_elements' ) );
+		add_filter( 'nav_menu_css_class', array( $this, 'scholarship_menu_class' ), 10, 3 );
 	}
 
 	/**
@@ -656,6 +659,99 @@ class WSUWP_Scholarships {
 				delete_post_meta( $post_id, $key );
 			}
 		}
+	}
+
+	/**
+	 * Register settings for the Scholarship Settings admin page.
+	 */
+	public function register_settings() {
+		register_setting(
+			'settings',
+			'scholarships_settings'
+		);
+
+		add_settings_section(
+			'url',
+			null,
+			null,
+			'settings'
+		);
+
+		add_settings_field(
+			'search_page_url',
+			'Search Page URL',
+			array( $this, 'search_page_url_dropdown' ),
+			'settings',
+			'url',
+			array(
+				'label_for' => 'search_page_url',
+			)
+		);
+	}
+
+	/**
+	 * Output for the Search Page URL field.
+	 */
+	public function search_page_url_dropdown( $args ) {
+		$options = get_option( 'scholarships_settings' );
+		?>
+		<select name="scholarships_settings[<?php echo esc_attr( $args['label_for'] ); ?>]">
+			<option value="">- Select -</option>
+			<?php
+			$pages = get_pages();
+			foreach ( $pages as $page ) {
+				// selected stuff
+				?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $options['search_page_url'], $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
+			}
+			?>
+		</select>
+		<?php
+	}
+
+	/**
+	 * Create an admin page for Scholarship Settings.
+	 */
+	public function add_settings_page() {
+		add_submenu_page(
+			'edit.php?post_type=' . $this->content_type_slug,
+			'Scholarship Database Settings',
+			'Settings',
+			'manage_options',
+			'settings',
+			array( $this, 'settings_page' )
+		);
+	}
+
+	/**
+	 * Display the Scholarships Settings page.
+	 */
+	public function settings_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['settings-updated'] ) ) {
+			add_settings_error(
+				'scholarships_settings_messages',
+				'scholarships_settings_message',
+				'Settings Saved',
+				'updated'
+			);
+		}
+
+		settings_errors( 'scholarships_settings_messages' );
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<form method="post" action="options.php">
+				<?php
+					settings_fields( 'settings' );
+					do_settings_sections( 'settings' );
+					submit_button( 'Save Settings' );
+				?>
+			</form>
+		</div>
+		<?php
 	}
 
 	/**
@@ -1295,5 +1391,31 @@ class WSUWP_Scholarships {
 		}
 
 		return $headers;
+	}
+
+	/**
+	 * Add the 'active' class to the scholarship search menu item when viewing an individual scholarship.
+	 *
+	 * @param array    $classes Current list of nav menu classes.
+	 * @param WP_Post  $item    Post object representing the menu item.
+	 * @param stdClass $args    Arguments used to create the menu.
+	 *
+	 * @return array Modified list of nav menu classes.
+	 */
+	public function scholarship_menu_class( $classes, $item, $args ) {
+		$post = get_post();
+
+		$spine_menu = in_array( $args->menu, array( 'site', 'offsite' ), true );
+		$scholarship = is_singular( $this->content_type_slug );
+		$settings = get_option( 'scholarships_settings' );
+		$search_page_url = ( $settings ) ? get_permalink( $settings['search_page_url'] ) : '';
+
+		$scholarship_search_page = ( $search_page_url === $item->url );
+
+		if ( $spine_menu && $scholarship && $scholarship_search_page ) {
+			$classes[] = 'active';
+		}
+
+		return $classes;
 	}
 }
