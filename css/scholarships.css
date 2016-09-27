@@ -255,6 +255,34 @@
 	width: 2rem;
 }
 
+.wsuwp-scholarships-tools {
+	bottom: 0;
+	display: none;
+	left: 0;
+	margin: 0 auto;
+	max-width: 1584px;
+	position: fixed;
+	right: 0;
+}
+
+.back-to-top {
+	border: 20px solid transparent;
+	border-bottom-color: rgba(113,113,113,0.5);
+	border-top: 0;
+	bottom: -100%;
+	font-size: 0;
+	line-height: 0;
+	margin-bottom: 1rem;
+	position: absolute;
+	right: 2rem;
+	transition: border-bottom-color .4s;
+}
+
+.back-to-top:hover {
+	background: none;
+	border-bottom-color: #4f868e;
+}
+
 @media screen and (max-width: 791px) {
 	.wsuwp-scholarships-filters div {
 		box-sizing: border-box;

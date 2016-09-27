@@ -165,4 +165,24 @@
 		$scholarships_container.find('article:visible:odd').css('background-color', '#fff');
 		$scholarships_container.find('article:visible:even').css('background-color', '#eff0f1');
 	});
+
+	var $scholarships_container_top = $scholarships_container.offset().top,
+		$tools = $('.wsuwp-scholarships-tools');
+
+	// Toggle visibility of the back to top button based on scroll position.
+	$(document).on('scroll', function () {
+		if ($(window).scrollTop() >= $scholarships_container_top) {
+			$tools.show();
+		} else {
+			$tools.hide();
+		}
+	});
+
+	// Jump to the top of the page when the back to top button is clicked.
+	// (This is here only to prevent a hash from being appended to the URL.)
+	$('.back-to-top').on('click', function (e) {
+		e.preventDefault();
+
+		$('html, body').scrollTop(0);
+	});
 }(jQuery, scholarships));
