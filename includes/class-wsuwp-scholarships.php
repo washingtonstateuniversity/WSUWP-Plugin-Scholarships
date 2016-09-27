@@ -921,6 +921,10 @@ class WSUWP_Scholarships {
 		</div>
 
 		<div class="wsuwp-scholarships"></div>
+
+		<div class="wsuwp-scholarships-tools">
+			<a class="back-to-top" title="Back to top" href="#">Back to top</a>
+		</div>
 		<?php
 		$html = ob_get_contents();
 
