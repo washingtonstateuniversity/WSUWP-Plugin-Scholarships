@@ -678,13 +678,13 @@ class WSUWP_Scholarships {
 		);
 
 		add_settings_field(
-			'search_page_url',
-			'Search Page URL',
-			array( $this, 'search_page_url_dropdown' ),
+			'search_page',
+			'Search Page',
+			array( $this, 'search_page_dropdown' ),
 			'settings',
 			'url',
 			array(
-				'label_for' => 'search_page_url',
+				'label_for' => 'search_page',
 			)
 		);
 	}
@@ -692,8 +692,9 @@ class WSUWP_Scholarships {
 	/**
 	 * Output for the Search Page URL field.
 	 */
-	public function search_page_url_dropdown( $args ) {
+	public function search_page_dropdown( $args ) {
 		$options = get_option( 'scholarships_settings' );
+		$search_page_id = ( $options && isset( $options[ $args['label_for'] ] ) ) ? $options[ $args['label_for'] ] : 0;
 		?>
 		<select name="scholarships_settings[<?php echo esc_attr( $args['label_for'] ); ?>]">
 			<option value="">- Select -</option>
@@ -701,10 +702,11 @@ class WSUWP_Scholarships {
 			$pages = get_pages();
 			foreach ( $pages as $page ) {
 				// selected stuff
-				?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $options['search_page_url'], $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
+				?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $search_page_id, $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
 			}
 			?>
 		</select>
+		<p class="description">Select the page that is using the <code>[wsuwp_scholarships]</code> shortcode.</p>
 		<?php
 	}
 
@@ -1403,17 +1405,16 @@ class WSUWP_Scholarships {
 	 * @return array Modified list of nav menu classes.
 	 */
 	public function scholarship_menu_class( $classes, $item, $args ) {
-		$post = get_post();
-
 		$spine_menu = in_array( $args->menu, array( 'site', 'offsite' ), true );
-		$scholarship = is_singular( $this->content_type_slug );
-		$settings = get_option( 'scholarships_settings' );
-		$search_page_url = ( $settings ) ? get_permalink( $settings['search_page_url'] ) : '';
+		$options = get_option( 'scholarships_settings' );
 
-		$scholarship_search_page = ( $search_page_url === $item->url );
+		if ( $spine_menu && $options && isset( $options['search_page'] ) ) {
+			$scholarship = is_singular( $this->content_type_slug );
+			$scholarship_search_page = ( get_permalink( $options['search_page'] ) === $item->url );
 
-		if ( $spine_menu && $scholarship && $scholarship_search_page ) {
-			$classes[] = 'active';
+			if ( $scholarship && $scholarship_search_page ) {
+				$classes[] = 'active';
+			}
 		}
 
 		return $classes;
