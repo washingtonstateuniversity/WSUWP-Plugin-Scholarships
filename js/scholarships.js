@@ -11,56 +11,62 @@
 	$filters.hide();
 	$header.hide();
 
-	// Retrieve and display a list of scholarships.
+	// Retrieve a list of scholarships.
 	function scholarships_response(data) {
 		$filters.hide().find('input:checkbox').removeAttr('checked');
 
 		$scholarships_container.html('<div class="wsuwp-scholarships-loading"></div>');
 
 		$.post(scholarships.ajax_url, data, function (response) {
-			var response_data = $.parseJSON(response);
-
-			// Make all show/hide options available first, then hide them if they aren't needed.
-			$filters.find('div').show();
-			$('.wsuwp-scholarship-major li').show();
-
-			if ($('#wsuwp-scholarship-enrolled').val()) {
-				$('#no-enrollment').closest('li').hide();
-			}
-
-			if ($('#wsuwp-scholarship-major').val()) {
-				$('.wsuwp-scholarship-major').hide();
-			}
-
-			if ($('#wsuwp-scholarship-school-year').val()) {
-				$('.wsuwp-scholarship-school-year').hide();
-			}
-
-			if ($('#wsuwp-scholarship-citizenship').val()) {
-				$('.wsuwp-scholarship-citizenship').hide();
-			}
-
-			if ($('#wsuwp-scholarship-gender').val()) {
-				$('.wsuwp-scholarship-gender').hide();
-			}
-
-			if ($('#wsuwp-scholarship-state').val()) {
-				$('.wsuwp-scholarship-state').hide();
-			}
-
-			if ($('#wsuwp-scholarship-ethnicity').val()) {
-				$('.wsuwp-scholarship-ethnicity').hide();
-			}
-
-			// Display the show/hide options and column headings.
-			$filters.show();
-			$header.show();
-
-			// Display the list of retrieved scholarships.
-			$scholarships_container.html('').append(response_data);
-
-			$scholarships = $scholarships_container.find('article');
+			sessionStorage.setItem('results', response);
+			display_results(response);
 		});
+	}
+
+	// Display the retrieved scholarships.
+	function display_results(response) {
+		var response_data = $.parseJSON(response);
+
+		// Make all show/hide options available first, then hide them if they aren't needed.
+		$filters.find('div').show();
+		$('.wsuwp-scholarship-major li').show();
+
+		if ($('#wsuwp-scholarship-enrolled').val()) {
+			$('#no-enrollment').closest('li').hide();
+		}
+
+		if ($('#wsuwp-scholarship-major').val()) {
+			$('.wsuwp-scholarship-major').hide();
+		}
+
+		if ($('#wsuwp-scholarship-school-year').val()) {
+			$('.wsuwp-scholarship-school-year').hide();
+		}
+
+		if ($('#wsuwp-scholarship-citizenship').val()) {
+			$('.wsuwp-scholarship-citizenship').hide();
+		}
+
+		if ($('#wsuwp-scholarship-gender').val()) {
+			$('.wsuwp-scholarship-gender').hide();
+		}
+
+		if ($('#wsuwp-scholarship-state').val()) {
+			$('.wsuwp-scholarship-state').hide();
+		}
+
+		if ($('#wsuwp-scholarship-ethnicity').val()) {
+			$('.wsuwp-scholarship-ethnicity').hide();
+		}
+
+		// Display the show/hide options and column headings.
+		$filters.show();
+		$header.show();
+
+		// Display the list of retrieved scholarships.
+		$scholarships_container.html('').append(response_data);
+
+		$scholarships = $scholarships_container.find('article');
 	}
 
 	// Retrieve scholarships based on the input and selected values.
