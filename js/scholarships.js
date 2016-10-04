@@ -98,6 +98,9 @@
 		$('.wsuwp-scholarships-form').find('option:selected').removeAttr('selected');
 		$('.wsuwp-scholarships-form').find('input:not(:submit)').val('');
 
+		// Clear session storage.
+		sessionStorage.clear();
+
 		var data = {
 				action: 'set_scholarships',
 				nonce: scholarships.nonce
