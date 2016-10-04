@@ -191,4 +191,73 @@
 
 		$('html, body').scrollTop(0);
 	});
+
+	// Check if storage is available.
+	function storage_available(type) {
+		try {
+			var storage = window[type],
+				x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
+
+	// If storage is available and items are stored, display the form field values.
+	if (storage_available('sessionStorage')) {
+		var results = sessionStorage.getItem('results');
+
+		if (sessionStorage.length) {
+			display_values();
+		}
+
+		if (results) {
+			display_results(results);
+		}
+	}
+
+	// Store the form field values.
+	function store_values() {
+		sessionStorage.setItem('age', $('#wsuwp-scholarship-age').val());
+		sessionStorage.setItem('gpa', $('#wsuwp-scholarship-gpa').val());
+		sessionStorage.setItem('enrollment', $('#wsuwp-scholarship-enrolled').val());
+		sessionStorage.setItem('major', $('#wsuwp-scholarship-major').val());
+		sessionStorage.setItem('year', $('#wsuwp-scholarship-school-year').val());
+		sessionStorage.setItem('citizenship', $('#wsuwp-scholarship-citizenship').val());
+		sessionStorage.setItem('gender', $('#wsuwp-scholarship-gender').val());
+		sessionStorage.setItem('state', $('#wsuwp-scholarship-state').val());
+		sessionStorage.setItem('ethnicity', $('#wsuwp-scholarship-ethnicity').val());
+
+		display_values();
+	}
+
+	// Display the form field values.
+	function display_values() {
+		var age = sessionStorage.getItem('age'),
+			gpa = sessionStorage.getItem('gpa'),
+			enrollment = sessionStorage.getItem('enrollment'),
+			major = sessionStorage.getItem('major'),
+			year = sessionStorage.getItem('year'),
+			citizenship = sessionStorage.getItem('citizenship'),
+			gender = sessionStorage.getItem('gender'),
+			state = sessionStorage.getItem('state'),
+			ethnicity = sessionStorage.getItem('ethnicity');
+
+		$('#wsuwp-scholarship-age').val(age);
+		$('#wsuwp-scholarship-gpa').val(gpa);
+		$('#wsuwp-scholarship-enrolled').val(enrollment);
+		$('#wsuwp-scholarship-major').val(major);
+		$('#wsuwp-scholarship-school-year').val(year);
+		$('#wsuwp-scholarship-citizenship').val(citizenship);
+		$('#wsuwp-scholarship-gender').val(gender);
+		$('#wsuwp-scholarship-state').val(state);
+		$('#wsuwp-scholarship-ethnicity').val(ethnicity);
+	}
+
+	// Store field values when the form is submitted.
+	$('.wsuwp-scholarships-form').on('submit', function() {
+		store_values();
+	})
 }(jQuery, scholarships));
