@@ -214,7 +214,8 @@
 
 	// If storage is available and items are stored, display the form field values.
 	if (storage_available('sessionStorage')) {
-		var results = sessionStorage.getItem('results');
+		var results = sessionStorage.getItem('results'),
+			filters = JSON.parse(sessionStorage.getItem('filters'));;
 
 		if (sessionStorage.length) {
 			display_values();
@@ -222,6 +223,12 @@
 
 		if (results) {
 			display_results(results);
+		}
+
+		if (filters) {
+			$.each(filters, function () {
+				$('#' + this).trigger('click');
+			});
 		}
 	}
 
