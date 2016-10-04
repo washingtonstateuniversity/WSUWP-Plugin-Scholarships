@@ -149,13 +149,17 @@
 
 		// Show/hide scholarships.
 		$filters.on('change', 'input:checkbox', function () {
-			var selected = [];
+			var selected = [],
+				selected_ids = [];
 
 			// Build the array of classes to look for.
 			$filters.find('input:checkbox:checked').each(function () {
+				selected_ids.push($(this).attr('id'));
 				selected.push($(this).val());
-
 			});
+
+			// Store ids of checked boxes.
+			sessionStorage.setItem('filters', JSON.stringify(selected_ids));
 
 			// Hide items that don't have the classes in the built array and show those that do.
 			if (selected.length > 0) {
