@@ -273,5 +273,5 @@
 	// Store field values when the form is submitted.
 	$('.wsuwp-scholarships-form').on('submit', function() {
 		store_values();
-	})
+	});
 }(jQuery, scholarships));
