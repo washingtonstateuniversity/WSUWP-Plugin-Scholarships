@@ -217,7 +217,7 @@
 		var results = sessionStorage.getItem('results'),
 			filters = JSON.parse(sessionStorage.getItem('filters'));;
 
-		if (sessionStorage.length) {
+		if (sessionStorage.getItem('form_data')) {
 			display_values();
 		}
 
@@ -234,40 +234,36 @@
 
 	// Store the form field values.
 	function store_values() {
-		sessionStorage.setItem('age', $('#wsuwp-scholarship-age').val());
-		sessionStorage.setItem('gpa', $('#wsuwp-scholarship-gpa').val());
-		sessionStorage.setItem('enrollment', $('#wsuwp-scholarship-enrolled').val());
-		sessionStorage.setItem('major', $('#wsuwp-scholarship-major').val());
-		sessionStorage.setItem('year', $('#wsuwp-scholarship-school-year').val());
-		sessionStorage.setItem('citizenship', $('#wsuwp-scholarship-citizenship').val());
-		sessionStorage.setItem('gender', $('#wsuwp-scholarship-gender').val());
-		sessionStorage.setItem('state', $('#wsuwp-scholarship-state').val());
-		sessionStorage.setItem('ethnicity', $('#wsuwp-scholarship-ethnicity').val());
+		var form_data = {
+			age: $('#wsuwp-scholarship-age').val(),
+			gpa: $('#wsuwp-scholarship-gpa').val(),
+			enrollment: $('#wsuwp-scholarship-enrolled').val(),
+			major: $('#wsuwp-scholarship-major').val(),
+			year: $('#wsuwp-scholarship-school-year').val(),
+			citizenship: $('#wsuwp-scholarship-citizenship').val(),
+			gender: $('#wsuwp-scholarship-gender').val(),
+			state: $('#wsuwp-scholarship-state').val(),
+			ethnicity: $('#wsuwp-scholarship-ethnicity').val()
+		};
+
+		sessionStorage.setItem('form_data', JSON.stringify(form_data));
 
 		display_values();
 	}
 
 	// Display the form field values.
 	function display_values() {
-		var age = sessionStorage.getItem('age'),
-			gpa = sessionStorage.getItem('gpa'),
-			enrollment = sessionStorage.getItem('enrollment'),
-			major = sessionStorage.getItem('major'),
-			year = sessionStorage.getItem('year'),
-			citizenship = sessionStorage.getItem('citizenship'),
-			gender = sessionStorage.getItem('gender'),
-			state = sessionStorage.getItem('state'),
-			ethnicity = sessionStorage.getItem('ethnicity');
+		var form_data = $.parseJSON(sessionStorage.getItem('form_data'));
 
-		$('#wsuwp-scholarship-age').val(age);
-		$('#wsuwp-scholarship-gpa').val(gpa);
-		$('#wsuwp-scholarship-enrolled').val(enrollment);
-		$('#wsuwp-scholarship-major').val(major);
-		$('#wsuwp-scholarship-school-year').val(year);
-		$('#wsuwp-scholarship-citizenship').val(citizenship);
-		$('#wsuwp-scholarship-gender').val(gender);
-		$('#wsuwp-scholarship-state').val(state);
-		$('#wsuwp-scholarship-ethnicity').val(ethnicity);
+		$('#wsuwp-scholarship-age').val(form_data.age);
+		$('#wsuwp-scholarship-gpa').val(form_data.gpa);
+		$('#wsuwp-scholarship-enrolled').val(form_data.enrollment);
+		$('#wsuwp-scholarship-major').val(form_data.major);
+		$('#wsuwp-scholarship-school-year').val(form_data.year);
+		$('#wsuwp-scholarship-citizenship').val(form_data.citizenship);
+		$('#wsuwp-scholarship-gender').val(form_data.gender);
+		$('#wsuwp-scholarship-state').val(form_data.state);
+		$('#wsuwp-scholarship-ethnicity').val(form_data.ethnicity);
 	}
 
 	// Store field values when the form is submitted.
