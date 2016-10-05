@@ -99,7 +99,9 @@
 		$('.wsuwp-scholarships-form').find('input:not(:submit)').val('');
 
 		// Clear session storage.
-		sessionStorage.clear();
+		sessionStorage.removeItem('form_data');
+		sessionStorage.removeItem('results');
+		sessionStorage.removeItem('filters');
 
 		var data = {
 				action: 'set_scholarships',
