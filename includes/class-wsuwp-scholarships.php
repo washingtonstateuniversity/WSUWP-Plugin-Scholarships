@@ -42,7 +42,7 @@ class WSUWP_Scholarships {
 		'scholarship_amount',
 		'scholarship_essay',
 		'scholarship_enrolled',
-		'scholarship_year',
+		'scholarship_grade',
 		'scholarship_state',
 		'scholarship_app_paper',
 		'scholarship_app_online',
@@ -61,66 +61,24 @@ class WSUWP_Scholarships {
 	 * @var array A list of states for the State of Residence field.
 	 */
 	var $states = array(
-		'Alabama',
-		'Alaska',
-		'Arizona',
-		'Arkansas',
-		'California',
-		'Colorado',
-		'Connecticut',
-		'Delaware',
-		'Florida',
-		'Georgia',
-		'Hawaii',
-		'Idaho',
-		'Illinois',
-		'Indiana',
-		'Iowa',
-		'Kansas',
-		'Kentucky',
-		'Louisiana',
-		'Maine',
-		'Maryland',
-		'Massachusetts',
-		'Michigan',
-		'Minnesota',
-		'Mississippi',
-		'Missouri',
-		'Montana',
-		'Nebraska',
-		'Nevada',
-		'New Hampshire',
-		'New Jersey',
-		'New Mexico',
-		'New York',
-		'North Carolina',
-		'North Dakota',
-		'Ohio',
-		'Oklahoma',
-		'Oregon',
-		'Pennsylvania',
-		'Rhode Island',
-		'South Carolina',
-		'South Dakota',
-		'Tennessee',
-		'Texas',
-		'Utah',
-		'Vermont',
-		'Virginia',
 		'Washington',
-		'West Virginia',
-		'Wisconsin',
-		'Wyoming',
+		'Non-Washington',
 	);
 
 	/**
-	 * @var array A list of classes for the Years in School field.
+	 * @var array A list of classes for the Grade Level field.
 	 */
-	var $years = array(
-		'Freshman',
-		'Sophomore',
-		'Junior',
-		'Senior',
+	var $grade_levels = array(
+		'High School Freshman',
+		'High School Sophomore',
+		'High School Junior',
+		'High School Senior',
+		'Incoming College Freshman',
+		'College Freshman',
+		'College Sophomore',
+		'College Junior',
+		'College Senior',
+		'Graduate',
 	);
 
 	/**
@@ -357,10 +315,10 @@ class WSUWP_Scholarships {
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
 		register_meta( 'post', 'scholarship_enrolled', $args );
 
-		$args['description'] = "Applicant's year in school";
+		$args['description'] = "Applicant's grade level";
 		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_year_in_school';
-		register_meta( 'post', 'scholarship_year', $args );
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_grade_level';
+		register_meta( 'post', 'scholarship_grade', $args );
 
 		$args['description'] = "Applicant's state of residence";
 		$args['type'] = 'string';
@@ -472,7 +430,7 @@ class WSUWP_Scholarships {
 		$amount = get_post_meta( $post->ID, 'scholarship_amount', true );
 		$essay = get_post_meta( $post->ID, 'scholarship_essay', true );
 		$enrolled = get_post_meta( $post->ID, 'scholarship_enrolled', true );
-		$year = get_post_meta( $post->ID, 'scholarship_year', true );
+		$grade = get_post_meta( $post->ID, 'scholarship_grade', true );
 		$state = get_post_meta( $post->ID, 'scholarship_state', true );
 		$paper = get_post_meta( $post->ID, 'scholarship_app_paper', true );
 		$online = get_post_meta( $post->ID, 'scholarship_app_online', true );
@@ -511,10 +469,10 @@ class WSUWP_Scholarships {
 
 				<label><input value="1" type="checkbox" name="scholarship_enrolled"<?php checked( $enrolled, 1 ); ?> /> Must be currently enrolled</label><br />
 
-				<select name="scholarship_year">
-					<option value="">Year in School</option>
-					<?php foreach ( $this->years as $year_option ) { ?>
-						<option value="<?php echo esc_attr( $year_option ); ?>"<?php selected( $year, $year_option ); ?>><?php echo esc_html( $year_option ); ?></option>
+				<select name="scholarship_grade">
+					<option value="">Current Grade Level</option>
+					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
+						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
 					<?php } ?>
 				</select><br />
 
@@ -602,16 +560,16 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * @param string $year The unsanitized Year in School value.
+	 * @param string $grade The unsanitized Grade Level value.
 	 *
-	 * @return string the sanitized Year in School value.
+	 * @return string the sanitized Grade Level value.
 	*/
-	public static function sanitize_year_in_school( $year ) {
-		if ( false === in_array( $year, WSUWP_Scholarships()->years, true ) ) {
-			$year = false;
+	public static function sanitize_grade_level( $grade ) {
+		if ( false === in_array( $grade, WSUWP_Scholarships()->grade_levels, true ) ) {
+			$grade = false;
 		}
 
-		return $year;
+		return $grade;
 	}
 
 	/**
@@ -620,7 +578,7 @@ class WSUWP_Scholarships {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( false === in_array( $state, WSUWP_Scholarships()->years, true ) ) {
+		if ( false === in_array( $state, WSUWP_Scholarships()->states, true ) ) {
 			$state = false;
 		}
 
@@ -787,46 +745,16 @@ class WSUWP_Scholarships {
 		<p>All fields are optional.</p>
 		<form class="wsuwp-scholarships-form">
 
-			<input type="number" id="wsuwp-scholarship-age" placeholder="Age" value="" />
-
-			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="" maxlength="4" />
-
 			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-enrolled">
-					<option value="">- Enrollment Status -</option>
-					<option value="enrolled">Currently Enrolled</option>
-					<option value="not-enrolled">Not Enrolled</option>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-major">
-					<option value="">- Major -</option>
-					<?php
-						$major = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_major,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $major ) ) {
-							foreach ( $major as $major_option ) {
-								?>
-								<option value="<?php echo esc_attr( $major_option->term_id ); ?>"><?php echo esc_html( $major_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-school-year">
-					<option value="">- Year in school -</option>
-					<?php foreach ( $this->years as $year_option ) { ?>
-						<option value="<?php echo esc_attr( $year_option ); ?>"><?php echo esc_html( $year_option ); ?></option>
+				<select id="wsuwp-scholarship-grade-level">
+					<option value="">- Current grade level -</option>
+					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
+						<option value="<?php echo esc_attr( $grade_option ); ?>"><?php echo esc_html( $grade_option ); ?></option>
 					<?php } ?>
 				</select>
 			</div>
+
+			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="" maxlength="4" />
 
 			<div class="wsuwp-scholarship-select">
 				<select id="wsuwp-scholarship-citizenship">
@@ -849,51 +777,11 @@ class WSUWP_Scholarships {
 			</div>
 
 			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-gender">
-					<option value="">- Gender Identity -</option>
-					<?php
-						$gender = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_gender,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $gender ) ) {
-							foreach ( $gender as $gender_option ) {
-								?>
-								<option value="<?php echo esc_attr( $gender_option->term_id ); ?>"><?php echo esc_html( $gender_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
 				<select id="wsuwp-scholarship-state">
-					<option value="">State of Residence</option>
+					<option value="">- Residency -</option>
 					<?php foreach ( $this->states as $state_option ) { ?>
 						<option value="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></option>
 					<?php } ?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-ethnicity">
-					<option value="">- Ethnicity -</option>
-					<?php
-						$ethnicity = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_ethnicity,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $ethnicity ) ) {
-							foreach ( $ethnicity as $ethnicity_option ) {
-								?>
-								<option value="<?php echo esc_attr( $ethnicity_option->term_id ); ?>"><?php echo esc_html( $ethnicity_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
 				</select>
 			</div>
 
@@ -903,16 +791,16 @@ class WSUWP_Scholarships {
 
 		<div class="wsuwp-scholarships-filters">
 
-			<div class="wsuwp-scholarship-major">
+			<div class="wsuwp-scholarship-misc">
 				<p>Only show scholarships with:</p>
 				<ul>
 					<li>
 						<input type="checkbox" value=".meta-no-essay" id="no-essay" />
-						<label for="no-essay">No Essay requirement</label>
+						<label for="no-essay">No essay requirement</label>
 					</li>
 					<li>
 						<input type="checkbox" value=".meta-no-enrollment" id="no-enrollment" />
-						<label for="no-enrollment">No Enrollment requirement</label>
+						<label for="no-enrollment">No enrollment requirement</label>
 					</li>
 					<li>
 						<input type="checkbox" value=".meta-paper" id="paper" />
@@ -925,7 +813,14 @@ class WSUWP_Scholarships {
 				</ul>
 			</div>
 
-			<?php if ( ! empty( $major ) ) { ?>
+			<?php
+			$major = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_major,
+				'hide_empty' => 0,
+			) );
+
+			if ( ! empty( $major ) ) {
+			?>
 				<div class="wsuwp-scholarship-major">
 					<p>Only show scholarships for the following majors:</p>
 					<ul>
@@ -939,33 +834,14 @@ class WSUWP_Scholarships {
 				</div>
 			<?php } ?>
 
-			<div class="wsuwp-scholarship-school-year">
-				<p>Only show scholarships for:</p>
-				<ul>
-				<?php foreach ( $this->years as $year_option ) { ?>
-					<li>
-						<input type="checkbox" value=".meta-<?php echo esc_attr( $year_option ); ?>" id="<?php echo esc_attr( $year_option ); ?>" />
-						<label for="<?php echo esc_attr( $year_option ); ?>"><?php echo esc_html( $year_option ); ?></label>
-					</li>
-				<?php } ?>
-				</ul>
-			</div>
+			<?php
+			$gender = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_gender,
+				'hide_empty' => 0,
+			) );
 
-			<?php if ( ! empty( $citizenship ) ) { ?>
-				<div class="wsuwp-scholarship-citizenship">
-					<p>Only show scholarships for people who are:</p>
-					<ul>
-					<?php foreach ( $citizenship as $citizenship_option ) { ?>
-						<li>
-							<input type="checkbox" value=".citizenship-<?php echo esc_attr( $citizenship_option->slug ); ?>" id="<?php echo esc_attr( $citizenship_option->slug ); ?>" />
-							<label for="<?php echo esc_attr( $citizenship_option->slug ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></label>
-						</li>
-					<?php } ?>
-					</ul>
-				</div>
-			<?php } ?>
-
-			<?php if ( ! empty( $gender ) ) { ?>
+			if ( ! empty( $gender ) ) {
+			?>
 				<div class="wsuwp-scholarship-gender">
 					<p>Only show scholarships for people who identify as:</p>
 					<ul>
@@ -979,19 +855,14 @@ class WSUWP_Scholarships {
 				</div>
 			<?php } ?>
 
-			<div class="wsuwp-scholarship-state">
-				<p>Only show scholarships for residents of:</p>
-				<ul>
-				<?php foreach ( $this->states as $state_option ) { ?>
-					<li>
-						<input type="checkbox" value=".meta-<?php echo esc_attr( $state_option ); ?>" id="<?php echo esc_attr( $state_option ); ?>" />
-						<label for="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></label>
-					</li>
-				<?php } ?>
-				</ul>
-			</div>
+			<?php
+			$ethnicity = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_ethnicity,
+				'hide_empty' => 0,
+			) );
 
-			<?php if ( ! empty( $ethnicity ) ) { ?>
+			if ( ! empty( $ethnicity ) ) {
+			?>
 				<div  class="wsuwp-scholarship-ethnicity">
 					<p>Only show scholarships for people who are:</p>
 					<ul>
@@ -1060,34 +931,21 @@ class WSUWP_Scholarships {
 			),
 		);
 
-		// Age meta parameters
-		if ( $_POST['age'] && is_numeric( $_POST['age'] ) ) {
+		// Grade Level meta parameters.
+		if ( $_POST['grade'] && in_array( $_POST['grade'], $this->grade_levels, true ) ) {
+			$grades = $this->grade_levels;
+			unset( $grades[ $_POST['grade'] ] );
+
 			$scholarships_query_args['meta_query'][] = array(
+				'relation' => 'OR',
 				array(
-					'relation' => 'OR',
-					array(
-						'key' => 'scholarship_age_min',
-						'value' => sanitize_text_field( $_POST['age'] ),
-						'type' => 'numeric',
-						'compare' => '<=',
-					),
-					array(
-						'key' => 'scholarship_age_min',
-						'compare' => 'NOT EXISTS',
-					),
+					'key' => 'scholarship_grade',
+					'value' => $grades,
+					'compare' => 'NOT IN',
 				),
 				array(
-					'relation' => 'OR',
-					array(
-						'key' => 'scholarship_age_max',
-						'value' => sanitize_text_field( $_POST['age'] ),
-						'type' => 'numeric',
-						'compare' => '>=',
-					),
-					array(
-						'key' => 'scholarship_age_max',
-						'compare' => 'NOT EXISTS',
-					),
+					'key' => 'scholarship_grade',
+					'compare' => 'NOT EXISTS',
 				),
 			);
 		}
@@ -1104,41 +962,6 @@ class WSUWP_Scholarships {
 				),
 				array(
 					'key' => 'scholarship_gpa',
-					'compare' => 'NOT EXISTS',
-				),
-			);
-		}
-
-		// Enrollment status meta parameters.
-		if ( $_POST['enrollment'] && 'not-enrolled' === $_POST['enrollment'] ) {
-			$scholarships_query_args['meta_query'][] = array(
-				'relation' => 'OR',
-				array(
-					'key' => 'scholarship_enrolled',
-					'value' => '1',
-					'compare' => '!=',
-				),
-				array(
-					'key' => 'scholarship_enrolled',
-					'compare' => 'NOT EXISTS',
-				),
-			);
-		}
-
-		// Year in School meta parameters.
-		if ( $_POST['year'] && in_array( $_POST['year'], $this->years, true ) ) {
-			$years = $this->years;
-			unset( $years[ $_POST['year'] ] );
-
-			$scholarships_query_args['meta_query'][] = array(
-				'relation' => 'OR',
-				array(
-					'key' => 'scholarship_year',
-					'value' => $years,
-					'compare' => 'NOT IN',
-				),
-				array(
-					'key' => 'scholarship_year',
 					'compare' => 'NOT EXISTS',
 				),
 			);
@@ -1161,30 +984,6 @@ class WSUWP_Scholarships {
 					'compare' => 'NOT EXISTS',
 				),
 			);
-		}
-
-		// Major taxonomy parameters.
-		if ( $_POST['major'] ) {
-			$majors = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_major,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['major'], $majors, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					array(
-						'taxonomy' => $this->taxonomy_slug_major,
-						'field' => 'term_id',
-						'terms' => $_POST['major'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_major,
-						'field' => 'term_id',
-						'terms' => array_diff( $majors, array( $_POST['major'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
 		}
 
 		// Citizenship taxonomy parameters.
@@ -1212,56 +1011,6 @@ class WSUWP_Scholarships {
 			}
 		}
 
-		// Gender taxonomy parameters.
-		if ( $_POST['gender'] ) {
-			$gender = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_gender,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['gender'], $gender, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					'relation' => 'OR',
-					array(
-						'taxonomy' => $this->taxonomy_slug_gender,
-						'field' => 'term_id',
-						'terms' => $_POST['gender'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_gender,
-						'field' => 'term_id',
-						'terms' => array_diff( $gender, array( $_POST['gender'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
-		}
-
-		// Ethnicity taxonomy parameters.
-		if ( $_POST['ethnicity']  ) {
-			$ethnicity = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_ethnicity,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['ethnicity'], $ethnicity, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					'relation' => 'OR',
-					array(
-						'taxonomy' => $this->taxonomy_slug_ethnicity,
-						'field' => 'term_id',
-						'terms' => $_POST['ethnicity'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_ethnicity,
-						'field' => 'term_id',
-						'terms' => array_diff( $ethnicity, array( $_POST['ethnicity'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
-		}
-
 		$scholarships = array();
 
 		$scholarships_query = new WP_Query( $scholarships_query_args );
@@ -1276,7 +1025,7 @@ class WSUWP_Scholarships {
 				$enrolled = get_post_meta( get_the_ID(), 'scholarship_enrolled', true );
 				$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
 				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
-				$year = get_post_meta( get_the_ID(), 'scholarship_year', true );
+				$grade = get_post_meta( get_the_ID(), 'scholarship_grade', true );
 				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
 				$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
 
@@ -1311,8 +1060,8 @@ class WSUWP_Scholarships {
 					$meta_classes[] = 'meta-online';
 				}
 
-				if ( $year ) {
-					$meta_classes[] = 'meta-' . esc_attr( $year );
+				if ( $grade ) {
+					$meta_classes[] = 'meta-' . esc_attr( $grade );
 				}
 
 				if ( $state ) {
