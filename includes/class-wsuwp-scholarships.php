@@ -66,13 +66,19 @@ class WSUWP_Scholarships {
 	);
 
 	/**
-	 * @var array A list of classes for the Years in School field.
+	 * @var array A list of classes for the Grade Level field.
 	 */
-	var $years = array(
-		'Freshman',
-		'Sophomore',
-		'Junior',
-		'Senior',
+	var $grade_levels = array(
+		'High School Freshman',
+		'High School Sophomore',
+		'High School Junior',
+		'High School Senior',
+		'Incoming College Freshman',
+		'College Freshman',
+		'College Sophomore',
+		'College Junior',
+		'College Senior',
+		'Graduate',
 	);
 
 	/**
@@ -311,7 +317,7 @@ class WSUWP_Scholarships {
 
 		$args['description'] = "Applicant's year in school";
 		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_year_in_school';
+		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_grade_level';
 		register_meta( 'post', 'scholarship_year', $args );
 
 		$args['description'] = "Applicant's state of residence";
@@ -424,7 +430,7 @@ class WSUWP_Scholarships {
 		$amount = get_post_meta( $post->ID, 'scholarship_amount', true );
 		$essay = get_post_meta( $post->ID, 'scholarship_essay', true );
 		$enrolled = get_post_meta( $post->ID, 'scholarship_enrolled', true );
-		$year = get_post_meta( $post->ID, 'scholarship_year', true );
+		$grade = get_post_meta( $post->ID, 'scholarship_year', true );
 		$state = get_post_meta( $post->ID, 'scholarship_state', true );
 		$paper = get_post_meta( $post->ID, 'scholarship_app_paper', true );
 		$online = get_post_meta( $post->ID, 'scholarship_app_online', true );
@@ -464,9 +470,9 @@ class WSUWP_Scholarships {
 				<label><input value="1" type="checkbox" name="scholarship_enrolled"<?php checked( $enrolled, 1 ); ?> /> Must be currently enrolled</label><br />
 
 				<select name="scholarship_year">
-					<option value="">Year in School</option>
-					<?php foreach ( $this->years as $year_option ) { ?>
-						<option value="<?php echo esc_attr( $year_option ); ?>"<?php selected( $year, $year_option ); ?>><?php echo esc_html( $year_option ); ?></option>
+					<option value="">Current Grade Level</option>
+					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
+						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
 					<?php } ?>
 				</select><br />
 
@@ -558,8 +564,8 @@ class WSUWP_Scholarships {
 	 *
 	 * @return string the sanitized Year in School value.
 	*/
-	public static function sanitize_year_in_school( $year ) {
-		if ( false === in_array( $year, WSUWP_Scholarships()->years, true ) ) {
+	public static function sanitize_grade_level( $grade ) {
+		if ( false === in_array( $grade, WSUWP_Scholarships()->grade_levels, true ) ) {
 			$year = false;
 		}
 
