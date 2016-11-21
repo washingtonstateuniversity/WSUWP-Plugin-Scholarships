@@ -44,15 +44,10 @@
 		var data = {
 				action: 'set_scholarships',
 				nonce: scholarships.nonce,
-				age: $('#wsuwp-scholarship-age').val(),
+				grade: $('#wsuwp-scholarship-grade-level').val(),
 				gpa: $('#wsuwp-scholarship-gpa').val(),
-				enrollment: $('#wsuwp-scholarship-enrolled').val(),
-				major: $('#wsuwp-scholarship-enrolled').val(),
-				year: $('#wsuwp-scholarship-school-year').val(),
 				citizenship: $('#wsuwp-scholarship-citizenship').val(),
-				gender: $('#wsuwp-scholarship-gender').val(),
-				state: $('#wsuwp-scholarship-state').val(),
-				ethnicity: $('#wsuwp-scholarship-ethnicity').val()
+				state: $('#wsuwp-scholarship-state').val()
 			};
 
 		scholarships_response(data);
