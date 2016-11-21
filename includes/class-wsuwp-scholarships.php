@@ -42,7 +42,7 @@ class WSUWP_Scholarships {
 		'scholarship_amount',
 		'scholarship_essay',
 		'scholarship_enrolled',
-		'scholarship_year',
+		'scholarship_grade',
 		'scholarship_state',
 		'scholarship_app_paper',
 		'scholarship_app_online',
@@ -315,10 +315,10 @@ class WSUWP_Scholarships {
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
 		register_meta( 'post', 'scholarship_enrolled', $args );
 
-		$args['description'] = "Applicant's year in school";
+		$args['description'] = "Applicant's grade level";
 		$args['type'] = 'string';
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_grade_level';
-		register_meta( 'post', 'scholarship_year', $args );
+		register_meta( 'post', 'scholarship_grade', $args );
 
 		$args['description'] = "Applicant's state of residence";
 		$args['type'] = 'string';
@@ -430,7 +430,7 @@ class WSUWP_Scholarships {
 		$amount = get_post_meta( $post->ID, 'scholarship_amount', true );
 		$essay = get_post_meta( $post->ID, 'scholarship_essay', true );
 		$enrolled = get_post_meta( $post->ID, 'scholarship_enrolled', true );
-		$grade = get_post_meta( $post->ID, 'scholarship_year', true );
+		$grade = get_post_meta( $post->ID, 'scholarship_grade', true );
 		$state = get_post_meta( $post->ID, 'scholarship_state', true );
 		$paper = get_post_meta( $post->ID, 'scholarship_app_paper', true );
 		$online = get_post_meta( $post->ID, 'scholarship_app_online', true );
@@ -560,16 +560,16 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * @param string $year The unsanitized Year in School value.
+	 * @param string $grade The unsanitized Grade Level value.
 	 *
-	 * @return string the sanitized Year in School value.
+	 * @return string the sanitized Grade Level value.
 	*/
 	public static function sanitize_grade_level( $grade ) {
 		if ( false === in_array( $grade, WSUWP_Scholarships()->grade_levels, true ) ) {
-			$year = false;
+			$grade = false;
 		}
 
-		return $year;
+		return $grade;
 	}
 
 	/**
@@ -1147,7 +1147,7 @@ class WSUWP_Scholarships {
 				$enrolled = get_post_meta( get_the_ID(), 'scholarship_enrolled', true );
 				$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
 				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
-				$year = get_post_meta( get_the_ID(), 'scholarship_year', true );
+				$grade = get_post_meta( get_the_ID(), 'scholarship_grade', true );
 				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
 				$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
 
@@ -1182,8 +1182,8 @@ class WSUWP_Scholarships {
 					$meta_classes[] = 'meta-online';
 				}
 
-				if ( $year ) {
-					$meta_classes[] = 'meta-' . esc_attr( $year );
+				if ( $grade ) {
+					$meta_classes[] = 'meta-' . esc_attr( $grade );
 				}
 
 				if ( $state ) {
