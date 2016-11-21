@@ -745,46 +745,16 @@ class WSUWP_Scholarships {
 		<p>All fields are optional.</p>
 		<form class="wsuwp-scholarships-form">
 
-			<input type="number" id="wsuwp-scholarship-age" placeholder="Age" value="" />
-
-			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="" maxlength="4" />
-
 			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-enrolled">
-					<option value="">- Enrollment Status -</option>
-					<option value="enrolled">Currently Enrolled</option>
-					<option value="not-enrolled">Not Enrolled</option>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-major">
-					<option value="">- Major -</option>
-					<?php
-						$major = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_major,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $major ) ) {
-							foreach ( $major as $major_option ) {
-								?>
-								<option value="<?php echo esc_attr( $major_option->term_id ); ?>"><?php echo esc_html( $major_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-school-year">
-					<option value="">- Year in school -</option>
-					<?php foreach ( $this->years as $year_option ) { ?>
-						<option value="<?php echo esc_attr( $year_option ); ?>"><?php echo esc_html( $year_option ); ?></option>
+				<select id="wsuwp-scholarship-grade-level">
+					<option value="">- Current grade level -</option>
+					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
+						<option value="<?php echo esc_attr( $grade_option ); ?>"><?php echo esc_html( $grade_option ); ?></option>
 					<?php } ?>
 				</select>
 			</div>
+
+			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="" maxlength="4" />
 
 			<div class="wsuwp-scholarship-select">
 				<select id="wsuwp-scholarship-citizenship">
@@ -807,51 +777,11 @@ class WSUWP_Scholarships {
 			</div>
 
 			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-gender">
-					<option value="">- Gender Identity -</option>
-					<?php
-						$gender = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_gender,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $gender ) ) {
-							foreach ( $gender as $gender_option ) {
-								?>
-								<option value="<?php echo esc_attr( $gender_option->term_id ); ?>"><?php echo esc_html( $gender_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
 				<select id="wsuwp-scholarship-state">
-					<option value="">State of Residence</option>
+					<option value="">- Residency -</option>
 					<?php foreach ( $this->states as $state_option ) { ?>
 						<option value="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></option>
 					<?php } ?>
-				</select>
-			</div>
-
-			<div class="wsuwp-scholarship-select">
-				<select id="wsuwp-scholarship-ethnicity">
-					<option value="">- Ethnicity -</option>
-					<?php
-						$ethnicity = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_ethnicity,
-							'hide_empty' => 0,
-						) );
-
-						if ( ! empty( $ethnicity ) ) {
-							foreach ( $ethnicity as $ethnicity_option ) {
-								?>
-								<option value="<?php echo esc_attr( $ethnicity_option->term_id ); ?>"><?php echo esc_html( $ethnicity_option->name ); ?></option>
-								<?php
-							}
-						}
-					?>
 				</select>
 			</div>
 
@@ -861,16 +791,16 @@ class WSUWP_Scholarships {
 
 		<div class="wsuwp-scholarships-filters">
 
-			<div class="wsuwp-scholarship-major">
+			<div class="wsuwp-scholarship-misc">
 				<p>Only show scholarships with:</p>
 				<ul>
 					<li>
 						<input type="checkbox" value=".meta-no-essay" id="no-essay" />
-						<label for="no-essay">No Essay requirement</label>
+						<label for="no-essay">No essay requirement</label>
 					</li>
 					<li>
 						<input type="checkbox" value=".meta-no-enrollment" id="no-enrollment" />
-						<label for="no-enrollment">No Enrollment requirement</label>
+						<label for="no-enrollment">No enrollment requirement</label>
 					</li>
 					<li>
 						<input type="checkbox" value=".meta-paper" id="paper" />
@@ -883,7 +813,14 @@ class WSUWP_Scholarships {
 				</ul>
 			</div>
 
-			<?php if ( ! empty( $major ) ) { ?>
+			<?php
+			$major = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_major,
+				'hide_empty' => 0,
+			) );
+
+			if ( ! empty( $major ) ) {
+			?>
 				<div class="wsuwp-scholarship-major">
 					<p>Only show scholarships for the following majors:</p>
 					<ul>
@@ -897,33 +834,14 @@ class WSUWP_Scholarships {
 				</div>
 			<?php } ?>
 
-			<div class="wsuwp-scholarship-school-year">
-				<p>Only show scholarships for:</p>
-				<ul>
-				<?php foreach ( $this->years as $year_option ) { ?>
-					<li>
-						<input type="checkbox" value=".meta-<?php echo esc_attr( $year_option ); ?>" id="<?php echo esc_attr( $year_option ); ?>" />
-						<label for="<?php echo esc_attr( $year_option ); ?>"><?php echo esc_html( $year_option ); ?></label>
-					</li>
-				<?php } ?>
-				</ul>
-			</div>
+			<?php
+			$gender = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_gender,
+				'hide_empty' => 0,
+			) );
 
-			<?php if ( ! empty( $citizenship ) ) { ?>
-				<div class="wsuwp-scholarship-citizenship">
-					<p>Only show scholarships for people who are:</p>
-					<ul>
-					<?php foreach ( $citizenship as $citizenship_option ) { ?>
-						<li>
-							<input type="checkbox" value=".citizenship-<?php echo esc_attr( $citizenship_option->slug ); ?>" id="<?php echo esc_attr( $citizenship_option->slug ); ?>" />
-							<label for="<?php echo esc_attr( $citizenship_option->slug ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></label>
-						</li>
-					<?php } ?>
-					</ul>
-				</div>
-			<?php } ?>
-
-			<?php if ( ! empty( $gender ) ) { ?>
+			if ( ! empty( $gender ) ) {
+			?>
 				<div class="wsuwp-scholarship-gender">
 					<p>Only show scholarships for people who identify as:</p>
 					<ul>
@@ -937,19 +855,14 @@ class WSUWP_Scholarships {
 				</div>
 			<?php } ?>
 
-			<div class="wsuwp-scholarship-state">
-				<p>Only show scholarships for residents of:</p>
-				<ul>
-				<?php foreach ( $this->states as $state_option ) { ?>
-					<li>
-						<input type="checkbox" value=".meta-<?php echo esc_attr( $state_option ); ?>" id="<?php echo esc_attr( $state_option ); ?>" />
-						<label for="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></label>
-					</li>
-				<?php } ?>
-				</ul>
-			</div>
+			<?php
+			$ethnicity = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_ethnicity,
+				'hide_empty' => 0,
+			) );
 
-			<?php if ( ! empty( $ethnicity ) ) { ?>
+			if ( ! empty( $ethnicity ) ) {
+			?>
 				<div  class="wsuwp-scholarship-ethnicity">
 					<p>Only show scholarships for people who are:</p>
 					<ul>
