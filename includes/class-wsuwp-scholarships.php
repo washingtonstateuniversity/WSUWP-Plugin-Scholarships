@@ -931,34 +931,21 @@ class WSUWP_Scholarships {
 			),
 		);
 
-		// Age meta parameters
-		if ( $_POST['age'] && is_numeric( $_POST['age'] ) ) {
+		// Grade Level meta parameters.
+		if ( $_POST['grade'] && in_array( $_POST['grade'], $this->grade_levels, true ) ) {
+			$grades = $this->grade_levels;
+			unset( $grades[ $_POST['grade'] ] );
+
 			$scholarships_query_args['meta_query'][] = array(
+				'relation' => 'OR',
 				array(
-					'relation' => 'OR',
-					array(
-						'key' => 'scholarship_age_min',
-						'value' => sanitize_text_field( $_POST['age'] ),
-						'type' => 'numeric',
-						'compare' => '<=',
-					),
-					array(
-						'key' => 'scholarship_age_min',
-						'compare' => 'NOT EXISTS',
-					),
+					'key' => 'scholarship_grade',
+					'value' => $grades,
+					'compare' => 'NOT IN',
 				),
 				array(
-					'relation' => 'OR',
-					array(
-						'key' => 'scholarship_age_max',
-						'value' => sanitize_text_field( $_POST['age'] ),
-						'type' => 'numeric',
-						'compare' => '>=',
-					),
-					array(
-						'key' => 'scholarship_age_max',
-						'compare' => 'NOT EXISTS',
-					),
+					'key' => 'scholarship_grade',
+					'compare' => 'NOT EXISTS',
 				),
 			);
 		}
@@ -975,41 +962,6 @@ class WSUWP_Scholarships {
 				),
 				array(
 					'key' => 'scholarship_gpa',
-					'compare' => 'NOT EXISTS',
-				),
-			);
-		}
-
-		// Enrollment status meta parameters.
-		if ( $_POST['enrollment'] && 'not-enrolled' === $_POST['enrollment'] ) {
-			$scholarships_query_args['meta_query'][] = array(
-				'relation' => 'OR',
-				array(
-					'key' => 'scholarship_enrolled',
-					'value' => '1',
-					'compare' => '!=',
-				),
-				array(
-					'key' => 'scholarship_enrolled',
-					'compare' => 'NOT EXISTS',
-				),
-			);
-		}
-
-		// Year in School meta parameters.
-		if ( $_POST['year'] && in_array( $_POST['year'], $this->years, true ) ) {
-			$years = $this->years;
-			unset( $years[ $_POST['year'] ] );
-
-			$scholarships_query_args['meta_query'][] = array(
-				'relation' => 'OR',
-				array(
-					'key' => 'scholarship_year',
-					'value' => $years,
-					'compare' => 'NOT IN',
-				),
-				array(
-					'key' => 'scholarship_year',
 					'compare' => 'NOT EXISTS',
 				),
 			);
@@ -1034,30 +986,6 @@ class WSUWP_Scholarships {
 			);
 		}
 
-		// Major taxonomy parameters.
-		if ( $_POST['major'] ) {
-			$majors = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_major,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['major'], $majors, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					array(
-						'taxonomy' => $this->taxonomy_slug_major,
-						'field' => 'term_id',
-						'terms' => $_POST['major'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_major,
-						'field' => 'term_id',
-						'terms' => array_diff( $majors, array( $_POST['major'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
-		}
-
 		// Citizenship taxonomy parameters.
 		if ( $_POST['citizenship'] ) {
 			$citizenship = get_terms( array(
@@ -1077,56 +1005,6 @@ class WSUWP_Scholarships {
 						'taxonomy' => $this->taxonomy_slug_citizenship,
 						'field' => 'term_id',
 						'terms' => array_diff( $citizenship, array( $_POST['citizenship'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
-		}
-
-		// Gender taxonomy parameters.
-		if ( $_POST['gender'] ) {
-			$gender = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_gender,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['gender'], $gender, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					'relation' => 'OR',
-					array(
-						'taxonomy' => $this->taxonomy_slug_gender,
-						'field' => 'term_id',
-						'terms' => $_POST['gender'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_gender,
-						'field' => 'term_id',
-						'terms' => array_diff( $gender, array( $_POST['gender'] ) ),
-						'operator' => 'NOT IN',
-					),
-				);
-			}
-		}
-
-		// Ethnicity taxonomy parameters.
-		if ( $_POST['ethnicity']  ) {
-			$ethnicity = get_terms( array(
-				'taxonomy' => $this->taxonomy_slug_ethnicity,
-				'fields' => 'ids',
-			) );
-
-			if ( in_array( $_POST['ethnicity'], $ethnicity, true ) ) {
-				$scholarships_query_args['tax_query'][] = array(
-					'relation' => 'OR',
-					array(
-						'taxonomy' => $this->taxonomy_slug_ethnicity,
-						'field' => 'term_id',
-						'terms' => $_POST['ethnicity'],
-					),
-					array(
-						'taxonomy' => $this->taxonomy_slug_ethnicity,
-						'field' => 'term_id',
-						'terms' => array_diff( $ethnicity, array( $_POST['ethnicity'] ) ),
 						'operator' => 'NOT IN',
 					),
 				);
