@@ -578,7 +578,7 @@ class WSUWP_Scholarships {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( false === in_array( $state, WSUWP_Scholarships()->years, true ) ) {
+		if ( false === in_array( $state, WSUWP_Scholarships()->states, true ) ) {
 			$state = false;
 		}
 
