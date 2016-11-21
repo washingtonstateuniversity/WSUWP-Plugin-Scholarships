@@ -27,38 +27,6 @@
 	function display_results(response) {
 		var response_data = $.parseJSON(response);
 
-		// Make all show/hide options available first, then hide them if they aren't needed.
-		$filters.find('div').show();
-		$('.wsuwp-scholarship-major li').show();
-
-		if ($('#wsuwp-scholarship-enrolled').val()) {
-			$('#no-enrollment').closest('li').hide();
-		}
-
-		if ($('#wsuwp-scholarship-major').val()) {
-			$('.wsuwp-scholarship-major').hide();
-		}
-
-		if ($('#wsuwp-scholarship-school-year').val()) {
-			$('.wsuwp-scholarship-school-year').hide();
-		}
-
-		if ($('#wsuwp-scholarship-citizenship').val()) {
-			$('.wsuwp-scholarship-citizenship').hide();
-		}
-
-		if ($('#wsuwp-scholarship-gender').val()) {
-			$('.wsuwp-scholarship-gender').hide();
-		}
-
-		if ($('#wsuwp-scholarship-state').val()) {
-			$('.wsuwp-scholarship-state').hide();
-		}
-
-		if ($('#wsuwp-scholarship-ethnicity').val()) {
-			$('.wsuwp-scholarship-ethnicity').hide();
-		}
-
 		// Display the show/hide options and column headings.
 		$filters.show();
 		$header.show();
