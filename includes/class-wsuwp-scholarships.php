@@ -739,6 +739,22 @@ class WSUWP_Scholarships {
 	 * Display a form for browsing scholarships.
 	 */
 	public function display_wsuwp_scholarships() {
+		$grade = ( isset( $_GET['grade'] ) && in_array( urldecode( $_GET['grade'] ), $this->grade_levels, true ) ) ? urldecode( $_GET['grade'] ) : '';
+		$gpa = ( isset( $_GET['gpa'] ) ) ? sanitize_text_field( $_GET['gpa'] ) : '';
+		$state = ( isset( $_GET['state'] ) && in_array( urldecode( $_GET['state'] ), $this->states, true )  ) ? urldecode( $_GET['state'] ) : '';
+		$citizenship = '';
+
+		if ( isset( $_GET['citizenship'] ) ) {
+			$citizenship_terms = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_citizenship,
+				'fields' => 'ids',
+			) );
+
+			if ( in_array( urldecode( $_GET['citizenship'] ), $citizenship_terms, true ) ) {
+				$citizenship = urldecode( $_GET['citizenship'] );
+			}
+		}
+
 		ob_start();
 		?>
 		<p>Tell us about yourself using the form below to help us find scholarships you might be eligible for, or <a class="wsuwp-scholarships-all" href="#">browse all scholarships &raquo;</a></p>
@@ -750,26 +766,26 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-grade-level">
 					<option value="">- Current grade level -</option>
 					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
-						<option value="<?php echo esc_attr( $grade_option ); ?>"><?php echo esc_html( $grade_option ); ?></option>
+						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
 					<?php } ?>
 				</select>
 			</div>
 
-			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="" maxlength="4" />
+			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="<?php echo esc_attr( $gpa ); ?>" maxlength="4" />
 
 			<div class="wsuwp-scholarship-select">
 				<select id="wsuwp-scholarship-citizenship">
 					<option value="">- Citizenship -</option>
 					<?php
-						$citizenship = get_terms( array(
+						$citizenship_terms = get_terms( array(
 							'taxonomy' => $this->taxonomy_slug_citizenship,
 							'hide_empty' => 0,
 						) );
 
-						if ( ! empty( $citizenship ) ) {
-							foreach ( $citizenship as $citizenship_option ) {
+						if ( ! empty( $citizenship_terms ) ) {
+							foreach ( $citizenship_terms as $citizenship_term ) {
 								?>
-								<option value="<?php echo esc_attr( $citizenship_option->term_id ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></option>
+								<option value="<?php echo esc_attr( $citizenship_term->term_id ); ?>"<?php selected( $citizenship, $citizenship_term->term_id ); ?>><?php echo esc_html( $citizenship_term->name ); ?></option>
 								<?php
 							}
 						}
@@ -781,7 +797,7 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-state">
 					<option value="">- Residency -</option>
 					<?php foreach ( $this->states as $state_option ) { ?>
-						<option value="<?php echo esc_attr( $state_option ); ?>"><?php echo esc_html( $state_option ); ?></option>
+						<option value="<?php echo esc_attr( $state_option ); ?>"<?php selected( $state, $state_option ); ?>><?php echo esc_html( $state_option ); ?></option>
 					<?php } ?>
 				</select>
 			</div>
