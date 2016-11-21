@@ -469,7 +469,7 @@ class WSUWP_Scholarships {
 
 				<label><input value="1" type="checkbox" name="scholarship_enrolled"<?php checked( $enrolled, 1 ); ?> /> Must be currently enrolled</label><br />
 
-				<select name="scholarship_year">
+				<select name="scholarship_grade">
 					<option value="">Current Grade Level</option>
 					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
 						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
