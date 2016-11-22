@@ -177,38 +177,13 @@
 		}
 	}
 
-	// If storage is available and items are stored, display the form field values.
-	if (storage_available('sessionStorage')) {
-		var results = sessionStorage.getItem('results'),
-			filters = JSON.parse(sessionStorage.getItem('filters'));;
-
-		if (sessionStorage.getItem('form_data')) {
-			display_values();
-		}
-
-		if (results) {
-			display_results(results);
-		}
-
-		if (filters) {
-			$.each(filters, function () {
-				$('#' + this).trigger('click');
-			});
-		}
-	}
-
 	// Store the form field values.
 	function store_values() {
 		var form_data = {
-			age: $('#wsuwp-scholarship-age').val(),
+			grade: $('#wsuwp-scholarship-grade-level').val(),
 			gpa: $('#wsuwp-scholarship-gpa').val(),
-			enrollment: $('#wsuwp-scholarship-enrolled').val(),
-			major: $('#wsuwp-scholarship-major').val(),
-			year: $('#wsuwp-scholarship-school-year').val(),
 			citizenship: $('#wsuwp-scholarship-citizenship').val(),
-			gender: $('#wsuwp-scholarship-gender').val(),
-			state: $('#wsuwp-scholarship-state').val(),
-			ethnicity: $('#wsuwp-scholarship-ethnicity').val()
+			state: $('#wsuwp-scholarship-state').val()
 		};
 
 		sessionStorage.setItem('form_data', JSON.stringify(form_data));
@@ -220,19 +195,47 @@
 	function display_values() {
 		var form_data = $.parseJSON(sessionStorage.getItem('form_data'));
 
-		$('#wsuwp-scholarship-age').val(form_data.age);
+		$('#wsuwp-scholarship-grade-level').val(form_data.grade);
 		$('#wsuwp-scholarship-gpa').val(form_data.gpa);
-		$('#wsuwp-scholarship-enrolled').val(form_data.enrollment);
-		$('#wsuwp-scholarship-major').val(form_data.major);
-		$('#wsuwp-scholarship-school-year').val(form_data.year);
 		$('#wsuwp-scholarship-citizenship').val(form_data.citizenship);
-		$('#wsuwp-scholarship-gender').val(form_data.gender);
 		$('#wsuwp-scholarship-state').val(form_data.state);
-		$('#wsuwp-scholarship-ethnicity').val(form_data.ethnicity);
 	}
 
 	// Store field values when the form is submitted.
 	$('.wsuwp-scholarships-form').on('submit', function() {
 		store_values();
+	});
+
+	// Fire actions that need to happen once the document is ready.
+	$( document ).ready( function() {
+
+		// Handling for when the page has been arrived at via the search shortcode.
+		if ( -1 !== window.location.href.indexOf('?') ) {
+			sessionStorage.removeItem('form_data');
+			sessionStorage.removeItem('results');
+			sessionStorage.removeItem('filters');
+
+			$('.wsuwp-scholarships-form').trigger('submit');
+		}
+
+		// If storage is available and items are stored, display the form field values.
+		if (storage_available('sessionStorage')) {
+			var results = sessionStorage.getItem('results'),
+				filters = JSON.parse(sessionStorage.getItem('filters'));;
+
+			if (sessionStorage.getItem('form_data')) {
+				display_values();
+			}
+
+			if (results) {
+				display_results(results);
+			}
+
+			if (filters) {
+				$.each(filters, function () {
+					$('#' + this).trigger('click');
+				});
+			}
+		}
 	});
 }(jQuery, scholarships));
