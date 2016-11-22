@@ -180,15 +180,10 @@
 	// Store the form field values.
 	function store_values() {
 		var form_data = {
-			age: $('#wsuwp-scholarship-age').val(),
+			grade: $('#wsuwp-scholarship-grade-level').val(),
 			gpa: $('#wsuwp-scholarship-gpa').val(),
-			enrollment: $('#wsuwp-scholarship-enrolled').val(),
-			major: $('#wsuwp-scholarship-major').val(),
-			year: $('#wsuwp-scholarship-school-year').val(),
 			citizenship: $('#wsuwp-scholarship-citizenship').val(),
-			gender: $('#wsuwp-scholarship-gender').val(),
-			state: $('#wsuwp-scholarship-state').val(),
-			ethnicity: $('#wsuwp-scholarship-ethnicity').val()
+			state: $('#wsuwp-scholarship-state').val()
 		};
 
 		sessionStorage.setItem('form_data', JSON.stringify(form_data));
