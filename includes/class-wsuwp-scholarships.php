@@ -7,6 +7,15 @@ class WSUWP_Scholarships {
 	private static $instance;
 
 	/**
+	 * Tracks the version number of the plugin for script enqueues.
+	 *
+	 * @since 0.0.2
+	 *
+	 * @var string
+	 */
+	public $version = '0.0.2';
+
+	/**
 	 * @since 0.0.1
 	 *
 	 * @var string Slug for tracking the content type of a scholarship.
@@ -770,8 +779,8 @@ class WSUWP_Scholarships {
 		$post = get_post();
 
 		if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'wsuwp_scholarships' ) ) {
-			wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
-			wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), false, true );
+			wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ), $this->version );
+			wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version, true );
 			wp_localize_script( 'wsuwp-scholarships', 'scholarships', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce' => wp_create_nonce( 'wsuwp-scholarships' ),
@@ -779,7 +788,7 @@ class WSUWP_Scholarships {
 		}
 
 		if ( is_singular( $this->content_type_slug ) ) {
-			wp_enqueue_style( 'wsuwp-scholarship', plugins_url( 'css/scholarship.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
+			wp_enqueue_style( 'wsuwp-scholarship', plugins_url( 'css/scholarship.css', dirname( __FILE__ ) ), array( 'spine-theme' ), $this->version );
 		}
 	}
 
