@@ -760,9 +760,9 @@ class WSUWP_Scholarships {
 		<p>Tell us about yourself using the form below to help us find scholarships you might be eligible for, or <a class="wsuwp-scholarships-all" href="#">browse all scholarships &raquo;</a></p>
 
 		<p>All fields are optional.</p>
-		<form class="wsuwp-scholarships-form">
+		<form class="wsuwp-scholarships-form flex-form">
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-grade-level">
 					<option value="">- Current grade level -</option>
 					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
@@ -773,7 +773,7 @@ class WSUWP_Scholarships {
 
 			<input type="text" id="wsuwp-scholarship-gpa" placeholder="G.P.A." value="<?php echo esc_attr( $gpa ); ?>" maxlength="4" />
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-citizenship">
 					<option value="">- Citizenship -</option>
 					<?php
@@ -793,7 +793,7 @@ class WSUWP_Scholarships {
 				</select>
 			</div>
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-state">
 					<option value="">- Residency -</option>
 					<?php foreach ( $this->states as $state_option ) { ?>
@@ -933,9 +933,9 @@ class WSUWP_Scholarships {
 
 		ob_start();
 		?>
-		<form class="wsuwp-scholarships-form" action="<?php echo esc_url( $search_page_url ); ?>">
+		<form class="wsuwp-scholarships-form flex-form" action="<?php echo esc_url( $search_page_url ); ?>">
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-grade-level" name="grade">
 					<option value="">- Current grade level -</option>
 					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
@@ -946,7 +946,7 @@ class WSUWP_Scholarships {
 
 			<input type="text" id="wsuwp-scholarship-gpa" name="gpa" placeholder="G.P.A." value="" maxlength="4" />
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-citizenship" name="citizenship">
 					<option value="">- Citizenship -</option>
 					<?php
@@ -966,7 +966,7 @@ class WSUWP_Scholarships {
 				</select>
 			</div>
 
-			<div class="wsuwp-scholarship-select">
+			<div class="select-wrap">
 				<select id="wsuwp-scholarship-state" name="state">
 					<option value="">- Residency -</option>
 					<?php foreach ( $this->states as $state_option ) { ?>
