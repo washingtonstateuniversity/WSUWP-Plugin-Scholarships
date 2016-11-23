@@ -7,31 +7,52 @@ class WSUWP_Scholarships {
 	private static $instance;
 
 	/**
+	 * Tracks the version number of the plugin for script enqueues.
+	 *
+	 * @since 0.0.2
+	 *
+	 * @var string
+	 */
+	public $version = '0.0.2';
+
+	/**
+	 * @since 0.0.1
+	 *
 	 * @var string Slug for tracking the content type of a scholarship.
 	 */
 	public $content_type_slug = 'scholarship';
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var string Slug for tracking the Major taxonomy.
 	 */
 	public $taxonomy_slug_major = 'major';
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var string Slug for tracking the Citizenship taxonomy.
 	 */
 	public $taxonomy_slug_citizenship = 'citizenship';
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var string Slug for tracking the Gender Identity taxonomy.
 	 */
 	public $taxonomy_slug_gender = 'gender-identity';
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var string Slug for tracking the Gender Identity taxonomy.
 	 */
 	public $taxonomy_slug_ethnicity = 'ethnicity';
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var array A list of post meta keys associated with scholarships.
 	 */
 	var $post_meta_keys = array(
@@ -58,6 +79,8 @@ class WSUWP_Scholarships {
 	);
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var array A list of states for the State of Residence field.
 	 */
 	var $states = array(
@@ -66,6 +89,8 @@ class WSUWP_Scholarships {
 	);
 
 	/**
+	 * @since 0.0.1
+	 *
 	 * @var array A list of classes for the Grade Level field.
 	 */
 	var $grade_levels = array(
@@ -123,6 +148,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Register a content type to track information about scholarships.
+	 *
+	 * @since 0.0.1
 	 */
 	public function register_content_type() {
 		$labels = array(
@@ -159,6 +186,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Register taxonomies that will be attached to the scholarship content type.
+	 *
+	 * @since 0.0.1
 	 */
 	public function register_taxonomies() {
 		$labels = array(
@@ -385,6 +414,8 @@ class WSUWP_Scholarships {
 	/**
 	 * Enqueue the styles for the scholarship information metabox.
 	 *
+	 * @since 0.0.1
+	 *
 	 * @param string $hook
 	 */
 	public function admin_enqueue_scripts( $hook ) {
@@ -397,6 +428,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Add the metabox used to capture scholarship information.
+	 *
+	 * @since 0.0.1
 	 */
 	public function add_meta_boxes() {
 		add_meta_box(
@@ -420,6 +453,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Display the metabox used to capture scholarship information.
+	 *
+	 * @since 0.0.1
 	 *
 	 * @param WP_Post $post Object for the post currently being edited.
 	 */
@@ -517,6 +552,8 @@ class WSUWP_Scholarships {
 	/**
 	 * Display the metabox used to capture granting organization information.
 	 *
+	 * @since 0.0.1
+	 *
 	 * @param WP_Post $post Object for the post currently being edited.
 	 */
 	public function display_granter_meta_box( $post ) {
@@ -548,6 +585,8 @@ class WSUWP_Scholarships {
 	/**
 	 * @param string $value The unsanitized checkbox value.
 	 *
+	 * @since 0.0.1
+	 *
 	 * @return string 1 or false.
 	*/
 	public static function sanitize_checkbox( $value ) {
@@ -563,6 +602,8 @@ class WSUWP_Scholarships {
 	/**
 	 * @param string $grade The unsanitized Grade Level value.
 	 *
+	 * @since 0.0.2
+	 *
 	 * @return string the sanitized Grade Level value.
 	*/
 	public static function sanitize_grade_level( $grade ) {
@@ -576,6 +617,8 @@ class WSUWP_Scholarships {
 	/**
 	 * @param string $state The unsanitized State value.
 	 *
+	 * @since 0.0.1
+	 *
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
@@ -588,6 +631,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Save the information assigned to the scholarship.
+	 *
+	 * @since 0.0.1
 	 *
 	 * @param int     $post_id ID of the post being saved.
 	 * @param WP_Post $post    Post object of the post being saved.
@@ -622,6 +667,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Register settings for the Scholarship Settings admin page.
+	 *
+	 * @since 0.0.1
 	 */
 	public function register_settings() {
 		register_setting(
@@ -650,6 +697,10 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Output for the Search Page URL field.
+	 *
+	 * @since 0.0.1
+	 *
+	 * @param array $args Extra arguments used when outputting the field.
 	 */
 	public function search_page_dropdown( $args ) {
 		$options = get_option( 'scholarships_settings' );
@@ -671,6 +722,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Create an admin page for Scholarship Settings.
+	 *
+	 * @since 0.0.1
 	 */
 	public function add_settings_page() {
 		add_submenu_page(
@@ -685,6 +738,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Display the Scholarships Settings page.
+	 *
+	 * @since 0.0.1
 	 */
 	public function settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -717,13 +772,15 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Enqueue the scripts and styles used on the front end.
+	 *
+	 * @since 0.0.1
 	 */
 	public function wp_enqueue_scripts() {
 		$post = get_post();
 
 		if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'wsuwp_scholarships' ) ) {
-			wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
-			wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), false, true );
+			wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ), $this->version );
+			wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version, true );
 			wp_localize_script( 'wsuwp-scholarships', 'scholarships', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce' => wp_create_nonce( 'wsuwp-scholarships' ),
@@ -731,12 +788,14 @@ class WSUWP_Scholarships {
 		}
 
 		if ( is_singular( $this->content_type_slug ) ) {
-			wp_enqueue_style( 'wsuwp-scholarship', plugins_url( 'css/scholarship.css', dirname( __FILE__ ) ), array( 'spine-theme' ) );
+			wp_enqueue_style( 'wsuwp-scholarship', plugins_url( 'css/scholarship.css', dirname( __FILE__ ) ), array( 'spine-theme' ), $this->version );
 		}
 	}
 
 	/**
 	 * Display a form for browsing scholarships.
+	 *
+	 * @since 0.0.1
 	 */
 	public function display_wsuwp_scholarships() {
 		$grade = ( isset( $_GET['grade'] ) && in_array( urldecode( $_GET['grade'] ), $this->grade_levels, true ) ) ? urldecode( $_GET['grade'] ) : '';
@@ -921,6 +980,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Display a form for searching scholarships.
+	 *
+	 * @since 0.0.2
 	 */
 	public function display_wsuwp_search_scholarships() {
 		$options = get_option( 'scholarships_settings' );
@@ -988,6 +1049,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Handle the ajax callback for populating a list of scholarships.
+	 *
+	 * @since 0.0.1
 	 */
 	public function ajax_callback() {
 		check_ajax_referer( 'wsuwp-scholarships', 'nonce' );
@@ -1200,6 +1263,8 @@ class WSUWP_Scholarships {
 	/**
 	 * Add 'section-scholarships' as a body class when individual scholarships are being displayed.
 	 *
+	 * @since 0.0.1
+	 *
 	 * @param array $classes Current body classes.
 	 *
 	 * @return array Modified body classes.
@@ -1214,6 +1279,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Output custom page headers when viewing an individual scholarship.
+	 *
+	 * @since 0.0.1
 	 *
 	 * @param array $headers Current header element values.
 	 *
@@ -1230,6 +1297,8 @@ class WSUWP_Scholarships {
 
 	/**
 	 * Add the 'active' class to the scholarship search menu item when viewing an individual scholarship.
+	 *
+	 * @since 0.0.1
 	 *
 	 * @param array    $classes Current list of nav menu classes.
 	 * @param WP_Post  $item    Post object representing the menu item.
