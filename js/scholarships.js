@@ -4,16 +4,25 @@
 
 	// Hide the show/hide options and column headings.
 	var $scholarships_container = $( ".wsuwp-scholarships" ),
+		$scholarships_container_top = $scholarships_container.offset().top,
 		$scholarships = "",
+		$filter_toggle = $( ".wsuwp-scholarships-toggle-filters" ),
 		$filters = $( ".wsuwp-scholarships-filters" ),
-		$header = $( ".wsuwp-scholarships-header" );
+		$count = $( ".wsuwp-scholarships-count span" ),
+		$header = $( ".wsuwp-scholarships-header" ),
+		$tools = $( ".wsuwp-scholarships-tools" ),
+		$show_after_submit = $( ".display-after-submit" );
 
-	$filters.hide();
 	$header.hide();
+
+	// Show the number of displayed scholarships.
+	function update_count() {
+		$count.html( $( ".wsuwp-scholarships article:visible" ).length );
+	}
 
 	// Retrieve a list of scholarships.
 	function scholarships_response( data ) {
-		$filters.hide().find( "input:checkbox" ).removeAttr( "checked" );
+		$filters.find( "input:checkbox" ).removeAttr( "checked" );
 
 		$scholarships_container.html( "<div class=\"wsuwp-scholarships-loading\"></div>" );
 
@@ -27,14 +36,16 @@
 	function display_results( response ) {
 		var response_data = $.parseJSON( response );
 
-		// Display the show/hide options and column headings.
-		$filters.show();
+		// Display filter visibility toggler, results count, and column headings.
+		$show_after_submit.show();
 		$header.show();
 
 		// Display the list of retrieved scholarships.
 		$scholarships_container.html( "" ).append( response_data );
 
 		$scholarships = $scholarships_container.find( "article" );
+
+		update_count();
 	}
 
 	// Retrieve scholarships based on the input and selected values.
@@ -142,10 +153,8 @@
 	sorted_or_filtered( function() {
 		$scholarships_container.find( "article:visible:odd" ).css( "background-color", "#fff" );
 		$scholarships_container.find( "article:visible:even" ).css( "background-color", "#eff0f1" );
+		update_count();
 	} );
-
-	var $scholarships_container_top = $scholarships_container.offset().top,
-		$tools = $( ".wsuwp-scholarships-tools" );
 
 	// Toggle visibility of the back to top button based on scroll position.
 	$( document ).on( "scroll", function() {
@@ -237,5 +246,13 @@
 				} );
 			}
 		}
+	} );
+
+	// Toggle the visibility of the filters.
+	$filter_toggle.on( "click", "a", function( e ) {
+		e.preventDefault();
+
+		$( this ).toggleClass( "close-filters" );
+		$filters.toggleClass( "visible" );
 	} );
 }( jQuery, scholarships ) );
