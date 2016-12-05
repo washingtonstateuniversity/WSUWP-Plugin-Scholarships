@@ -317,7 +317,7 @@ class WSUWP_Scholarships {
 	}
 
 	/**
-	 * Register the degree program factsheet post type.
+	 * Register the scholarship post type.
 	 *
 	 * @since 0.0.1
 	 */
@@ -869,10 +869,16 @@ class WSUWP_Scholarships {
 
 		</form>
 
+		<p class="wsuwp-scholarships-toggle-filters display-after-submit">
+			<a href="#">Advanced filters</a>
+		</p>
+
 		<div class="wsuwp-scholarships-filters">
 
+			<p class="wsuwp-scholarships-filters-prefix">Only show scholarships:</p>
+
 			<div class="wsuwp-scholarship-misc">
-				<p>Only show scholarships with:</p>
+				<p>with</p>
 				<ul>
 					<li>
 						<input type="checkbox" value=".meta-no-essay" id="no-essay" />
@@ -898,7 +904,7 @@ class WSUWP_Scholarships {
 			if ( ! empty( $major ) ) {
 			?>
 				<div class="wsuwp-scholarship-major">
-					<p>Only show scholarships for the following majors:</p>
+					<p>for the following majors</p>
 					<ul>
 					<?php foreach ( $major as $major_option ) { ?>
 						<li>
@@ -919,7 +925,7 @@ class WSUWP_Scholarships {
 			if ( ! empty( $gender ) ) {
 			?>
 				<div class="wsuwp-scholarship-gender">
-					<p>Only show scholarships for people who identify as:</p>
+					<p>for people who identify as</p>
 					<ul>
 					<?php foreach ( $gender as $gender_option ) { ?>
 						<li>
@@ -940,7 +946,7 @@ class WSUWP_Scholarships {
 			if ( ! empty( $ethnicity ) ) {
 			?>
 				<div  class="wsuwp-scholarship-ethnicity">
-					<p>Only show scholarships for people who are:</p>
+					<p>for people who are</p>
 					<ul>
 					<?php foreach ( $ethnicity as $ethnicity_option ) { ?>
 						<li>
@@ -951,7 +957,10 @@ class WSUWP_Scholarships {
 					</ul>
 				</div>
 			<?php } ?>
+
 		</div>
+
+		<p class="wsuwp-scholarships-count display-after-submit"><span></span> scholarships found</p>
 
 		<div class="wsuwp-scholarships-header">
 			<div class="name">
