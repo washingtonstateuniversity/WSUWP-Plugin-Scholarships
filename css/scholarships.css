@@ -1,13 +1,46 @@
 /* Filters */
+.wsuwp-scholarships-toggle-filters {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.wsuwp-scholarships-toggle-filters a {
+	padding-right: 1em;
+	position: relative;
+}
+
+.wsuwp-scholarships-toggle-filters a:after {
+	content: '+';
+	font-weight: normal;
+	line-height: normal;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: transform .4s;
+}
+
+.wsuwp-scholarships-toggle-filters a.close-filters:after {
+	transform: rotate(45deg);
+}
+
+.display-after-submit {
+	display: none;
+}
+
 .wsuwp-scholarships-filters {
 	display: flex;
 	flex-wrap: wrap;
-	padding-bottom: 1rem;
+	margin: -1rem 0 1rem;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height .4s ease;
+}
+
+.wsuwp-scholarships-filters.visible {
+	max-height: 276px;
 }
 
 .wsuwp-scholarships-filters div {
-	background-color: #d7dadb;
-	background-clip: content-box;
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -16,11 +49,19 @@
 	padding: 0 0.5rem;
 }
 
-.wsuwp-scholarships-filters p {
-	background-color: #fff;
+.wsuwp-scholarships-filters-prefix {
+	flex-basis: 100%;
+	font-size: 14px;
+	padding: 0 0.5rem;
+}
+
+.wsuwp-scholarships-filters div p {
+	font-size: 14px;
+	padding-bottom: 1em;
 }
 
 .wsuwp-scholarships-filters ul {
+	background-color: #d7dadb;
 	box-sizing: border-box;
 	flex: 1;
 	overflow: scroll;
@@ -55,11 +96,15 @@
 	color: #fff;
 }
 
+.wsuwp-scholarships-count {
+	font-style: italic;
+	padding: 1.75rem 0 0 0;
+}
+
 /* Table */
 .wsuwp-scholarships-header,
 .wsuwp-scholarships article {
 	display: flex;
-	flex-wrap: wrap;
 }
 
 .name,
@@ -88,6 +133,7 @@
 .apply a:after {
 	content: "\21AA";
 	font-family: Spine-Icons;
+	font-size: 12px;
 	margin-left: 3px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -95,22 +141,46 @@
 
 .wsuwp-scholarships-header a {
 	border-bottom: none;
+	color: #4e4e4e;
 	font-size: 0.9em;
 	font-weight: 400;
 	letter-spacing: 1px;
 	position: relative;
+	padding-right: 1rem;
 	text-transform: uppercase;
+	transition: color .4s;
 }
 
-.wsuwp-scholarships-header a:hover:after,
-.wsuwp-scholarships-header .sorted:after {
+.wsuwp-scholarships-header a.sorted {
+	color: #981e32;
+}
+
+.wsuwp-scholarships-header a:hover {
+	background: none;
+	border-bottom: none;
+	color: #c60c30;
+}
+
+.wsuwp-scholarships-header a:before,
+.wsuwp-scholarships-header a:after {
 	border: solid transparent;
-	border-width: 0.6em 0.4em;
-	border-top-color: #c60c30;
-	content: ' ';
-	margin-left: 0.5em;
-	margin-top: 7px;
+	border-width: 6px 4px;
+	box-sizing: border-box;
+	content: '';
+	height: 12px;
 	position: absolute;
+	right: 0;
+	transition: border-color .4s;
+}
+
+.wsuwp-scholarships-header a:before {
+	border-bottom-color: #B7B7B7;
+	top: -5px;
+}
+
+.wsuwp-scholarships-header a:after {
+	border-top-color: #B7B7B7;
+	bottom: -5px;
 }
 
 .wsuwp-scholarships-header .sorted:after {
@@ -118,13 +188,22 @@
 }
 
 .wsuwp-scholarships-header .sorted.asc:after {
-	border-bottom-color: #981e32;
-	border-top-color: transparent;
-	margin-top: 0;
+	border-top-color: #B7B7B7;
 }
 
-.wsuwp-scholarships-header .sorted.asc:hover:after {
+.wsuwp-scholarships-header .sorted.asc:before {
+	border-bottom-color: #981e32;
+}
+
+.wsuwp-scholarships-header a:hover:before,
+.wsuwp-scholarships-header .sorted.asc:hover:before {
 	border-bottom-color: #c60c30;
+}
+
+.wsuwp-scholarships-header a:hover:after,
+.wsuwp-scholarships-header .sorted:hover:after,
+.wsuwp-scholarships-header .sorted.asc:hover:after {
+	border-top-color: #c60c30;
 }
 
 .wsuwp-scholarships article:nth-of-type(odd) {
@@ -165,13 +244,10 @@
 }
 
 .wsuwp-scholarships-tools {
-	bottom: 0;
 	display: none;
-	left: 0;
-	margin: 0 auto;
 	max-width: 1584px;
-	position: fixed;
-	right: 0;
+	position: relative;
+	text-align: right;
 	z-index: 1;
 }
 
@@ -179,18 +255,16 @@
 	border: 20px solid transparent;
 	border-bottom-color: rgba(113,113,113,0.5);
 	border-top: 0;
-	bottom: -100%;
+	bottom: 1rem;
 	font-size: 0;
 	line-height: 0;
-	margin-bottom: 1rem;
-	position: absolute;
-	right: 2rem;
+	position: fixed;
 	transition: border-bottom-color .4s;
 }
 
 .back-to-top:hover {
 	background: none;
-	border-bottom-color: #4f868e;
+	border-bottom: 20px solid #981e32;
 }
 
 @media screen and (max-width: 791px) {
@@ -218,6 +292,7 @@
 
 	.wsuwp-scholarships-header,
 	.wsuwp-scholarships article {
+		flex-wrap: wrap;
 		justify-content: flex-end;
 	}
 
