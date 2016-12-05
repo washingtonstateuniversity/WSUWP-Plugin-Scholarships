@@ -985,7 +985,7 @@ class WSUWP_Scholarships {
 
 		<p class="wsuwp-scholarships-count display-after-submit"><span></span> scholarships found</p>
 
-		<div class="wsuwp-scholarships-header">
+		<div class="wsuwp-scholarships-header display-after-submit">
 			<div class="name">
 				<a href="#" class="sorted">Scholarship</a>
 			</div>
