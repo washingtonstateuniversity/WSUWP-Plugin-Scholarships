@@ -483,20 +483,29 @@ class WSUWP_Scholarships {
 		wp_nonce_field( 'save-wsu-scholarship-meta', '_wsu_scholarship_meta_nonce' );
 		?>
 		<div class="wsuwp-scholarship-fieldset">
+			<label>Minimum GPA<br />
+				<input type="text" class="widefat" name="scholarship_gpa" value="<?php echo esc_attr( $gpa ); ?>" />
+			</label>
 
-			<input type="text" class="widefat" name="scholarship_gpa" placeholder="Minimum GPA" value="<?php echo esc_attr( $gpa ); ?>" />
+			<label>Minimum Age<br />
+				<input type="number" class="widefat" name="scholarship_age_min" value="<?php echo esc_attr( $age_min ); ?>" />
+			</label>
 
-			<input type="number" class="widefat" name="scholarship_age_min" placeholder="Minimum Age" value="<?php echo esc_attr( $age_min ); ?>" />
-
-			<input type="number" class="widefat" name="scholarship_age_max" placeholder="Maximum Age" value="<?php echo esc_attr( $age_max ); ?>" />
+			<label>Maximum Age<br />
+				<input type="number" class="widefat" name="scholarship_age_max" value="<?php echo esc_attr( $age_max ); ?>" />
+			</label>
 
 		</div>
 
 		<div class="wsuwp-scholarship-fieldset">
 
-			<input type="text" class="widefat" name="scholarship_deadline" placeholder="Deadline (yyyy-mm-dd)" value="<?php echo esc_attr( $deadline ); ?>" pattern="\d{4}-\d{2}-\d{2}" />
+			<label>Deadline (yyyy-mm-dd)<br />
+				<input type="text" class="widefat" name="scholarship_deadline" value="<?php echo esc_attr( $deadline ); ?>" pattern="\d{4}-\d{2}-\d{2}" />
+			</label>
 
-			<input type="text" class="widefat" name="scholarship_amount" placeholder="Amount" value="<?php echo esc_attr( $amount ); ?>" />
+			<label>Amount<br />
+				<input type="text" class="widefat" name="scholarship_amount" value="<?php echo esc_attr( $amount ); ?>" />
+			</label>
 
 		</div>
 
@@ -529,17 +538,25 @@ class WSUWP_Scholarships {
 
 		</div>
 
-		<p>Contact</p>
+		<p><strong>Contact</strong></p>
 
 		<div class="wsuwp-scholarship-fieldset">
 
-			<input type="url" class="widefat" name="scholarship_site" placeholder="Website" pattern="https?://.+" value="<?php echo esc_attr( $site ); ?>" />
+			<label>Website<br />
+				<input type="url" class="widefat" name="scholarship_site" pattern="https?://.+" value="<?php echo esc_attr( $site ); ?>" />
+			</label>
 
-			<input type="email" class="widefat" name="scholarship_email" placeholder="Email" value="<?php echo esc_attr( $email ); ?>" />
+			<label>Email<br />
+				<input type="email" class="widefat" name="scholarship_email" value="<?php echo esc_attr( $email ); ?>" />
+			</label>
 
-			<input type="tel" class="widefat" name="scholarship_phone" placeholder="Phone (555-555-5555)" pattern="\d{3}[\-]\d{3}[\-]\d{4}" value="<?php echo esc_attr( $phone ); ?>" />
+			<label>Phone (555-555-5555)<br />
+				<input type="tel" class="widefat" name="scholarship_phone" pattern="\d{3}[\-]\d{3}[\-]\d{4}" value="<?php echo esc_attr( $phone ); ?>" />
+			</label>
 
-			<input type="text" class="widefat" name="scholarship_address" placeholder="Address" value="<?php echo esc_attr( $address ); ?>" />
+			<label>Address<br />
+				<input type="text" class="widefat" name="scholarship_address" value="<?php echo esc_attr( $address ); ?>" />
+			</label>
 
 		</div>
 		<?php
@@ -564,15 +581,21 @@ class WSUWP_Scholarships {
 
 		<?php wp_editor( $org, 'scholarship_org', array( 'textarea_rows' => 7 ) ); ?>
 
-		<p>Contact</p>
+		<p><strong>Contact</strong></p>
 
 		<div class="wsuwp-scholarship-fieldset">
 
-			<input type="url" class="widefat" name="scholarship_org_site" placeholder="Website" value="<?php echo esc_attr( $org_site ); ?>" />
+			<label>Website<br />
+				<input type="url" class="widefat" name="scholarship_org_site" value="<?php echo esc_attr( $org_site ); ?>" />
+			</label>
 
-			<input type="email" class="widefat" name="scholarship_org_email" placeholder="Email" value="<?php echo esc_attr( $org_email ); ?>" />
+			<label>Email<br />
+				<input type="email" class="widefat" name="scholarship_org_email" value="<?php echo esc_attr( $org_email ); ?>" />
+			</label>
 
-			<input type="tel" class="widefat" name="scholarship_org_phone" placeholder="Phone (555-555-5555)" pattern="\d{3}[\-]\d{3}[\-]\d{4}" value="<?php echo esc_attr( $org_phone ); ?>" />
+			<label>Phone (555-555-5555)<br />
+				<input type="tel" class="widefat" name="scholarship_org_phone" pattern="\d{3}[\-]\d{3}[\-]\d{4}" value="<?php echo esc_attr( $org_phone ); ?>" />
+			</label>
 
 		</div>
 		<?php
