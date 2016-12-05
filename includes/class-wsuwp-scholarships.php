@@ -198,7 +198,7 @@ class WSUWP_Scholarships {
 			'labels' => $labels,
 			'description' => 'Scholarship major criteria.',
 			'public' => true,
-			'hierarchical' => false,
+			'hierarchical' => true,
 			'show_admin_column' => true,
 		);
 
