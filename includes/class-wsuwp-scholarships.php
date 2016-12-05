@@ -840,19 +840,19 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-grade-level">
 					<option value="">- Current grade level -</option>
 					<?php
-						$grade_level = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_grade,
-							'hide_empty' => 0,
-							'orderby' => 'term_id',
-						) );
+					$grade_level = get_terms( array(
+						'taxonomy' => $this->taxonomy_slug_grade,
+						'hide_empty' => 0,
+						'orderby' => 'term_id',
+					) );
 
-						if ( ! empty( $grade_level ) ) {
-							foreach ( $grade_level as $grade_level_term ) {
-								?>
-								<option value="<?php echo esc_attr( $grade_level_term->term_id ); ?>"<?php selected( $grade, $grade_level_term->term_id ); ?>><?php echo esc_html( $grade_level_term->name ); ?></option>
-								<?php
-							}
+					if ( ! empty( $grade_level ) ) {
+						foreach ( $grade_level as $grade_level_term ) {
+							?>
+							<option value="<?php echo esc_attr( $grade_level_term->term_id ); ?>"<?php selected( $grade, $grade_level_term->term_id ); ?>><?php echo esc_html( $grade_level_term->name ); ?></option>
+							<?php
 						}
+					}
 					?>
 				</select>
 			</div>
@@ -863,18 +863,18 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-citizenship">
 					<option value="">- Citizenship -</option>
 					<?php
-						$citizenship_terms = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_citizenship,
-							'hide_empty' => 0,
-						) );
+					$citizenship_terms = get_terms( array(
+						'taxonomy' => $this->taxonomy_slug_citizenship,
+						'hide_empty' => 0,
+					) );
 
-						if ( ! empty( $citizenship_terms ) ) {
-							foreach ( $citizenship_terms as $citizenship_term ) {
-								?>
-								<option value="<?php echo esc_attr( $citizenship_term->term_id ); ?>"<?php selected( $citizenship, $citizenship_term->term_id ); ?>><?php echo esc_html( $citizenship_term->name ); ?></option>
-								<?php
-							}
+					if ( ! empty( $citizenship_terms ) ) {
+						foreach ( $citizenship_terms as $citizenship_term ) {
+							?>
+							<option value="<?php echo esc_attr( $citizenship_term->term_id ); ?>"<?php selected( $citizenship, $citizenship_term->term_id ); ?>><?php echo esc_html( $citizenship_term->name ); ?></option>
+							<?php
 						}
+					}
 					?>
 				</select>
 			</div>
@@ -1032,19 +1032,19 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-grade-level" name="grade">
 					<option value="">- Current grade level -</option>
 					<?php
-						$grade_level = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_grade,
-							'hide_empty' => 0,
-							'orderby' => 'term_id',
-						) );
+					$grade_level = get_terms( array(
+						'taxonomy' => $this->taxonomy_slug_grade,
+						'hide_empty' => 0,
+						'orderby' => 'term_id',
+					) );
 
-						if ( ! empty( $grade_level ) ) {
-							foreach ( $grade_level as $grade_level_option ) {
-								?>
-								<option value="<?php echo esc_attr( $grade_level_option->term_id ); ?>"><?php echo esc_html( $grade_level_option->name ); ?></option>
-								<?php
-							}
+					if ( ! empty( $grade_level ) ) {
+						foreach ( $grade_level as $grade_level_option ) {
+							?>
+							<option value="<?php echo esc_attr( $grade_level_option->term_id ); ?>"><?php echo esc_html( $grade_level_option->name ); ?></option>
+							<?php
 						}
+					}
 					?>
 				</select>
 			</div>
@@ -1055,18 +1055,18 @@ class WSUWP_Scholarships {
 				<select id="wsuwp-scholarship-citizenship" name="citizenship">
 					<option value="">- Citizenship -</option>
 					<?php
-						$citizenship = get_terms( array(
-							'taxonomy' => $this->taxonomy_slug_citizenship,
-							'hide_empty' => 0,
-						) );
+					$citizenship = get_terms( array(
+						'taxonomy' => $this->taxonomy_slug_citizenship,
+						'hide_empty' => 0,
+					) );
 
-						if ( ! empty( $citizenship ) ) {
-							foreach ( $citizenship as $citizenship_option ) {
-								?>
-								<option value="<?php echo esc_attr( $citizenship_option->term_id ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></option>
-								<?php
-							}
+					if ( ! empty( $citizenship ) ) {
+						foreach ( $citizenship as $citizenship_option ) {
+							?>
+							<option value="<?php echo esc_attr( $citizenship_option->term_id ); ?>"><?php echo esc_html( $citizenship_option->name ); ?></option>
+							<?php
 						}
+					}
 					?>
 				</select>
 			</div>
