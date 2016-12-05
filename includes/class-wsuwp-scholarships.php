@@ -51,6 +51,13 @@ class WSUWP_Scholarships {
 	public $taxonomy_slug_ethnicity = 'ethnicity';
 
 	/**
+	 * @since 0.0.3
+	 *
+	 * @var string Slug for tracking the Grade Level taxonomy.
+	 */
+	public $taxonomy_slug_grade = 'grade';
+
+	/**
 	 * @since 0.0.1
 	 *
 	 * @var array A list of post meta keys associated with scholarships.
@@ -63,7 +70,6 @@ class WSUWP_Scholarships {
 		'scholarship_amount',
 		'scholarship_essay',
 		'scholarship_enrolled',
-		'scholarship_grade',
 		'scholarship_state',
 		'scholarship_app_paper',
 		'scholarship_app_online',
@@ -86,24 +92,6 @@ class WSUWP_Scholarships {
 	var $states = array(
 		'Washington',
 		'Non-Washington',
-	);
-
-	/**
-	 * @since 0.0.1
-	 *
-	 * @var array A list of classes for the Grade Level field.
-	 */
-	var $grade_levels = array(
-		'High School Freshman',
-		'High School Sophomore',
-		'High School Junior',
-		'High School Senior',
-		'Incoming College Freshman',
-		'College Freshman',
-		'College Sophomore',
-		'College Junior',
-		'College Senior',
-		'Graduate',
 	);
 
 	/**
@@ -297,6 +285,36 @@ class WSUWP_Scholarships {
 		);
 
 		register_taxonomy( $this->taxonomy_slug_ethnicity, $this->content_type_slug, $args );
+
+		/**
+		 * @since 0.0.3
+		 */
+		$labels = array(
+			'name' => 'Grade Level',
+			'singular_name' => 'Grade Level',
+			'all_items' => 'All Grade Levels',
+			'edit_item' => 'Edit Grade Level',
+			'view_item' => 'View Grade Level',
+			'update_item' => 'Update Grade Level',
+			'add_new_item' => 'Add New Grade Level',
+			'new_item_name' => 'New Grade Level Name',
+			'search_items' => 'Search Grade Levels',
+			'popular_items' => 'Popular Grade Levels',
+			'separate_items_with_commas' => 'Separate grade levels with commas',
+			'add_or_remove_items' => 'Add or remove grade levels',
+			'choose_from_most_used' => 'Choose from the most used grade levels',
+			'not_found' => 'No grade levels found',
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'description' => 'Scholarship grade level criteria.',
+			'public' => true,
+			'hierarchical' => false,
+			'show_admin_column' => true,
+		);
+
+		register_taxonomy( $this->taxonomy_slug_grade, $this->content_type_slug, $args );
 	}
 
 	/**
@@ -344,11 +362,6 @@ class WSUWP_Scholarships {
 		$args['type'] = '';
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
 		register_meta( 'post', 'scholarship_enrolled', $args );
-
-		$args['description'] = "Applicant's grade level";
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_grade_level';
-		register_meta( 'post', 'scholarship_grade', $args );
 
 		$args['description'] = "Applicant's state of residence";
 		$args['type'] = 'string';
@@ -466,7 +479,6 @@ class WSUWP_Scholarships {
 		$amount = get_post_meta( $post->ID, 'scholarship_amount', true );
 		$essay = get_post_meta( $post->ID, 'scholarship_essay', true );
 		$enrolled = get_post_meta( $post->ID, 'scholarship_enrolled', true );
-		$grade = get_post_meta( $post->ID, 'scholarship_grade', true );
 		$state = get_post_meta( $post->ID, 'scholarship_state', true );
 		$paper = get_post_meta( $post->ID, 'scholarship_app_paper', true );
 		$online = get_post_meta( $post->ID, 'scholarship_app_online', true );
@@ -504,13 +516,6 @@ class WSUWP_Scholarships {
 				<label><input value="1" type="checkbox" name="scholarship_essay"<?php checked( $essay, 1 ); ?> /> Essay</label><br />
 
 				<label><input value="1" type="checkbox" name="scholarship_enrolled"<?php checked( $enrolled, 1 ); ?> /> Must be currently enrolled</label><br />
-
-				<select name="scholarship_grade">
-					<option value="">Current Grade Level</option>
-					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
-						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
-					<?php } ?>
-				</select><br />
 
 				<select name="scholarship_state">
 					<option value="">State of Residence</option>
@@ -597,21 +602,6 @@ class WSUWP_Scholarships {
 		}
 
 		return $value;
-	}
-
-	/**
-	 * @param string $grade The unsanitized Grade Level value.
-	 *
-	 * @since 0.0.2
-	 *
-	 * @return string the sanitized Grade Level value.
-	*/
-	public static function sanitize_grade_level( $grade ) {
-		if ( false === in_array( $grade, WSUWP_Scholarships()->grade_levels, true ) ) {
-			$grade = false;
-		}
-
-		return $grade;
 	}
 
 	/**
@@ -798,10 +788,21 @@ class WSUWP_Scholarships {
 	 * @since 0.0.1
 	 */
 	public function display_wsuwp_scholarships() {
-		$grade = ( isset( $_GET['grade'] ) && in_array( urldecode( $_GET['grade'] ), $this->grade_levels, true ) ) ? urldecode( $_GET['grade'] ) : '';
+		$grade = '';
 		$gpa = ( isset( $_GET['gpa'] ) ) ? sanitize_text_field( $_GET['gpa'] ) : '';
 		$state = ( isset( $_GET['state'] ) && in_array( urldecode( $_GET['state'] ), $this->states, true )  ) ? urldecode( $_GET['state'] ) : '';
 		$citizenship = '';
+
+		if ( isset( $_GET['grade'] ) ) {
+			$grade_terms = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_grade,
+				'fields' => 'ids',
+			) );
+
+			if ( in_array( urldecode( $_GET['grade'] ), $grade_terms, true ) ) {
+				$grade = urldecode( $_GET['grade'] );
+			}
+		}
 
 		if ( isset( $_GET['citizenship'] ) ) {
 			$citizenship_terms = get_terms( array(
@@ -824,9 +825,21 @@ class WSUWP_Scholarships {
 			<div class="select-wrap">
 				<select id="wsuwp-scholarship-grade-level">
 					<option value="">- Current grade level -</option>
-					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
-						<option value="<?php echo esc_attr( $grade_option ); ?>"<?php selected( $grade, $grade_option ); ?>><?php echo esc_html( $grade_option ); ?></option>
-					<?php } ?>
+					<?php
+						$grade_level = get_terms( array(
+							'taxonomy' => $this->taxonomy_slug_grade,
+							'hide_empty' => 0,
+							'orderby' => 'term_id',
+						) );
+
+						if ( ! empty( $grade_level ) ) {
+							foreach ( $grade_level as $grade_level_term ) {
+								?>
+								<option value="<?php echo esc_attr( $grade_level_term->term_id ); ?>"<?php selected( $grade, $grade_level_term->term_id ); ?>><?php echo esc_html( $grade_level_term->name ); ?></option>
+								<?php
+							}
+						}
+					?>
 				</select>
 			</div>
 
@@ -999,9 +1012,21 @@ class WSUWP_Scholarships {
 			<div class="select-wrap">
 				<select id="wsuwp-scholarship-grade-level" name="grade">
 					<option value="">- Current grade level -</option>
-					<?php foreach ( $this->grade_levels as $grade_option ) { ?>
-						<option value="<?php echo esc_attr( $grade_option ); ?>"><?php echo esc_html( $grade_option ); ?></option>
-					<?php } ?>
+					<?php
+						$grade_level = get_terms( array(
+							'taxonomy' => $this->taxonomy_slug_grade,
+							'hide_empty' => 0,
+							'orderby' => 'term_id',
+						) );
+
+						if ( ! empty( $grade_level ) ) {
+							foreach ( $grade_level as $grade_level_option ) {
+								?>
+								<option value="<?php echo esc_attr( $grade_level_option->term_id ); ?>"><?php echo esc_html( $grade_level_option->name ); ?></option>
+								<?php
+							}
+						}
+					?>
 				</select>
 			</div>
 
@@ -1079,22 +1104,28 @@ class WSUWP_Scholarships {
 		);
 
 		// Grade Level meta parameters.
-		if ( $_POST['grade'] && in_array( $_POST['grade'], $this->grade_levels, true ) ) {
-			$grades = $this->grade_levels;
-			unset( $grades[ $_POST['grade'] ] );
+		if ( $_POST['grade'] ) {
+			$grade = get_terms( array(
+				'taxonomy' => $this->taxonomy_slug_grade,
+				'fields' => 'ids',
+			) );
 
-			$scholarships_query_args['meta_query'][] = array(
-				'relation' => 'OR',
-				array(
-					'key' => 'scholarship_grade',
-					'value' => $grades,
-					'compare' => 'NOT IN',
-				),
-				array(
-					'key' => 'scholarship_grade',
-					'compare' => 'NOT EXISTS',
-				),
-			);
+			if ( in_array( $_POST['grade'], $grade, true ) ) {
+				$scholarships_query_args['tax_query'][] = array(
+					'relation' => 'OR',
+					array(
+						'taxonomy' => $this->taxonomy_slug_grade,
+						'field' => 'term_id',
+						'terms' => $_POST['citizenship'],
+					),
+					array(
+						'taxonomy' => $this->taxonomy_slug_grade,
+						'field' => 'term_id',
+						'terms' => array_diff( $grade, array( $_POST['grade'] ) ),
+						'operator' => 'NOT IN',
+					),
+				);
+			}
 		}
 
 		// GPA meta parameters.
@@ -1172,7 +1203,6 @@ class WSUWP_Scholarships {
 				$enrolled = get_post_meta( get_the_ID(), 'scholarship_enrolled', true );
 				$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
 				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
-				$grade = get_post_meta( get_the_ID(), 'scholarship_grade', true );
 				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
 				$site = get_post_meta( get_the_ID(), 'scholarship_site', true );
 
@@ -1205,10 +1235,6 @@ class WSUWP_Scholarships {
 
 				if ( $online ) {
 					$meta_classes[] = 'meta-online';
-				}
-
-				if ( $grade ) {
-					$meta_classes[] = 'meta-' . esc_attr( $grade );
 				}
 
 				if ( $state ) {
