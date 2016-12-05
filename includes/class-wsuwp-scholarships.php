@@ -69,7 +69,6 @@ class WSUWP_Scholarships {
 		'scholarship_deadline',
 		'scholarship_amount',
 		'scholarship_essay',
-		'scholarship_enrolled',
 		'scholarship_state',
 		'scholarship_app_paper',
 		'scholarship_app_online',
@@ -358,11 +357,6 @@ class WSUWP_Scholarships {
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
 		register_meta( 'post', 'scholarship_essay', $args );
 
-		$args['description'] = 'Applicant must be enrolled';
-		$args['type'] = '';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
-		register_meta( 'post', 'scholarship_enrolled', $args );
-
 		$args['description'] = "Applicant's state of residence";
 		$args['type'] = 'string';
 		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_state';
@@ -478,7 +472,6 @@ class WSUWP_Scholarships {
 		$deadline = get_post_meta( $post->ID, 'scholarship_deadline', true );
 		$amount = get_post_meta( $post->ID, 'scholarship_amount', true );
 		$essay = get_post_meta( $post->ID, 'scholarship_essay', true );
-		$enrolled = get_post_meta( $post->ID, 'scholarship_enrolled', true );
 		$state = get_post_meta( $post->ID, 'scholarship_state', true );
 		$paper = get_post_meta( $post->ID, 'scholarship_app_paper', true );
 		$online = get_post_meta( $post->ID, 'scholarship_app_online', true );
@@ -514,8 +507,6 @@ class WSUWP_Scholarships {
 				<p>Eligibility Requirements</p>
 
 				<label><input value="1" type="checkbox" name="scholarship_essay"<?php checked( $essay, 1 ); ?> /> Essay</label><br />
-
-				<label><input value="1" type="checkbox" name="scholarship_enrolled"<?php checked( $enrolled, 1 ); ?> /> Must be currently enrolled</label><br />
 
 				<select name="scholarship_state">
 					<option value="">State of Residence</option>
@@ -888,10 +879,6 @@ class WSUWP_Scholarships {
 						<label for="no-essay">No essay requirement</label>
 					</li>
 					<li>
-						<input type="checkbox" value=".meta-no-enrollment" id="no-enrollment" />
-						<label for="no-enrollment">No enrollment requirement</label>
-					</li>
-					<li>
 						<input type="checkbox" value=".meta-paper" id="paper" />
 						<label for="paper">Paper application form</label>
 					</li>
@@ -1200,7 +1187,6 @@ class WSUWP_Scholarships {
 				$deadline = get_post_meta( get_the_ID(), 'scholarship_deadline', true );
 				$amount = get_post_meta( get_the_ID(), 'scholarship_amount', true );
 				$essay = get_post_meta( get_the_ID(), 'scholarship_essay', true );
-				$enrolled = get_post_meta( get_the_ID(), 'scholarship_enrolled', true );
 				$paper = get_post_meta( get_the_ID(), 'scholarship_app_paper', true );
 				$online = get_post_meta( get_the_ID(), 'scholarship_app_online', true );
 				$state = get_post_meta( get_the_ID(), 'scholarship_state', true );
@@ -1223,10 +1209,6 @@ class WSUWP_Scholarships {
 
 				if ( ! $essay ) {
 					$meta_classes[] = 'meta-no-essay';
-				}
-
-				if ( ! $enrolled ) {
-					$meta_classes[] = 'meta-no-enrollment';
 				}
 
 				if ( $paper ) {
