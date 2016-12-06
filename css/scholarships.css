@@ -2,6 +2,7 @@
 .wsuwp-scholarships-toggle-filters {
 	font-size: 14px;
 	font-weight: normal;
+	padding-bottom: .5rem;
 }
 
 .wsuwp-scholarships-toggle-filters a {
@@ -19,7 +20,7 @@
 	transition: transform .4s;
 }
 
-.wsuwp-scholarships-toggle-filters a.close-filters:after {
+.wsuwp-scholarships-toggle-filters.close-filters a:after {
 	transform: rotate(45deg);
 }
 
@@ -30,14 +31,8 @@
 .wsuwp-scholarships-filters {
 	display: flex;
 	flex-wrap: wrap;
-	margin: -1rem 0 1rem;
-	max-height: 0;
+	margin-bottom: 1rem;
 	overflow: hidden;
-	transition: max-height .4s ease;
-}
-
-.wsuwp-scholarships-filters.visible {
-	max-height: 276px;
 }
 
 .wsuwp-scholarships-filters div {
@@ -98,7 +93,7 @@
 
 .wsuwp-scholarships-count {
 	font-style: italic;
-	padding: 1.75rem 0 0 0;
+	padding: 4rem 0 0 0;
 }
 
 /* Table */

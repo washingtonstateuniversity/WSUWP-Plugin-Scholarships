@@ -17,6 +17,8 @@
 		$scholarships = "",
 		$back_to_top = $( ".back-to-top" );
 
+	// Hide filter options and table header.
+	$filters.hide();
 	$header.hide();
 
 	// Check if storage is available.
@@ -190,15 +192,18 @@
 	$filter_toggle.on( "click", "a", function( e ) {
 		e.preventDefault();
 
-		$( this ).toggleClass( "close-filters" );
-		$filters.toggleClass( "visible" );
+		if ( $filter_toggle.hasClass( "close-filters" ) ) {
+			$filter_toggle.removeClass( "close-filters" );
+			$filters.slideUp();
+		} else {
+			$filter_toggle.addClass( "close-filters" );
+			$filters.slideDown();
+		};
 	} );
 
 	// Retrieve scholarships when the form is submitted.
 	$form.on( "submit", function( e ) {
 		e.preventDefault();
-
-		store_values();
 
 		var data = {
 				action: "set_scholarships",
@@ -209,6 +214,7 @@
 				state: $state.val()
 			};
 
+		store_values();
 		scholarships_response( data );
 	} );
 
