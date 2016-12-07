@@ -2,7 +2,11 @@
 	display: flex;
 	margin-bottom: 1rem;
 }
-.wsuwp-scholarship-fieldset * + * {
+.wsuwp-scholarship-fieldset label {
+	width: 100%;
+}
+.wsuwp-scholarship-fieldset label + label,
+.wsuwp-scholarship-fieldset div label {
 	margin-left: 1rem;
 }
 .wsuwp-scholarship-fieldset div {
@@ -10,7 +14,7 @@
 }
 .wsuwp-scholarship-fieldset select {
 	font-size: 1em;
-	margin-top: 0.5em;
+	margin: 0.5em 0 0 1rem;
 }
 #wp-scholarship_org-wrap {
 	margin-top: 1em;
