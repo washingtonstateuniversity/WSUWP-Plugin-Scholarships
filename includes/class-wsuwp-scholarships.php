@@ -55,7 +55,7 @@ class WSUWP_Scholarships {
 	 *
 	 * @var string Slug for tracking the Grade Level taxonomy.
 	 */
-	public $taxonomy_slug_grade = 'grade';
+	public $taxonomy_slug_grade = 'scholarship-grade';
 
 	/**
 	 * @since 0.0.1
