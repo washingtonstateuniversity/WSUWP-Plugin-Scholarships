@@ -131,6 +131,10 @@ class WSUWP_Scholarships {
 		add_filter( 'body_class', array( $this, 'body_class' ) );
 		add_filter( 'sfs_theme_header_elements', array( $this, 'header_elements' ) );
 		add_filter( 'nav_menu_css_class', array( $this, 'scholarship_menu_class' ), 10, 3 );
+		add_filter( "manage_{$this->content_type_slug}_posts_columns", array( $this, 'scholarship_columns' ) );
+		add_action( "manage_{$this->content_type_slug}_posts_custom_column", array( $this, 'manage_scholarship_columns' ), 10, 2 );
+		add_filter( "manage_edit-{$this->content_type_slug}_sortable_columns", array( $this, 'manage_scholarship_sortable_columns' ) );
+		add_action( 'pre_get_posts', array( $this, 'deadline_orderby' ) );
 	}
 
 	/**
@@ -1360,5 +1364,71 @@ class WSUWP_Scholarships {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Unset the 'posts' column and add a 'deadline' column on the 'All Scholarships' page.
+	 *
+	 * @since 0.0.4
+	 *
+	 * @param array $columns Default columns shown in the manage terms table.
+	 *
+	 * @return array $columns Columns to be shown in the manage terms table.
+	 */
+	public function scholarship_columns( $columns ) {
+		unset( $columns['date'] );
+
+		$columns['deadline'] = 'Deadline';
+
+		return $columns;
+	}
+
+	/**
+	 * Displays content for custom columns on the 'All Scholarships' taxonomy page.
+	 *
+	 * @since 0.0.4
+	 *
+	 * @param string $column_name The name of the column.
+	 * @param int    $post_id     The ID of the current post.
+	 */
+	function manage_scholarship_columns( $column_name, $post_id ) {
+		if ( 'deadline' === $column_name ) {
+			echo esc_html( get_post_meta( $post_id, 'scholarship_deadline', true ) );
+		}
+	}
+
+	/**
+	 * Allow for sorting scholarships by the 'Deadline' column.
+	 *
+	 * @since 0.0.4
+	 *
+	 * @param array $sortable_columns The default array of sortable columns.
+	 *
+	 * @return array $sortable_columns Modified array of sortable columns.
+	 */
+	public function manage_scholarship_sortable_columns( $sortable_columns ) {
+		$sortable_columns['deadline'] = 'deadline';
+
+		return $sortable_columns;
+	}
+
+	/**
+	 * Modify the 'All Scholarships' listing when it is sorted by deadline.
+	 *
+	 * @since 0.0.4
+	 *
+	 * @param WP_Query $query Current query object to be modified.
+	 */
+	public function deadline_orderby( $query ) {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$orderby = $query->get( 'orderby' );
+
+		if ( 'deadline' === $orderby ) {
+			$query->set( 'meta_key', 'scholarship_deadline' );
+			$query->set( 'orderby', 'meta_value_num date' );
+		}
 	}
 }
