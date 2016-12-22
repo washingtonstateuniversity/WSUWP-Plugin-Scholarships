@@ -1449,7 +1449,7 @@ class WSUWP_Scholarships {
 	 * @return int $num Number of revisions to keep.
 	 */
 	public function scholarship_revisions_to_keep( $num, $post ) {
-		if( $this->content_type_slug === $post->post_type ) {
+		if ( $this->content_type_slug === $post->post_type ) {
 			$num = 1;
 		}
 
