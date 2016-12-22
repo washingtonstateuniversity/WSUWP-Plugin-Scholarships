@@ -135,6 +135,7 @@ class WSUWP_Scholarships {
 		add_action( "manage_{$this->content_type_slug}_posts_custom_column", array( $this, 'manage_scholarship_columns' ), 10, 2 );
 		add_filter( "manage_edit-{$this->content_type_slug}_sortable_columns", array( $this, 'manage_scholarship_sortable_columns' ) );
 		add_action( 'pre_get_posts', array( $this, 'deadline_orderby' ) );
+		add_filter( 'wp_revisions_to_keep', array( $this, 'scholarship_revisions_to_keep' ), 10, 2 );
 	}
 
 	/**
@@ -165,6 +166,7 @@ class WSUWP_Scholarships {
 			'supports' => array(
 				'title',
 				'editor',
+				'revisions',
 			),
 			'taxonomies' => array(
 				'post_tag',
@@ -1430,5 +1432,27 @@ class WSUWP_Scholarships {
 			$query->set( 'meta_key', 'scholarship_deadline' );
 			$query->set( 'orderby', 'meta_value_num date' );
 		}
+	}
+
+	/**
+	 * Limit scholarship revisions to 1.
+	 *
+	 * Revision support has been added to the 'scholarship' post type so that
+	 * 'Last Updated' data is provided, so only one revision needs to be kept.
+	 * The revisions link in the publish block is hidden via css.
+	 *
+	 * @since 0.0.4
+	 *
+	 * @param int     $num  Number of revisions to keep.
+	 * @param WP_Post $post Current post object.
+	 *
+	 * @return int $num Number of revisions to keep.
+	 */
+	public function scholarship_revisions_to_keep( $num, $post ) {
+		if( $this->content_type_slug === $post->post_type ) {
+			$num = 1;
+		}
+
+		return $num;
 	}
 }
