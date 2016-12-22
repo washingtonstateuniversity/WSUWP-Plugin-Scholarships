@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WSU Scholarships
-Version: 0.0.3
+Version: 0.0.4
 Description: Provides a content type for publishing and managing a collection of scholarships.
 Author: washingtonstateuniversity, philcable
 Author URI: https://web.wsu.edu/
