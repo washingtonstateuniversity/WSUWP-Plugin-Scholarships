@@ -22,3 +22,6 @@
 [name^=wsuwp_scholarship]:not(:focus):invalid {
 	border-color: #c60c30;
 }
+.misc-pub-revisions {
+	display: none;
+}
