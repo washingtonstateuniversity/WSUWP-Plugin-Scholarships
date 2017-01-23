@@ -84,7 +84,7 @@ module.exports = function( grunt ) {
 
         jshint: {
             grunt_script: {
-                src: [ "Gruntfile.js", "js/*.js" ],
+                src: [ "Gruntfile.js" ],
                 options: {
                     curly: true,
                     eqeqeq: true,
@@ -93,6 +93,23 @@ module.exports = function( grunt ) {
                     undef: true,
                     unused: false,
                     node: true     // Define globals available when running in Node.
+                }
+            },
+            scholarships_script: {
+                src: [ "js/*.js" ],
+                options: {
+                    bitwise: true,
+                    curly: true,
+                    eqeqeq: true,
+                    forin: true,
+                    freeze: true,
+                    noarg: true,
+                    nonbsp: true,
+                    quotmark: "double",
+                    undef: true,
+                    unused: true,
+                    browser: true, // Define globals exposed by modern browsers.
+                    jquery: true   // Define globals exposed by jQuery.
                 }
             }
         }
