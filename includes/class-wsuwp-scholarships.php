@@ -1172,15 +1172,11 @@ class WSUWP_Scholarships {
 
 		// State of Residence meta parameters.
 		if ( $_POST['state'] && in_array( $_POST['state'], $this->states, true ) ) {
-			$states = $this->states;
-			unset( $states[ $_POST['state'] ] );
-
 			$scholarships_query_args['meta_query'][] = array(
 				'relation' => 'OR',
 				array(
 					'key' => 'scholarship_state',
-					'value' => $states,
-					'compare' => 'NOT IN',
+					'value' => $_POST['state'],
 				),
 				array(
 					'key' => 'scholarship_state',
