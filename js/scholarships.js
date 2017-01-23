@@ -1,4 +1,4 @@
-( function( $, scholarships ) {
+( function( $, window, document, scholarships ) {
 
 	"use strict";
 
@@ -198,7 +198,7 @@
 		} else {
 			$filter_toggle.addClass( "close-filters" );
 			$filters.slideDown();
-		};
+		}
 	} );
 
 	// Retrieve scholarships when the form is submitted.
@@ -262,4 +262,4 @@
 
 		$( "html, body" ).scrollTop( 0 );
 	} );
-}( jQuery, scholarships ) );
+}( jQuery, window, document, window.scholarships ) );
