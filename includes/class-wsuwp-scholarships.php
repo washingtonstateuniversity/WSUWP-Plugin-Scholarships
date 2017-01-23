@@ -1135,13 +1135,13 @@ class WSUWP_Scholarships {
 				'fields' => 'ids',
 			) );
 
-			if ( in_array( $_POST['grade'], $grade, true ) ) {
+			if ( in_array( absint( $_POST['grade'] ), $grade, true ) ) {
 				$scholarships_query_args['tax_query'][] = array(
 					'relation' => 'OR',
 					array(
 						'taxonomy' => $this->taxonomy_slug_grade,
 						'field' => 'term_id',
-						'terms' => $_POST['citizenship'],
+						'terms' => $_POST['grade'],
 					),
 					array(
 						'taxonomy' => $this->taxonomy_slug_grade,
@@ -1196,7 +1196,7 @@ class WSUWP_Scholarships {
 				'fields' => 'ids',
 			) );
 
-			if ( in_array( $_POST['citizenship'], $citizenship, true ) ) {
+			if ( in_array( absint( $_POST['citizenship'] ), $citizenship, true ) ) {
 				$scholarships_query_args['tax_query'][] = array(
 					'relation' => 'OR',
 					array(
