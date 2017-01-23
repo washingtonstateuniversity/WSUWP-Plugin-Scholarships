@@ -13,7 +13,7 @@ class WSUWP_Scholarships {
 	 *
 	 * @var string
 	 */
-	public $version = '0.0.5';
+	public $version = '0.0.6';
 
 	/**
 	 * @since 0.0.1
