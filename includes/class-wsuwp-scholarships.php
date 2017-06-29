@@ -899,7 +899,7 @@ class WSUWP_Scholarships {
 		</form>
 
 		<p class="wsuwp-scholarships-toggle-filters display-after-submit">
-			<a href="#">Advanced filters</a>
+			<a href="#">Filter results</a>
 		</p>
 
 		<div class="wsuwp-scholarships-filters">
