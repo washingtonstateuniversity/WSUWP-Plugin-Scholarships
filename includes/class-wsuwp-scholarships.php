@@ -1273,6 +1273,8 @@ class WSUWP_Scholarships {
 
 				if ( $deadline ) {
 					$post .= esc_html( $deadline_display );
+				} else {
+					$post .= 'Varies';
 				}
 
 				$post .= '</div>';
