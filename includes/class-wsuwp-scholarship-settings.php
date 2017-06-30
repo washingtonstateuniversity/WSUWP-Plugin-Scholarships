@@ -52,6 +52,13 @@ class WSUWP_Scholarship_Settings {
 			'settings'
 		);
 
+		add_settings_section(
+			'menu_item',
+			null,
+			null,
+			'settings'
+		);
+
 		add_settings_field(
 			'search_page',
 			'Search Page',
@@ -60,6 +67,17 @@ class WSUWP_Scholarship_Settings {
 			'url',
 			array(
 				'label_for' => 'search_page',
+			)
+		);
+
+		add_settings_field(
+			'active_menu_item',
+			'Active Menu Item',
+			array( $this, 'active_menu_item_page_dropdown' ),
+			'settings',
+			'menu_item',
+			array(
+				'label_for' => 'active_menu_item',
 			)
 		);
 	}
@@ -86,6 +104,31 @@ class WSUWP_Scholarship_Settings {
 			?>
 		</select>
 		<p class="description">Select the page that is using the <code>[WSUWP_Scholarship_Settings]</code> shortcode.</p>
+		<?php
+	}
+
+	/**
+	 * Output for the Search Page URL field.
+	 *
+	 * @since 0.0.1
+	 *
+	 * @param array $args Extra arguments used when outputting the field.
+	 */
+	public function active_menu_item_page_dropdown( $args ) {
+		$options = get_option( 'scholarships_settings' );
+		$menu_item_id = ( $options && isset( $options[ $args['label_for'] ] ) ) ? $options[ $args['label_for'] ] : 0;
+		?>
+		<select name="scholarships_settings[<?php echo esc_attr( $args['label_for'] ); ?>]">
+			<option value="">- Select -</option>
+			<?php
+			$pages = get_pages();
+			foreach ( $pages as $page ) {
+				// selected stuff
+				?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $menu_item_id, $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
+			}
+			?>
+		</select>
+		<p class="description">Select the page to mark as the active menu item when the search results page or an individual scholarship is being viewed.</p>
 		<?php
 	}
 

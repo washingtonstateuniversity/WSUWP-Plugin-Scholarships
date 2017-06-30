@@ -718,7 +718,7 @@ class WSUWP_Scholarship_Post_Type {
 	}
 
 	/**
-	 * Add the 'active' class to the scholarship search menu item when viewing an individual scholarship.
+	 * Add the 'active' class to a menu item when the search results page or an individual scholarship is viewed.
 	 *
 	 * @since 0.0.1
 	 *
@@ -732,11 +732,12 @@ class WSUWP_Scholarship_Post_Type {
 		$spine_menu = in_array( $args->menu, array( 'site', 'offsite' ), true );
 		$options = get_option( 'scholarships_settings' );
 
-		if ( $spine_menu && $options && isset( $options['search_page'] ) ) {
+		if ( $spine_menu && $options && isset( $options['active_menu_item'] ) ) {
 			$scholarship = is_singular( self::$post_type_slug );
-			$scholarship_search_page = ( get_permalink( $options['search_page'] ) === $item->url );
+			$search_results = ( isset( $options['search_page'] ) && is_page( $options['search_page'] ) );
+			$active_item = ( get_permalink( $options['active_menu_item'] ) === $item->url );
 
-			if ( $scholarship && $scholarship_search_page ) {
+			if ( $active_item && ( $scholarship || $search_results ) ) {
 				$classes[] = 'active';
 			}
 		}
