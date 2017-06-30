@@ -43,7 +43,7 @@ class WSUWP_Scholarship_Shortcodes {
 	 */
 	public function display_wsuwp_scholarships() {
 		wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ), WSUWP_Scholarships::$version );
-		wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), WSUWP_Scholarships::$version, true );
+		wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.min.js', dirname( __FILE__ ) ), array( 'jquery' ), WSUWP_Scholarships::$version, true );
 		wp_localize_script( 'wsuwp-scholarships', 'scholarships', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'wsuwp-scholarships' ),
