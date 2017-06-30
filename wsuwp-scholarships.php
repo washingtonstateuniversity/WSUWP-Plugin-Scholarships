@@ -25,3 +25,36 @@ add_action( 'after_setup_theme', 'WSUWP_Scholarships' );
 function WSUWP_Scholarships() {
 	return WSUWP_Scholarships::get_instance();
 }
+
+/**
+ * Retrieve the instance of the scholarship post type and meta data handler.
+ *
+ * @since 0.0.7
+ *
+ * @return WSUWP_Scholarship_Post_Type
+ */
+function WSUWP_Scholarship_Post_Type() {
+	return WSUWP_Scholarship_Post_Type::get_instance();
+}
+
+/**
+ * Retrieve the instance of the scholarship settings.
+ *
+ * @since 0.3.0
+ *
+ * @return WSUWP_Scholarship_Settings
+ */
+function WSUWP_Scholarship_Settings() {
+	return WSUWP_Scholarship_Settings::get_instance();
+}
+
+/**
+ * Retrieve the scholarship shortcodes.
+ *
+ * @since 0.3.0
+ *
+ * @return WSUWP_Scholarship_Shortcodes
+ */
+function WSUWP_Scholarship_Shortcodes() {
+	return WSUWP_Scholarship_Shortcodes::get_instance();
+}
