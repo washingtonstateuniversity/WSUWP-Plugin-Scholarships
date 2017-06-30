@@ -117,6 +117,7 @@ class WSUWP_Scholarships {
 	public function setup_hooks() {
 		add_action( 'init', array( $this, 'register_content_type' ), 12 );
 		add_action( 'init', array( $this, 'register_taxonomies' ), 12 );
+		add_action( 'init', array( $this, 'register_taxonomies_for_scholarships' ), 12 );
 		add_action( 'init', array( $this, 'register_meta' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10 );
 		add_action( 'add_meta_boxes_' . $this->content_type_slug, array( $this, 'add_meta_boxes' ), 10 );
@@ -320,6 +321,16 @@ class WSUWP_Scholarships {
 		);
 
 		register_taxonomy( $this->taxonomy_slug_grade, $this->content_type_slug, $args );
+	}
+
+	/**
+	 * Add support for WSU University Taxonomies to the scholarship content type.
+	 *
+	 * @since 0.0.7
+	 */
+	public function register_taxonomies_for_scholarships() {
+		register_taxonomy_for_object_type( 'wsuwp_university_location', $this->content_type_slug );
+		register_taxonomy_for_object_type( 'wsuwp_university_org', $this->content_type_slug );
 	}
 
 	/**
