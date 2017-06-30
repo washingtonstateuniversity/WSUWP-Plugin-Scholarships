@@ -54,24 +54,78 @@ class WSUWP_Scholarship_Post_Type {
 	 * @var array A list of post meta keys associated with scholarships.
 	 */
 	public $post_meta_keys = array(
-		'scholarship_gpa',
-		'scholarship_age_min',
-		'scholarship_age_max',
-		'scholarship_deadline',
-		'scholarship_amount',
-		'scholarship_essay',
-		'scholarship_state',
-		'scholarship_app_paper',
-		'scholarship_app_online',
-		'scholarship_site',
-		'scholarship_email',
-		'scholarship_phone',
-		'scholarship_address',
-		'scholarship_org_name',
-		'scholarship_org',
-		'scholarship_org_site',
-		'scholarship_org_email',
-		'scholarship_org_phone',
+		'scholarship_gpa' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_age_min' => array(
+			'type' => 'int',
+			'sanitize_callback' => 'absint',
+		),
+		'scholarship_age_max' => array(
+			'type' => 'int',
+			'sanitize_callback' => 'absint',
+		),
+		'scholarship_deadline' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_amount' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_essay' => array(
+			'type' => 'boolean',
+			'sanitize_callback' => 'WSUWP_Scholarship_Post_Type::sanitize_checkbox',
+		),
+		'scholarship_state' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'WSUWP_Scholarship_Post_Type::sanitize_state',
+		),
+		'scholarship_app_paper' => array(
+			'type' => 'boolean',
+			'sanitize_callback' => 'WSUWP_Scholarship_Post_Type::sanitize_checkbox',
+		),
+		'scholarship_app_online' => array(
+			'type' => 'boolean',
+			'sanitize_callback' => 'WSUWP_Scholarship_Post_Type::sanitize_checkbox',
+		),
+		'scholarship_site' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'esc_url_raw',
+		),
+		'scholarship_email' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_email',
+		),
+		'scholarship_phone' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_address' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_org_name' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
+		'scholarship_org' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'wp_kses_post',
+		),
+		'scholarship_org_site' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'esc_url_raw',
+		),
+		'scholarship_org_email' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_email',
+		),
+		'scholarship_org_phone' => array(
+			'type' => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		),
 	);
 
 	/**
@@ -324,100 +378,11 @@ class WSUWP_Scholarship_Post_Type {
 	 * @since 0.0.1
 	 */
 	public function register_meta() {
-		$args = array(
-			'show_in_rest' => true,
-			'single' => true,
-		);
-
-		$args['description'] = 'Minimum GPA';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_gpa', $args );
-
-		$args['description'] = 'Minimum age';
-		$args['type'] = 'int';
-		$args['sanitize_callback'] = 'absint';
-		register_meta( 'post', 'scholarship_age_min', $args );
-
-		$args['description'] = 'Maximum age';
-		$args['type'] = 'int';
-		$args['sanitize_callback'] = 'absint';
-		register_meta( 'post', 'scholarship_age_max', $args );
-
-		$args['description'] = 'Scholarship application deadline';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_deadline', $args );
-
-		$args['description'] = 'Scholarship amount';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_amount', $args );
-
-		$args['description'] = 'Essay requirement';
-		$args['type'] = '';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
-		register_meta( 'post', 'scholarship_essay', $args );
-
-		$args['description'] = "Applicant's state of residence";
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_state';
-		register_meta( 'post', 'scholarship_state', $args );
-
-		$args['description'] = 'Paper application availability';
-		$args['type'] = '';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
-		register_meta( 'post', 'scholarship_app_paper', $args );
-
-		$args['description'] = 'Online application availability';
-		$args['type'] = '';
-		$args['sanitize_callback'] = 'WSUWP_Graduate_Degree_Programs::sanitize_checkbox';
-		register_meta( 'post', 'scholarship_app_online', $args );
-
-		$args['description'] = 'Scholarship website';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'esc_url_raw';
-		register_meta( 'post', 'scholarship_site', $args );
-
-		$args['description'] = 'Scholarship email address';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_email';
-		register_meta( 'post', 'scholarship_email', $args );
-
-		$args['description'] = 'Scholarship phone number';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_phone', $args );
-
-		$args['description'] = 'Scholarship mailing address';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_address', $args );
-
-		$args['description'] = 'Granting organization name';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_org_name', $args );
-
-		$args['description'] = 'About the granting organization';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'wp_kses_post';
-		register_meta( 'post', 'scholarship_org', $args );
-
-		$args['description'] = 'Granting organization website';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'esc_url_raw';
-		register_meta( 'post', 'scholarship_org_site', $args );
-
-		$args['description'] = 'Granting organization email address';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_email';
-		register_meta( 'post', 'scholarship_org_email', $args );
-
-		$args['description'] = 'Granting organization phone number';
-		$args['type'] = 'string';
-		$args['sanitize_callback'] = 'sanitize_text_field';
-		register_meta( 'post', 'scholarship_org_phone', $args );
+		foreach ( $this->$post_meta_keys as $key => $args ) {
+			$args['single'] = true;
+			$args['show_in_rest'] = true;
+			register_meta( 'post', $args['meta_key'], $args );
+		}
 	}
 
 	/**
@@ -628,7 +593,7 @@ class WSUWP_Scholarship_Post_Type {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( false === in_array( $state, WSUWP_Scholarship_Post_Type()->states, true ) ) {
+		if ( false === in_array( $state, WSUWP_Scholarship_Post_Type::$states, true ) ) {
 			$state = false;
 		}
 
@@ -662,8 +627,8 @@ class WSUWP_Scholarship_Post_Type {
 
 		$keys = get_registered_meta_keys( 'post' );
 
-		foreach ( $this->post_meta_keys as $key ) {
-			if ( isset( $_POST[ $key ] ) && '' !== $_POST[ $key ] && isset( $keys[ $key ] ) && isset( $keys[ $key ]['sanitize_callback'] ) ) {
+		foreach ( $this->post_meta_keys as $key => $args ) {
+			if ( isset( $_POST[ $key ] ) && '' !== $_POST[ $key ] && isset( $args['sanitize_callback'] ) ) {
 				update_post_meta( $post_id, $key, $_POST[ $key ] );
 			} else {
 				delete_post_meta( $post_id, $key );
