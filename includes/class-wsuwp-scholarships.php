@@ -826,23 +826,25 @@ class WSUWP_Scholarships {
 
 		if ( isset( $_GET['grade'] ) ) {
 			$grade_terms = get_terms( array(
+				'hide_empty' => false,
 				'taxonomy' => $this->taxonomy_slug_grade,
 				'fields' => 'ids',
 			) );
 
-			if ( in_array( urldecode( $_GET['grade'] ), $grade_terms, true ) ) {
-				$grade = urldecode( $_GET['grade'] );
+			if ( in_array( absint( $_GET['grade'] ), $grade_terms, true ) ) {
+				$grade = absint( $_GET['grade'] );
 			}
 		}
 
 		if ( isset( $_GET['citizenship'] ) ) {
 			$citizenship_terms = get_terms( array(
+				'hide_empty' => false,
 				'taxonomy' => $this->taxonomy_slug_citizenship,
 				'fields' => 'ids',
 			) );
 
-			if ( in_array( urldecode( $_GET['citizenship'] ), $citizenship_terms, true ) ) {
-				$citizenship = urldecode( $_GET['citizenship'] );
+			if ( in_array( absint( $_GET['citizenship'] ), $citizenship_terms, true ) ) {
+				$citizenship = absint( $_GET['citizenship'] );
 			}
 		}
 
