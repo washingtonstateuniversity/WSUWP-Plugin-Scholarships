@@ -1406,7 +1406,15 @@ class WSUWP_Scholarships {
 	 */
 	function manage_scholarship_columns( $column_name, $post_id ) {
 		if ( 'deadline' === $column_name ) {
-			echo esc_html( get_post_meta( $post_id, 'scholarship_deadline', true ) );
+			$deadline_value = get_post_meta( $post_id, 'scholarship_deadline', true );
+			$deadline = new DateTime( $deadline_value );
+			$today = new DateTime( 'now' );
+
+			if ( $today > $deadline ) {
+				echo '<span style="color:#c60c30;">' . esc_html( $deadline_value ) . '</span>';
+			} else {
+				echo esc_html( $deadline_value );
+			}
 		}
 	}
 
