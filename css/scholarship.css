@@ -24,6 +24,7 @@
 }
 
 @media screen and (min-width: 792px) {
+
 	.scholarship .article-header {
 		float: left;
 		width: calc(100% - 150px);

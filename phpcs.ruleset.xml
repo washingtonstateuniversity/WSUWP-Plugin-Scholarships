@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
-<ruleset name="WSUWP Scholarships">
-    <description>Sniffs for the coding standards of the WSUWP Scholarships plugin</description>
+<ruleset name="WSUWP Plugins">
+    <description>Sniffs for PHP coding standards used by WSUWP Plugins</description>
+
+    <exclude-pattern>node_modules</exclude-pattern>
 
     <rule ref="WordPress-Extra">
         <exclude name="WordPress.NamingConventions.ValidFunctionName" />
+        <exclude name="WordPress.Files.FileName" />
+        <exclude name="Squiz.Commenting.LongConditionClosingComment" />
     </rule>
 </ruleset>

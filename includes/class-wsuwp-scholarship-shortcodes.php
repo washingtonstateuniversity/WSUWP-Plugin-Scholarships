@@ -43,16 +43,25 @@ class WSUWP_Scholarship_Shortcodes {
 	 */
 	public function display_wsuwp_scholarships() {
 		wp_enqueue_style( 'wsuwp-scholarships', plugins_url( 'css/scholarships.css', dirname( __FILE__ ) ), array( 'spine-theme' ), WSUWP_Scholarships::$version );
-		wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.js', dirname( __FILE__ ) ), array( 'jquery' ), WSUWP_Scholarships::$version, true );
+		wp_enqueue_script( 'wsuwp-scholarships', plugins_url( 'js/scholarships.min.js', dirname( __FILE__ ) ), array( 'jquery' ), WSUWP_Scholarships::$version, true );
 		wp_localize_script( 'wsuwp-scholarships', 'scholarships', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'wsuwp-scholarships' ),
 		) );
 
-		$grade = '';
-		$gpa = ( isset( $_GET['gpa'] ) ) ? sanitize_text_field( $_GET['gpa'] ) : '';
-		$state = ( isset( $_GET['state'] ) && in_array( urldecode( $_GET['state'] ), WSUWP_Scholarship_Post_Type::$states, true )  ) ? urldecode( $_GET['state'] ) : '';
-		$citizenship = '';
+		$grade = false;
+		$gpa = false;
+		$state = false;
+		$citizenship = false;
+
+		// @codingStandardsIgnoreStart
+		if ( isset( $_GET['gpa'] ) ) {
+			$gpa = sanitize_text_field( $_GET['gpa'] );
+		}
+
+		if ( isset( $_GET['state'] ) ) {
+			$state = urldecode( $_GET['state'] );
+		}
 
 		if ( isset( $_GET['grade'] ) ) {
 			$grade_terms = get_terms( array(
@@ -77,6 +86,7 @@ class WSUWP_Scholarship_Shortcodes {
 				$citizenship = absint( $_GET['citizenship'] );
 			}
 		}
+		// @codingStandardsIgnoreEnd
 
 		ob_start();
 		?>
