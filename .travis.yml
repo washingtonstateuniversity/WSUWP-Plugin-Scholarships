@@ -1,15 +1,26 @@
+sudo: false
 language: php
+
+# Cache some data across builds for performance.
+cache:
+  apt: true
+  directories:
+    - node_modules
+    - vendor
+    - $HOME/.composer/cache
 
 notifications:
   email:
     on_success: never
     on_failure: change
   slack:
-    rooms:
-      - wsu-ucomm:n2TLZRJd84rMOMbkKthSEMgS
+    on_pull_requests: true
     on_success: change
     on_failure: always
     on_start: never
+    on_cancel: always
+    rooms:
+      - wsu-ucomm:n2TLZRJd84rMOMbkKthSEMgS
 
 branches:
   only:
@@ -17,26 +28,54 @@ branches:
 
 matrix:
   include:
-    - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=0 WP_TRAVISCI=grunt
-    - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=1
-    - php: 5.6
-      env: WP_VERSION=nightly WP_MULTISITE=1
+    - php: 7.1
+      env: WP_VERSION=nightly
     - php: 7.0
-      env: WP_VERSION=latest WP_MULTISITE=1
+      env: WP_VERSION=latest WP_TRAVISCI=grunt
+    - php: 5.6
+      env: WP_TRAVISCI=phpcs
 
 before_script:
-    - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-    - |
-      if [[ "$WP_TRAVISCI" == "grunt" ]] ; then
-        npm install
-        composer install
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+      if [[ ${TRAVIS_PHP_VERSION:0:2} == "5." ]]; then
+        composer global require "phpunit/phpunit=4.8.*"
+      else
+        composer global require "phpunit/phpunit=5.7.*"
       fi
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer global require wp-coding-standards/wpcs
+      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+    fi
+  - mysql --version
+  - phpenv versions
+  - php --version
+  - npm --version
+  - node --version
+  - nvm install stable
+  - npm install -g grunt-cli
+  - npm install
+  - npm prune
+  - npm --version
+  - node --version
 
 script:
-    - phpunit
-    - |
-      if [[ "$WP_TRAVISCI" == "grunt" ]] ; then
-        grunt default
-      fi
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit --version
+      phpunit
+      WP_MULTISITE=1 phpunit
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      phpcs --standard=phpcs.ruleset.xml $(find . -name '*.php')
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "grunt" ]] ; then
+      grunt --version
+      grunt default
+    fi
