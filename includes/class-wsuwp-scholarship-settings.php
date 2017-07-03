@@ -158,7 +158,7 @@ class WSUWP_Scholarship_Settings {
 			return;
 		}
 
-		if ( isset( $_GET['settings-updated'] ) ) {
+		if ( isset( $_GET['settings-updated'] ) ) { //@codingStandardsIgnoreLine
 			add_settings_error(
 				'scholarships_settings_messages',
 				'scholarships_settings_message',

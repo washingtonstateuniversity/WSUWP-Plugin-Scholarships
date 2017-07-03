@@ -4,5 +4,6 @@
 
     <rule ref="WordPress-Extra">
         <exclude name="WordPress.NamingConventions.ValidFunctionName" />
+        <exclude name="Squiz.Commenting.LongConditionClosingComment" />
     </rule>
 </ruleset>

@@ -546,7 +546,11 @@ class WSUWP_Scholarship_Post_Type {
 
 		<input type="text" class="widefat" name="scholarship_org_name" placeholder="Name" value="<?php echo esc_attr( $org_name ); ?>" />
 
-		<?php wp_editor( $org, 'scholarship_org', array( 'textarea_rows' => 7 ) ); ?>
+		<?php
+		wp_editor( $org, 'scholarship_org', array(
+			'textarea_rows' => 7,
+		) );
+		?>
 
 		<p><strong>Contact</strong></p>
 
