@@ -176,6 +176,7 @@ class WSUWP_Scholarship_Post_Type {
 		add_filter( 'manage_edit-' . self::$post_type_slug . '_sortable_columns', array( $this, 'manage_scholarship_sortable_columns' ) );
 		add_action( 'pre_get_posts', array( $this, 'deadline_orderby' ) );
 		add_filter( 'wp_revisions_to_keep', array( $this, 'scholarship_revisions_to_keep' ), 10, 2 );
+		add_action( 'rest_api_init', array( $this, 'register_api_fields' ) );
 	}
 
 	/**
@@ -211,7 +212,7 @@ class WSUWP_Scholarship_Post_Type {
 			'taxonomies' => array(
 				'post_tag',
 			),
-			'has_archive' => true,
+			'show_in_rest' => true,
 		);
 
 		register_post_type( self::$post_type_slug, $args );
@@ -380,7 +381,6 @@ class WSUWP_Scholarship_Post_Type {
 	public function register_meta() {
 		foreach ( $this->$post_meta_keys as $key => $args ) {
 			$args['single'] = true;
-			$args['show_in_rest'] = true;
 			register_meta( 'post', $key, $args );
 		}
 	}
@@ -597,7 +597,7 @@ class WSUWP_Scholarship_Post_Type {
 	 * @return string the sanitized State value.
 	*/
 	public static function sanitize_state( $state ) {
-		if ( false === in_array( $state, WSUWP_Scholarship_Post_Type::$states, true ) ) {
+		if ( false === in_array( $state, self::$states, true ) ) {
 			$state = false;
 		}
 
@@ -808,5 +808,64 @@ class WSUWP_Scholarship_Post_Type {
 		}
 
 		return $num;
+	}
+
+	/**
+	 * Register the custom meta fields attached to a REST API response containing scholarship data.
+	 *
+	 * @since 0.0.7
+	 */
+	public function register_api_fields() {
+		$args = array(
+			'get_callback' => array( $this, 'get_api_meta_data' ),
+			'update_callback' => null,
+			'schema' => null,
+		);
+
+		foreach ( $this->post_meta_keys as $key => $_args ) {
+			register_rest_field( self::$post_type_slug, $key, $args );
+		}
+	}
+
+	/**
+	 * Return the value of a post meta field sanitized against a whitelist with the provided method.
+	 *
+	 * @since 0.0.7
+	 *
+	 * @param array           $object  The current post being processed.
+	 * @param string          $key     Name of the field being retrieved.
+	 * @param WP_Rest_Request $request The full current REST request.
+	 *
+	 * @return mixed Meta data associated with the post and field name.
+	 */
+	public function get_api_meta_data( $object, $key, $request ) {
+		if ( ! array_key_exists( $key, $this->post_meta_keys ) ) {
+			return '';
+		}
+
+		$sanitize_callback = $this->post_meta_keys[ $key ]['sanitize_callback'];
+		$meta_value = get_post_meta( $object['id'], $key, true );
+
+		if ( 'sanitize_text_field' === $sanitize_callback || 'WSUWP_Scholarship_Post_Type::sanitize_checkbox' === $sanitize_callback || 'WSUWP_Scholarship_Post_Type::sanitize_state' === $sanitize_callback ) {
+			return esc_html( $meta_value );
+		}
+
+		if ( 'absint' === $sanitize_callback ) {
+			return absint( $meta_value );
+		}
+
+		if ( 'esc_url_raw' === $sanitize_callback ) {
+			return esc_url( $meta_value );
+		}
+
+		if ( 'sanitize_email' === $sanitize_callback ) {
+			return sanitize_email( $meta_value );
+		}
+
+		if ( 'wp_kses_post' === $sanitize_callback ) {
+			return wp_kses_post( apply_filters( 'the_content', $meta_value ) );
+		}
+
+		return '';
 	}
 }
