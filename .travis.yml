@@ -33,7 +33,7 @@ matrix:
     - php: 7.0
       env: WP_VERSION=latest
     - php: 7.0
-      WP_TRAVISCI=grunt
+      env: WP_TRAVISCI=grunt
     - php: 5.6
       env: WP_TRAVISCI=phpcs
 
