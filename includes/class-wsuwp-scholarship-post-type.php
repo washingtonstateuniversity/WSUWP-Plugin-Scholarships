@@ -212,7 +212,6 @@ class WSUWP_Scholarship_Post_Type {
 			'taxonomies' => array(
 				'post_tag',
 			),
-			'has_archive' => true,
 			'show_in_rest' => true,
 		);
 
