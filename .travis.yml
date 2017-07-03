@@ -51,15 +51,19 @@ before_script:
       composer global require wp-coding-standards/wpcs
       phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
     fi
-  - mysql --version
-  - phpenv versions
-  - php --version
+  - |
+    if [[ "$WP_TRAVISCI" == "grunt" ]]; then
+      composer install
+    fi
   - npm --version
   - node --version
   - nvm install stable
   - npm install -g grunt-cli
   - npm install
   - npm prune
+  - mysql --version
+  - phpenv versions
+  - php --version
   - npm --version
   - node --version
 
