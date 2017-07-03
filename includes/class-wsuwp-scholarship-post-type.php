@@ -381,7 +381,7 @@ class WSUWP_Scholarship_Post_Type {
 		foreach ( $this->$post_meta_keys as $key => $args ) {
 			$args['single'] = true;
 			$args['show_in_rest'] = true;
-			register_meta( 'post', $args['meta_key'], $args );
+			register_meta( 'post', $key, $args );
 		}
 	}
 
