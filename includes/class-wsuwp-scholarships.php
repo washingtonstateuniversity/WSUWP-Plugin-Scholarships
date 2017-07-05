@@ -40,9 +40,11 @@ class WSUWP_Scholarships {
 		require_once( dirname( __FILE__ ) . '/class-wsuwp-scholarship-post-type.php' );
 		require_once( dirname( __FILE__ ) . '/class-wsuwp-scholarship-settings.php' );
 		require_once( dirname( __FILE__ ) . '/class-wsuwp-scholarship-shortcodes.php' );
+		require_once( dirname( __FILE__ ) . '/class-wsuwp-scholarship-contributor-role.php' );
 
 		add_action( 'init', 'WSUWP_Scholarship_Post_Type' );
 		add_action( 'init', 'WSUWP_Scholarship_Settings' );
 		add_action( 'init', 'WSUWP_Scholarship_Shortcodes' );
+		add_action( 'init', 'WSUWP_Scholarship_Contributor_Role' );
 	}
 }
