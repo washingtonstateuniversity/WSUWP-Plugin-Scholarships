@@ -40,7 +40,7 @@ function WSUWP_Scholarship_Post_Type() {
 /**
  * Retrieve the instance of the scholarship settings.
  *
- * @since 0.3.0
+ * @since 0.0.7
  *
  * @return WSUWP_Scholarship_Settings
  */
@@ -51,10 +51,21 @@ function WSUWP_Scholarship_Settings() {
 /**
  * Retrieve the scholarship shortcodes.
  *
- * @since 0.3.0
+ * @since 0.0.7
  *
  * @return WSUWP_Scholarship_Shortcodes
  */
 function WSUWP_Scholarship_Shortcodes() {
 	return WSUWP_Scholarship_Shortcodes::get_instance();
+}
+
+/**
+ * Retrieve the instance of the scholarship contributor role handler.
+ *
+ * @since 0.0.7
+ *
+ * @return WSUWP_Scholarship_Contributor_Role
+ */
+function WSUWP_Scholarship_Contributor_Role() {
+	return WSUWP_Scholarship_Contributor_Role::get_instance();
 }
