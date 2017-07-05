@@ -30,7 +30,7 @@ function register_settings() {
 
 	add_settings_field(
 		'search_page',
-		'Search Page',
+		'Results Page',
 		'WSU\Scholarships\Settings\search_page_dropdown',
 		'settings',
 		'url',
@@ -67,12 +67,11 @@ function search_page_dropdown( $args ) {
 		<?php
 		$pages = get_pages();
 		foreach ( $pages as $page ) {
-			// selected stuff
 			?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $search_page_id, $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
 		}
 		?>
 	</select>
-	<p class="description">Select the page that is using the <code>[WSUWP_Scholarship_Settings]</code> shortcode.</p>
+	<p class="description">Select the page that is using the <code>[wsuwp_scholarships]</code> shortcode.</p>
 	<?php
 }
 
@@ -92,7 +91,6 @@ function active_menu_item_page_dropdown( $args ) {
 		<?php
 		$pages = get_pages();
 		foreach ( $pages as $page ) {
-			// selected stuff
 			?><option value="<?php echo esc_attr( $page->ID ); ?>"<?php selected( $menu_item_id, $page->ID ); ?>><?php echo esc_html( $page->post_title ); ?></option><?php
 		}
 		?>
