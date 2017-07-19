@@ -84,9 +84,7 @@ function filter_list_tables( $query ) {
 		return;
 	}
 
-	$screen = get_current_screen();
-
-	if ( 'upload' === $screen->id || ( isset( $_REQUEST['action'] ) && 'query-attachments' === $_REQUEST['action'] ) ) { //@codingStandardsIgnoreLine
+	if ( 'attachment' === $query->query['post_type'] ) {
 		$query->set( 'author', $user->ID );
 	}
 }
