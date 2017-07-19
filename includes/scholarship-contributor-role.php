@@ -5,7 +5,7 @@ namespace WSU\Scholarships\Contributor_Role;
 /**
  * Provides the name of the Scholarship Contributor role.
  *
- * @since 0.0.7
+ * @since 0.1.0
  *
  * @return string
  */
@@ -17,7 +17,7 @@ add_action( 'init', 'WSU\Scholarships\Contributor_Role\add_scholarship_contribut
 /**
  * Adds the Scholarship Contributor role.
  *
- * @since 0.0.7
+ * @since 0.1.0
  */
 function add_scholarship_contributor_role() {
 	if ( array_key_exists( scholarship_contributor(), \WP_Roles()->get_names() ) ) {
@@ -40,7 +40,7 @@ add_action( 'init', 'WSU\Scholarships\Contributor_Role\map_scholarship_contribut
 /**
  * Maps the Scholarship Contributor role capabilities to the scholarship post type.
  *
- * @since 0.0.7
+ * @since 0.1.0
  */
 function map_scholarship_contributor_capabilities() {
 	$user = wp_get_current_user();
@@ -69,7 +69,7 @@ add_action( 'pre_get_posts', 'WSU\Scholarships\Contributor_Role\filter_list_tabl
 /**
  * Filters the media library view for users with the Scholarship Contributor role.
  *
- * @since 0.0.7
+ * @since 0.1.0
  *
  * @param WP_Query $query
  */

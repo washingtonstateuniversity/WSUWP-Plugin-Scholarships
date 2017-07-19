@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WSU Scholarships
-Version: 0.0.6
+Version: 0.1.0
 Description: A WordPress plugin for managing a collection of scholarships.
 Author: washingtonstateuniversity, philcable
 Author URI: https://web.wsu.edu/
@@ -26,18 +26,18 @@ if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 	/**
 	 * Provide the plugin version for enqueued scripts and styles.
 	 *
-	 * @since 0.0.7
+	 * @since 0.1.0
 	 *
 	 * @return string
 	 */
 	function plugin_version() {
-		return '0.0.7';
+		return '0.1.0';
 	}
 
 	/**
 	 * Starts things up.
 	 *
-	 * @since 0.0.7
+	 * @since 0.1.0
 	 */
 	function bootstrap() {
 		include_once dirname( __FILE__ ) . '/includes/scholarship-post-type.php';

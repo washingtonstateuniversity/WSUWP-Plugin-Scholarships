@@ -814,7 +814,7 @@ add_action( 'rest_api_init', 'WSU\Scholarships\Post_Type\register_api_fields' );
 /**
  * Register the custom meta fields attached to a REST API response containing scholarship data.
  *
- * @since 0.0.7
+ * @since 0.1.0
  */
 function register_api_fields() {
 	$args = array(
@@ -831,7 +831,7 @@ function register_api_fields() {
 /**
  * Return the value of a post meta field sanitized against a whitelist with the provided method.
  *
- * @since 0.0.7
+ * @since 0.1.0
  *
  * @param array           $object  The current post being processed.
  * @param string          $key     Name of the field being retrieved.
