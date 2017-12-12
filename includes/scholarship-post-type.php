@@ -883,3 +883,43 @@ function get_api_meta_data( $object, $key, $request ) {
 
 	return '';
 }
+
+add_filter( 'pll_get_post_types', 'WSU\Scholarships\Post_Type\disable_post_type_translation_support' );
+/**
+ * Disables translation support for the scholarship post type.
+ *
+ * @since 0.1.1
+ *
+ * @param array $post_types Post types with Polylang support.
+ *
+ * @return array
+ */
+function disable_post_type_translation_support( $post_types ) {
+	unset( $post_types[ post_type_slug() ] );
+
+	return $post_types;
+}
+
+add_filter( 'pll_get_taxonomies', 'WSU\Scholarships\Post_Type\disable_taxonomy_translation_support' );
+/**
+ * Disables translation support for taxonomies associated with the scholarship post type.
+ *
+ * @since 0.1.1
+ *
+ * @param array $post_types Post types with Polylang support.
+ *
+ * @return array
+ */
+function disable_taxonomy_translation_support( $taxonomies ) {
+	$unset_taxonomies = array(
+		taxonomy_slug_major(),
+		taxonomy_slug_citizenship(),
+		taxonomy_slug_gender(),
+		taxonomy_slug_ethnicity(),
+		taxonomy_slug_grade(),
+	);
+
+	$taxonomies = array_diff( $taxonomies, $unset_taxonomies );
+
+	return $taxonomies;
+}
