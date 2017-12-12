@@ -608,6 +608,20 @@ function taxonomy_meta_box( $post_types ) {
 	return $post_types;
 }
 
+add_filter( 'wsuwp_taxonomy_metabox_disable_new_term_adding', 'WSU\Scholarships\Post_Type\disable_new_majors' );
+/**
+ * Disables the in-post interface for adding new terms to the Majors taxonomy.
+ *
+ * @since 0.1.1
+ *
+ * @param array $taxonomies Taxonomies for which to disable the interface for adding new terms.
+ */
+function disable_new_majors( $taxonomies ) {
+	$taxonomies[] = taxonomy_slug_major();
+
+	return $taxonomies;
+}
+
 add_action( 'save_post', 'WSU\Scholarships\Post_Type\save_post', 10, 2 );
 /**
  * Saves the information assigned to the scholarship.
