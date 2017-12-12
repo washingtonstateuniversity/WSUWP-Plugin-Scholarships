@@ -594,6 +594,20 @@ function display_granter_meta_box( $post ) {
 	<?php
 }
 
+add_filter( 'wsuwp_taxonomy_metabox_post_types', 'WSU\Scholarships\Post_Type\taxonomy_meta_box' );
+/**
+ * Displays a meta box with the Select2 interface provided by the University Taxonomy plugin.
+ *
+ * @since 0.1.1
+ *
+ * @param array $post_types Post types and their associated taxonomies.
+ */
+function taxonomy_meta_box( $post_types ) {
+	$post_types[ post_type_slug() ] = get_object_taxonomies( post_type_slug() );
+
+	return $post_types;
+}
+
 add_action( 'save_post', 'WSU\Scholarships\Post_Type\save_post', 10, 2 );
 /**
  * Saves the information assigned to the scholarship.
