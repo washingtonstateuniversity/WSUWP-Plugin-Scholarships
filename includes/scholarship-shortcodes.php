@@ -332,6 +332,7 @@ function ajax_callback() {
 	$scholarships_query_args = array(
 		'orderby' => 'title',
 		'order' => 'ASC',
+		'post_status' => 'publish',
 		'posts_per_page' => -1,
 		'post_type' => \WSU\Scholarships\Post_Type\post_type_slug(),
 		'meta_query' => array(
