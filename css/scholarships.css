@@ -17,15 +17,12 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-	transition: -webkit-transform .4s;
 	transition: transform .4s;
-	transition: transform .4s, -webkit-transform .4s;
 }
 
 .wsuwp-scholarships-toggle-filters.close-filters a:after {
-	-webkit-transform: rotate(45deg);
-	    -ms-transform: rotate(45deg);
-	        transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	    transform: rotate(45deg);
 }
 
 .display-after-submit {
@@ -33,7 +30,6 @@
 }
 
 .wsuwp-scholarships-filters {
-	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
@@ -43,16 +39,12 @@
 }
 
 .wsuwp-scholarships-filters div {
-	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-flex: 1;
-	    -ms-flex: 1;
-	        flex: 1;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
+	-ms-flex: 1;
+	    flex: 1;
+	-ms-flex-direction: column;
+	    flex-direction: column;
 	height: 250px;
 	max-height: 250px;
 	max-width: 50%;
@@ -74,9 +66,8 @@
 .wsuwp-scholarships-filters ul {
 	background-color: #d7dadb;
 	box-sizing: border-box;
-	-webkit-box-flex: 1;
-	    -ms-flex: 1;
-	        flex: 1;
+	-ms-flex: 1;
+	    flex: 1;
 	overflow: scroll;
 	overflow-x: hidden;
 	padding: 0;
@@ -118,7 +109,6 @@
 /* Table */
 .wsuwp-scholarships-header,
 .wsuwp-scholarships article {
-	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
 }
@@ -132,9 +122,8 @@
 }
 
 .name {
-	-webkit-box-flex: 1;
-	    -ms-flex: 1;
-	        flex: 1;
+	-ms-flex: 1;
+	    flex: 1;
 }
 
 .amount,
@@ -229,34 +218,19 @@
 }
 
 /* Loading animation */
-@-webkit-keyframes spin {
-
-	0% {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
-	}
-
-	100% {
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
-	}
-}
 
 @keyframes spin {
 
 	0% {
-		-webkit-transform: rotate(0deg);
 		transform: rotate(0deg);
 	}
 
 	100% {
-		-webkit-transform: rotate(360deg);
 		transform: rotate(360deg);
 	}
 }
 
 .wsuwp-scholarships-loading {
-	-webkit-animation: spin 1s infinite linear;
 	animation: spin 1s infinite linear;
 	border: .25rem solid rgba(113, 113, 113, .5);
 	border-radius: 50%;
@@ -294,9 +268,8 @@
 
 	.wsuwp-scholarships-filters div {
 		box-sizing: border-box;
-		-webkit-box-flex: 1;
-		    -ms-flex: auto 0;
-		        flex: auto 0;
+		-ms-flex: auto 0;
+		    flex: auto 0;
 		width: calc(100% / 3);
 	}
 }
@@ -322,15 +295,13 @@
 	.wsuwp-scholarships article {
 		-ms-flex-wrap: wrap;
 		    flex-wrap: wrap;
-		-webkit-box-pack: end;
-		    -ms-flex-pack: end;
-		        justify-content: flex-end;
+		-ms-flex-pack: end;
+		    justify-content: flex-end;
 	}
 
 	.name {
-		-webkit-box-flex: 1;
-		    -ms-flex: 1 0 100%;
-		        flex: 1 0 100%;
+		-ms-flex: 1 0 100%;
+		    flex: 1 0 100%;
 		padding-bottom: .25rem;
 	}
 
@@ -369,9 +340,8 @@
 	}
 
 	.wsuwp-scholarships-header div {
-		-webkit-box-flex: 1;
-		    -ms-flex: 1 0 100%;
-		        flex: 1 0 100%;
+		-ms-flex: 1 0 100%;
+		    flex: 1 0 100%;
 		padding: 0 1rem .5rem;
 		text-align: right;
 	}
