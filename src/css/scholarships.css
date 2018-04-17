@@ -116,6 +116,10 @@
 	flex: 1;
 }
 
+.name svg {
+	vertical-align: top;
+}
+
 .amount,
 .deadline {
 	padding-left: 0;
