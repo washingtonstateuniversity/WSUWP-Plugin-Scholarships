@@ -145,10 +145,10 @@
 
 			// Hide items that don"t have the classes in the built array and show those that do.
 			if ( selected.length > 0 ) {
-				$scholarships.not( selected.join( "" ) ).hide( 0 );
-				$scholarships.filter( selected.join( "" ) ).show( 0 );
+				$scholarships.not( selected.join( "" ) ).addClass( "hidden" );
+				$scholarships.filter( selected.join( "" ) ).removeClass( "hidden" );
 			} else {
-				$scholarships.show( 0 );
+				$scholarships.removeClass( "hidden" );
 			}
 
 			callback();

@@ -113,6 +113,10 @@
 	display: flex;
 }
 
+.wsuwp-scholarships article.hidden {
+	display: none;
+}
+
 .name,
 .amount,
 .deadline,
