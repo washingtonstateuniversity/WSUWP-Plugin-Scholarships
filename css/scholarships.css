@@ -101,6 +101,32 @@
 	color: #fff;
 }
 
+.wsuwp-scholarships-filters .donor {
+	-ms-flex: 1 0 100%;
+	    flex: 1 0 100%;
+	height: auto;
+	max-width: none;
+	padding: .5rem;
+	width: 100%;
+}
+
+.wsuwp-scholarships-filters .donor input {
+	display: inline-block;
+}
+
+.wsuwp-scholarships-filters .donor label:hover {
+	background: none;
+}
+
+.wsuwp-scholarships-filters .donor label:hover span,
+.wsuwp-scholarships-filters .donor input:focus + span {
+	font-weight: 700;
+}
+
+.wsuwp-scholarships-filters .donor input:checked + span {
+	color: #981e32;
+}
+
 .wsuwp-scholarships-count {
 	font-style: italic;
 	padding: 4rem 0 0;

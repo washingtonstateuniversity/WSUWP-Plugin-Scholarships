@@ -194,7 +194,7 @@ function display_wsuwp_scholarships() {
 
 		if ( ! empty( $ethnicity ) ) {
 		?>
-			<div  class="wsuwp-scholarship-ethnicity">
+			<div class="wsuwp-scholarship-ethnicity">
 				<p>for people who are</p>
 				<ul>
 				<?php foreach ( $ethnicity as $ethnicity_option ) { ?>
@@ -206,6 +206,11 @@ function display_wsuwp_scholarships() {
 				</ul>
 			</div>
 		<?php } ?>
+
+		<div class="donor">
+			<label><input type="checkbox" value=".tag-wsu" /> <span>from WSU</span></label>
+			<label><input type="checkbox" value=":not(.tag-wsu)" /> <span>from outside WSU</span></label>
+		</div>
 
 	</div>
 
