@@ -214,6 +214,13 @@ function display_wsuwp_scholarships() {
 
 	</div>
 
+	<p class="wsuwp-scholarships-key display-after-submit">
+		<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" class="wsu-scholarship-indicator">
+			<title>WSU scholarship indicator</title>
+			<use xlink:href="#icon-wsu-scholarship" />
+		</svg> = scholarships awarded by Washington State University.
+	</p>
+
 	<p class="wsuwp-scholarships-count display-after-submit"><span></span> scholarships found</p>
 
 	<div class="wsuwp-scholarships-header display-after-submit">
@@ -500,8 +507,8 @@ function ajax_callback() {
 			$post = '<article class="' . esc_attr( $classes ) . '" data-scholarship="' . esc_attr( $i ) . '" data-amount="' . esc_attr( $amount_data_value ) . '" data-deadline="' . esc_attr( $deadline_data_value ) . '">';
 			$post .= '<header class="name">';
 			if ( has_tag( 'wsu' ) ) {
-				$post .= '<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23">';
-				$post .= '<title>WSU Scholarship</title>';
+				$post .= '<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" class="wsu-scholarship-indicator">';
+				$post .= '<title>Awarded by WSU:</title>';
 				$post .= '<use xlink:href="#icon-wsu-scholarship" />';
 				$post .= '</svg> ';
 			}
