@@ -1,0 +1,38 @@
+@import "../../../css/variables";
+
+$component-class-name: ".wsu-gutenberg-scholarships-search";
+
+.block-editor #{$component-class-name} {
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+
+  &__filters {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+  }
+
+  &__filter {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    padding: 6px 12px;
+    color: #555;
+  }
+
+  &__filter-icon {
+    margin-left: 6px;
+    font-size: 1em;
+    line-height: 20px;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid $wsu-color--crimson;
+    color: white;
+    padding: 6px 24px;
+    background-color: $wsu-color--crimson;
+  }
+}

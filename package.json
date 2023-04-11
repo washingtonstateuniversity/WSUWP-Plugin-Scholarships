@@ -7,7 +7,13 @@
   },
   "author": "washingtonstateuniversity",
   "license": "GPL-2.0+",
+  "scripts": {
+    "build:old": "grunt default --force",
+    "start": "wp-scripts start assets/src/index.js --output-path=assets/dist/",
+    "build": "wp-scripts build assets/src/index.js --output-path=assets/dist/"
+  },
   "devDependencies": {
+    "@wordpress/scripts": "^25.5.1",
     "autoprefixer": "^8.3.0",
     "grunt": "~1.0.2",
     "grunt-contrib-jshint": "^1.0.0",

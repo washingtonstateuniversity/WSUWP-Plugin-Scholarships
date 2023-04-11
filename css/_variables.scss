@@ -1,0 +1,505 @@
+/*
+- Colors
+---- Crimsons
+---- WSU Grays
+- Dropshadows
+- Easing
+- Font Family
+- Font Size
+- Font Weights
+- Heights
+- Media Sizes
+- Spacing
+- Transition Speed
+- Z-Index
+*/
+
+/* ========================================================
+== Border Radius ==
+==========================================================*/
+$wsu-border-radius--xlarge: 12px;
+$wsu-border-radius--large: 6px;
+$wsu-border-radius--medium: 4px;
+$wsu-border-radius--small: 3px;
+$wsu-border-radius--xsmall: 3px;
+
+/* ========================================================
+== Breakpoints ==
+==========================================================*/
+
+$wsu-breakpoint--sxxultrawide: 2400px;
+$wsu-breakpoint--xxultrawide: 1900px;
+$wsu-breakpoint--xultrawide: 1750px;
+$wsu-breakpoint--ultrawide: 1600px;
+$wsu-breakpoint--xdesktop: 1400px;
+$wsu-breakpoint--desktop: 1260px;
+$wsu-breakpoint--tablet-large: 992px;
+$wsu-breakpoint--tablet-medium: 860px;
+$wsu-breakpoint--tablet: 768px;
+$wsu-breakpoint--phone: 576px;
+$wsu-breakpoint--phone-small: 450px;
+$wsu-breakpoint--phone-xsmall: 380px;
+
+$wsu-breakpoint-map: (
+  "xxultrawide": 2400px,
+  "xultrawide": 1900px,
+  "ultrawide": 1600px,
+  "desktop": 1260px,
+  "tablet-large": 992px,
+  "tablet-medium": 860px,
+  "tablet": 768px,
+  "phone": 576px,
+  "phone-small": 450px,
+);
+
+$wsu-breakpoint--horizontal-nav: $wsu-breakpoint--desktop;
+
+/* ========================================================
+== Colors ==
+==========================================================*/
+
+/* WSU Accent colors */
+$wsu-color--accent-autumn: #ff6727;
+$wsu-color--accent-goldfinch: #f3e700;
+$wsu-color--accent-vineyard: #aadc24;
+$wsu-color--accent-pacificsky: #5bc3f5;
+$wsu-color--accent-midnight: #002d61;
+
+/* WSU Crimson */
+$wsu-color--crimson: #a60f2d;
+$wsu-color--crimson-light: #ca1237;
+$wsu-color--crimson-accent: #fae6ea;
+$wsu-color--crimson-dark: #78001e;
+
+/* WSU Grays */
+$wsu-color--gray-0: hsl(0, 0, 97%); // #f7f7f7
+$wsu-color--gray-5: hsl(0, 0, 95%); // #f2f2f2
+$wsu-color--gray-10: hsl(0, 0, 90%); // #e6e6e6
+$wsu-color--gray-15: hsl(0, 0, 85%); // #d9d9d9
+$wsu-color--gray-20: hsl(0, 0, 80%); // #cccccc
+$wsu-color--gray-25: hsl(0, 0, 75%); // #bfbfbf
+$wsu-color--gray-30: hsl(0, 0, 70%); // #b3b3b3
+$wsu-color--gray-35: hsl(0, 0, 65%); // #a6a6a6
+$wsu-color--gray-40: hsl(0, 0, 60%); // #999999
+$wsu-color--gray-45: hsl(0, 0, 55%); // #8c8c8c
+$wsu-color--gray-50: hsl(0, 0, 50%); // #808080
+$wsu-color--gray-55: hsl(0, 0, 45%); // #737373
+$wsu-color--gray-60: hsl(0, 0, 40%); // #666666
+$wsu-color--gray-65: hsl(0, 0, 35%); // #595959
+$wsu-color--gray-70: hsl(0, 0, 30%); // #4d4d4d
+$wsu-color--gray-75: hsl(0, 0, 25%); // #404040
+$wsu-color--gray-80: hsl(0, 0, 20%); // #333333
+$wsu-color--gray-85: hsl(0, 0, 15%); // #262626
+$wsu-color--gray-90: hsl(0, 0, 10%); // #1a1a1a
+$wsu-color--gray-95: hsl(
+  0,
+  0,
+  3%
+); // #080808 - 5% and 3% are nearly indistinguishable, so treat them the same and leave the value to maintain consistency
+$wsu-color--gray-100: hsl(0, 0, 3%); // #080808
+
+$wsu-color--text: $wsu-color--gray-85; // #080808
+
+$wsu-color-map: (
+  "white": #ffffff,
+  "gray-0": $wsu-color--gray-0,
+  "gray-5": $wsu-color--gray-5,
+  "gray-10": $wsu-color--gray-10,
+  "gray-15": $wsu-color--gray-15,
+  "gray-20": $wsu-color--gray-20,
+  "gray-25": $wsu-color--gray-25,
+  "gray-30": $wsu-color--gray-30,
+  "gray-35": $wsu-color--gray-35,
+  "gray-40": $wsu-color--gray-40,
+  "gray-45": $wsu-color--gray-45,
+  "gray-50": $wsu-color--gray-50,
+  "gray-55": $wsu-color--gray-55,
+  "gray-60": $wsu-color--gray-60,
+  "gray-65": $wsu-color--gray-65,
+  "gray-70": $wsu-color--gray-70,
+  "gray-75": $wsu-color--gray-75,
+  "gray-80": $wsu-color--gray-80,
+  "gray-85": $wsu-color--gray-85,
+  "gray-90": $wsu-color--gray-90,
+  "gray-95": $wsu-color--gray-95,
+  "gray-100": $wsu-color--gray-100,
+  "crimson": $wsu-color--crimson,
+  "crimson-light": $wsu-color--crimson-light,
+);
+
+$wsu-color-background-text-map: (
+  "white": $wsu-color--text,
+  "gray-0": $wsu-color--text,
+  "gray-5": $wsu-color--text,
+  "gray-10": $wsu-color--text,
+  "gray-15": $wsu-color--text,
+  "gray-20": $wsu-color--text,
+  "gray-25": $wsu-color--text,
+  "gray-30": $wsu-color--text,
+  "gray-35": $wsu-color--text,
+  "gray-40": $wsu-color--text,
+  "gray-45": $wsu-color--gray-5,
+  "gray-50": $wsu-color--gray-5,
+  "gray-55": $wsu-color--gray-5,
+  "gray-60": $wsu-color--gray-5,
+  "gray-65": $wsu-color--gray-5,
+  "gray-70": $wsu-color--gray-5,
+  "gray-75": $wsu-color--gray-5,
+  "gray-80": $wsu-color--gray-5,
+  "gray-85": $wsu-color--gray-5,
+  "gray-90": $wsu-color--gray-5,
+  "gray-95": $wsu-color--gray-5,
+  "gray-100": $wsu-color--gray-5,
+  "crimson": #fff,
+  "crimson-light": #fff,
+);
+
+$wsu-color-border-map: (
+  "white": #ffffff,
+  "lighter": $wsu-color--gray-5,
+  "light": $wsu-color--gray-10,
+  "dark": $wsu-color--gray-75,
+  "darker": $wsu-color--gray-95,
+  "crimson": $wsu-color--crimson,
+  "crimson-light": $wsu-color--crimson-light,
+  "autumn": $wsu-color--accent-autumn,
+  "goldfinch": $wsu-color--accent-goldfinch,
+  "vineyard": $wsu-color--accent-vineyard,
+  "pacificsky": $wsu-color--accent-pacificsky,
+  "midnight": $wsu-color--accent-midnight,
+);
+
+/* ========================================================
+== Dropshadows ==
+==========================================================*/
+$wsu-dropshadow--xlow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+$wsu-dropshadow--low: 0px 0px 7px rgba(0, 0, 0, 0.4);
+$wsu-dropshadow--medium: 0px 0px 14px rgba(0, 0, 0, 0.4);
+$wsu-dropshadow--high: 0px 0px 17px rgba(0, 0, 0, 0.5);
+
+$wsu-shadow--xlow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+$wsu-shadow--low: 0px 0px 7px rgba(0, 0, 0, 0.4);
+$wsu-shadow--medium: 0px 0px 14px rgba(0, 0, 0, 0.4);
+$wsu-shadow--high: 0px 0px 17px rgba(0, 0, 0, 0.5);
+
+$wsu-dropshadow-rise--medium: 0px 5px 14px rgba(0, 0, 0, 0.4);
+
+$wsu-dropshadow-rise--medium: 0px 5px 14px rgba(0, 0, 0, 0.4);
+
+/* ========================================================
+== Easing ==
+==========================================================*/
+$wsu-easing: cubic-bezier(0, 0, 0.03, 1);
+
+/* ========================================================
+== Font Family ==
+==========================================================*/
+$wsu-font-family: "Montserrat", sans-serif;
+
+/* ========================================================
+== Font Sizes ==
+==========================================================*/
+
+$wsu-font-sizes: "hero", "sxxlarge", "xxlarge", "xlarge", "large", "xxmedium",
+  "xmedium", "medium", "small", "xsmall", "xxsmall";
+
+$wsu-font-size--hero: 5.125rem;
+$wsu-font-size--sxxlarge: 4.125rem;
+$wsu-font-size--xxlarge: 3.125rem;
+$wsu-font-size--xlarge: 2rem;
+$wsu-font-size--large: 1.5rem;
+$wsu-font-size--xxmedium: 1.25rem;
+$wsu-font-size--xmedium: 1.125rem;
+$wsu-font-size--medium: 1rem;
+$wsu-font-size--small: 0.875rem;
+$wsu-font-size--xsmall: 0.75rem;
+$wsu-font-size--xxsmall: 0.6875rem;
+
+$wsu-font-size-map: (
+  "hero": $wsu-font-size--hero,
+  "sxxlarge": $wsu-font-size--sxxlarge,
+  "xxlarge": $wsu-font-size--xxlarge,
+  "xlarge": $wsu-font-size--xlarge,
+  "large": $wsu-font-size--large,
+  "xxmedium": $wsu-font-size--xxmedium,
+  "xmedium": $wsu-font-size--xmedium,
+  "medium": $wsu-font-size--medium,
+  "small": $wsu-font-size--small,
+  "xsmall": $wsu-font-size--xsmall,
+  "xxsmall": $wsu-font-size--xxsmall,
+);
+
+/* ========================================================
+== Font Weights ==
+==========================================================*/
+$wsu-font-weight--thin: 100;
+$wsu-font-weight--extralight: 200;
+$wsu-font-weight--light: 300;
+$wsu-font-weight--regular: 400;
+$wsu-font-weight--medium: 500;
+$wsu-font-weight--semibold: 600;
+$wsu-font-weight--bold: 700;
+$wsu-font-weight--extrabold: 800;
+$wsu-font-weight--xextrabold: 900;
+
+/* ========================================================
+== Height ==
+==========================================================*/
+$wsu-height--global-header: 64px;
+$wsu-height--system-header: 100px;
+
+$wsu-height--full: 100vh;
+$wsu-height--hero: 1150px;
+$wsu-height--xxlarge: 1050px;
+$wsu-height--xlarge: 950px;
+$wsu-height--large: 850px;
+$wsu-height--xxmedium: 750px;
+$wsu-height--xmedium: 650px;
+$wsu-height--medium: 550px;
+$wsu-height--small: 450px;
+$wsu-height--xsmall: 350px;
+$wsu-height--xxsmall: 250px;
+$wsu-height--sxxsmall: 150px;
+
+$wsu-height-map: (
+  "full": $wsu-height--full,
+  "hero": $wsu-height--hero,
+  "xxlarge": $wsu-height--xxlarge,
+  "xlarge": $wsu-height--xlarge,
+  "large": $wsu-height--large,
+  "xxmedium": $wsu-height--xxmedium,
+  "xmedium": $wsu-height--xmedium,
+  "medium": $wsu-height--medium,
+  "small": $wsu-height--small,
+  "xsmall": $wsu-height--xsmall,
+  "xxsmall": $wsu-height--xxsmall,
+  "sxxsmall": $wsu-height--sxxsmall,
+);
+
+/* ========================================================
+== Image Sizes ==
+==========================================================*/
+$wsu-image-sizes: "full", "hero", "xxlarge", "xlarge", "large", "xmedium",
+  "medium", "small", "xsmall", "xxsmall", "sxxsmall";
+
+$wsu-image-size--full: 100%;
+$wsu-image-size--hero: 1200px;
+$wsu-image-size--xxlarge: 1200px;
+$wsu-image-size--xlarge: 900px;
+$wsu-image-size--large: 600px;
+$wsu-image-size--xmedium: 450px;
+$wsu-image-size--medium: 350px;
+$wsu-image-size--small: 250px;
+$wsu-image-size--xsmall: 200px;
+$wsu-image-size--xxsmall: 175px;
+$wsu-image-size--sxxsmall: 125px;
+
+$wsu-image-size-map: (
+  "full": $wsu-image-size--full,
+  "hero": $wsu-image-size--hero,
+  "xxlarge": $wsu-image-size--xxlarge,
+  "xlarge": $wsu-image-size--xlarge,
+  "large": $wsu-image-size--large,
+  "xmedium": $wsu-image-size--xmedium,
+  "medium": $wsu-image-size--medium,
+  "small": $wsu-image-size--small,
+  "xsmall": $wsu-image-size--xsmall,
+  "xxsmall": $wsu-image-size--xxsmall,
+  "sxxsmall": $wsu-image-size--sxxsmall,
+);
+
+/* ========================================================
+== Line Heights ==
+==========================================================*/
+
+$wsu-line-heights: "hero", "sxxlarge", "xxlarge", "xlarge", "large", "xxmedium",
+  "xmedium", "medium", "small", "xsmall", "xxsmall";
+
+$wsu-line-height--hero: 1.15;
+$wsu-line-height--sxxlarge: 1.2;
+$wsu-line-height--xxlarge: 1.2;
+$wsu-line-height--xlarge: 1.2;
+$wsu-line-height--large: 1.3;
+$wsu-line-height--xxmedium: 1.4;
+$wsu-line-height--xmedium: 1.4;
+$wsu-line-height--medium: 1.5;
+$wsu-line-height--small: 1.5;
+$wsu-line-height--xsmall: 1.5;
+$wsu-line-height--xxsmall: 1.5;
+
+$wsu-line-height--tight-hero: 1.15;
+$wsu-line-height--tight-xxlarge: 1.2;
+$wsu-line-height--tight-xlarge: 1.2;
+$wsu-line-height--tight-large: 1.3;
+$wsu-line-height--tight-xxmedium: 1.3;
+$wsu-line-height--tight-xmedium: 1.3;
+$wsu-line-height--tight-medium: 1.4;
+$wsu-line-height--tight-small: 1.4;
+$wsu-line-height--tight-xsmall: 1.4;
+$wsu-line-height--tight-xxsmall: 1.4;
+
+$wsu-line-height-map: (
+  "hero": $wsu-line-height--hero,
+  "sxxlarge": $wsu-line-height--sxxlarge,
+  "xxlarge": $wsu-line-height--xxlarge,
+  "xlarge": $wsu-line-height--xlarge,
+  "large": $wsu-line-height--large,
+  "xxmedium": $wsu-line-height--xxmedium,
+  "xmedium": $wsu-line-height--xmedium,
+  "medium": $wsu-line-height--medium,
+  "small": $wsu-line-height--small,
+  "xsmall": $wsu-line-height--xsmall,
+  "xxsmall": $wsu-line-height--xxsmall,
+);
+
+$wsu-line-height-tight-map: (
+  "hero": $wsu-line-height--tight-hero,
+  "xxlarge": $wsu-line-height--tight-xxlarge,
+  "xlarge": $wsu-line-height--tight-xlarge,
+  "large": $wsu-line-height--tight-large,
+  "xxmedium": $wsu-line-height--tight-xxmedium,
+  "xmedium": $wsu-line-height--tight-xmedium,
+  "medium": $wsu-line-height--tight-medium,
+  "small": $wsu-line-height--tight-small,
+  "xsmall": $wsu-line-height--tight-xsmall,
+  "xxsmall": $wsu-line-height--tight-xxsmall,
+);
+
+/* ========================================================
+== Ratios height/width ==
+==========================================================*/
+
+$wsu-ratios: "2-5", "16-9", "6-4", "4-3", "square", "3-4";
+
+$wsu-ratio--2-5: 40%;
+$wsu-ratio--16-9: 56.25%;
+$wsu-ratio--6-4: 66%;
+$wsu-ratio--4-3: 75%;
+$wsu-ratio--square: 100%;
+$wsu-ratio--1-1: 100%;
+$wsu-ratio--3-4: 133%;
+
+$wsu-image-ratio-map: (
+  "2-5": $wsu-ratio--2-5,
+  "16-9": $wsu-ratio--16-9,
+  "6-4": $wsu-ratio--6-4,
+  "4-3": $wsu-ratio--4-3,
+  "square": $wsu-ratio--square,
+  "1-1": $wsu-ratio--1-1,
+  "3-4": $wsu-ratio--3-4,
+);
+
+/* ========================================================
+== Spacing ==
+==========================================================*/
+
+$wsu-spacing--hero: 6.87rem;
+$wsu-spacing--xxlarge: 5.125rem;
+$wsu-spacing--xlarge: 4.125rem;
+$wsu-spacing--large: 3.125rem;
+$wsu-spacing--xxmedium: 2.25rem;
+$wsu-spacing--xmedium: 1.75rem;
+$wsu-spacing--medium: 1.5rem;
+$wsu-spacing--small: 1.125rem;
+$wsu-spacing--xsmall: 0.875rem;
+$wsu-spacing--xxsmall: 0.6875rem;
+$wsu-spacing--sxxsmall: 0.5rem;
+$wsu-spacing--xxhero: ($wsu-spacing--hero + $wsu-spacing--xlarge);
+$wsu-spacing--xhero: ($wsu-spacing--hero + $wsu-spacing--xmedium);
+
+$wsu-spacing--em-hero: 6.87em;
+$wsu-spacing--em-xlarge: 5.125em;
+$wsu-spacing--em-large: 3.125em;
+$wsu-spacing--em-xxmedium: 2em;
+$wsu-spacing--em-xmedium: 1.75em;
+$wsu-spacing--em-medium: 1.5em;
+$wsu-spacing--em-small: 1.125em;
+$wsu-spacing--em-xsmall: 0.875em;
+$wsu-spacing--em-xxsmall: 0.6875em;
+
+$wsu-spacing--component: $wsu-spacing--xxmedium;
+$wsu-spacing--column: $wsu-spacing--xmedium;
+
+$wsu-spacing-map: (
+  "xxhero": $wsu-spacing--xxhero,
+  "xhero": $wsu-spacing--xhero,
+  "hero": $wsu-spacing--hero,
+  "xxlarge": $wsu-spacing--xxlarge,
+  "xlarge": $wsu-spacing--xlarge,
+  "large": $wsu-spacing--xlarge,
+  "xxmedium": $wsu-spacing--xxmedium,
+  "xmedium": $wsu-spacing--xmedium,
+  "medium": $wsu-spacing--medium,
+  "small": $wsu-spacing--small,
+  "xsmall": $wsu-spacing--xsmall,
+  "xxsmall": $wsu-spacing--xxsmall,
+  "sxxsmall": $wsu-spacing--sxxsmall,
+  "none": 0,
+);
+
+/* ========================================================
+== Transition Speed ==
+==========================================================*/
+$wsu-transition-speed--xxslow: 600ms;
+$wsu-transition-speed--xslow: 500ms;
+$wsu-transition-speed--slow: 400ms;
+$wsu-transition-speed--xmedium: 350ms;
+$wsu-transition-speed--medium: 300ms;
+$wsu-transition-speed--fast: 200ms;
+$wsu-transition-speed--xfast: 150ms;
+$wsu-transition-speed--xxfast: 100ms;
+
+/* ========================================================
+== Widths ==
+==========================================================*/
+
+$wsu-width--copy: 900px;
+
+$wsu-width--button-small: 60px;
+$wsu-width--navigation: 230px;
+$wsu-width--navigation-veritcal: 280px;
+$wsu-width--navigation-open: 280px;
+$wsu-width--navigation-mobile-open: 320px;
+$wsu-width--navigation-closed: 60px;
+$wsu-width--navigation-width--modal: 200px;
+$wsu-width--navigation-narrow: 200px;
+$wsu-width--navigation-xnarrow: 150px;
+$wsu-width--content-narrow: 990px;
+$wsu-width--content: 1200px;
+$wsu-width--content-wide: 1400px;
+$wsu-width--content-xwide: 1600px;
+
+$wsu-width--auto: auto;
+$wsu-width--full: 100%;
+$wsu-width--xxlarge: 1200px;
+$wsu-width--xlarge: 900px;
+$wsu-width--large: 700px;
+$wsu-width--xmedium: 550px;
+$wsu-width--medium: 450px;
+$wsu-width--small: 300px;
+$wsu-width--xsmall: 250px;
+$wsu-width--xxsmall: 150px;
+
+/* ========================================================
+== Z-Index ==
+
+Bootstrap z-index for reference
+$zindex-dropdown:                   1000;
+$zindex-sticky:                     1020;
+$zindex-fixed:                      1030;
+$zindex-modal-backdrop:             1040;
+$zindex-offcanvas:                  1050;
+$zindex-modal:                      1060;
+$zindex-popover:                    1070;
+$zindex-tooltip:                    1080;
+
+==========================================================*/
+$wsu-zindex--background: 1000;
+$wsu-zindex--content: 1010;
+$wsu-zindex--global-footer: 1020;
+$wsu-zindex--navigation: 1030;
+$wsu-zindex--global-header: 1035;
+$wsu-zindex--modal-backdrop: 1040;
+$wsu-zindex--modal: 1060;
+$wsu-zindex--popover: 1070;
+$wsu-zindex--tooltip: 1080;
