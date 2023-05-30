@@ -62,6 +62,9 @@ class Rest_API {
 					'hide_empty' => 0,
 				)
 			);
+		} else {
+			$options = get_option( 'scholarships_settings' );
+			$data['searchPage'] = get_permalink( $options['search_page'] );
 		}
 
 		return new \WP_REST_Response(

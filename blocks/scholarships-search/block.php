@@ -50,6 +50,7 @@ class Block_WSUWP_Scholarships_Search {
 
 		if ( ! is_wp_error( $response ) ) {
 			$response_data = json_decode( trim( $response['body'] ) );
+			$data['search_page_url'] = $response_data->searchPage;
 			$data['grade_levels'] = $response_data->gradeLevels;
 			$data['citizenship'] = $response_data->citizenship;
 			$data['states'] = $response_data->states;
