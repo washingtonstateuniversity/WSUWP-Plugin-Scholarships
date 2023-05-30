@@ -62,6 +62,7 @@ class Block_WSUWP_Scholarships_Search {
 
 	private static function getDataFromLocal( $data ) {
 
+		$options = get_option( 'scholarships_settings' );
 		$data['search_page_url'] = get_permalink( $options['search_page'] );
 		$data['grade_levels'] = get_terms(
 			array(
