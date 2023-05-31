@@ -202,7 +202,9 @@ function sanitize_state( $state ) {
 	return $state;
 }
 
-add_action( 'init', 'WSU\Scholarships\Post_Type\register_post_type', 12 );
+if ( 1 === (int) get_option( 'wsu_scholarships_plugin_enable_post_type', 0 ) ) {
+	add_action( 'init', 'WSU\Scholarships\Post_Type\register_post_type', 12 );
+}
 /**
  * Registers a post type for tracking information about scholarships.
  *
@@ -569,9 +571,13 @@ function display_granter_meta_box( $post ) {
 	<input type="text" class="widefat" name="scholarship_org_name" placeholder="Name" value="<?php echo esc_attr( $org_name ); ?>" />
 
 	<?php
-	wp_editor( $org, 'scholarship_org', array(
-		'textarea_rows' => 7,
-	) );
+	wp_editor(
+		$org,
+		'scholarship_org',
+		array(
+			'textarea_rows' => 7,
+		)
+	);
 	?>
 
 	<p><strong>Contact</strong></p>

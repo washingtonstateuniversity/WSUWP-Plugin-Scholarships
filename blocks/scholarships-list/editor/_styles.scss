@@ -1,0 +1,169 @@
+@import "../../../css/variables";
+
+$component-class-name: ".wsu-gutenberg-scholarships-list";
+
+.block-editor #{$component-class-name} {
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+
+  /*=============================================
+  =            Filter Controls            =
+  =============================================*/
+  &__filters {
+    margin-bottom: $wsu-spacing--large;
+  }
+
+  &__default-filters {
+    margin-bottom: $wsu-spacing--medium;
+    display: flex;
+    flex-flow: row wrap;
+    gap: $wsu-spacing--xsmall;
+    font-size: $wsu-font-size--small;
+  }
+
+  &__filter {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    padding: 12px 16px;
+    color: #555;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  &__filter-icon {
+    margin-left: 6px;
+    font-size: 1em;
+    line-height: 20px;
+  }
+
+  &__filters-toggle {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    padding: 0;
+    border-bottom: 3px solid $wsu-color--crimson;
+
+    &__icon {
+      margin-left: 0.4rem;
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 1.25em;
+    }
+  }
+
+  /*=====  End of Filter Controls  ======*/
+
+  /*=============================================
+  =           Table Meta            =
+  =============================================*/
+  // meta
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: $wsu-spacing--small;
+    flex-flow: row wrap;
+    margin-bottom: $wsu-spacing--xmedium;
+  }
+
+  &__meta-icon {
+    font-size: $wsu-font-size--small;
+    margin: 0;
+  }
+
+  &__meta-count {
+    margin: 0;
+    font-size: $wsu-font-size--small;
+    font-style: italic;
+  }
+
+  /*=============================================
+  =            Table            =
+  =============================================*/
+  &__table-container {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    margin-bottom: 0 !important;
+
+    tbody.is-loading {
+      visibility: collapse;
+    }
+
+    th,
+    td {
+      padding: $wsu-spacing--small;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    a {
+      pointer-events: none;
+    }
+  }
+
+  // sort control
+  &__sort-control {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0;
+    font-weight: 400;
+    padding-right: $wsu-spacing--em-small;
+
+    &.is-active {
+      color: $wsu-color--crimson;
+
+      &.asc::before {
+        border-bottom-color: $wsu-color--crimson;
+      }
+      &.desc::after {
+        border-top-color: $wsu-color--crimson;
+      }
+    }
+
+    &::before,
+    &::after {
+      border: solid transparent;
+      border-width: 6px 4px;
+      box-sizing: border-box;
+      content: "";
+      height: 12px;
+      position: absolute;
+      right: 0;
+    }
+
+    &::before {
+      border-bottom-color: $wsu-color--gray-25;
+      top: -5px;
+    }
+
+    &::after {
+      border-top-color: $wsu-color--gray-25;
+      bottom: -5px;
+    }
+  }
+
+  // apply link
+  &__apply-link {
+    white-space: nowrap;
+  }
+
+  /*=====  End of Table  ======*/
+
+  // logo
+  &__coug-head {
+    fill: $wsu-color--crimson;
+    width: $wsu-spacing--medium;
+    vertical-align: text-bottom;
+    margin-right: 0.5rem;
+  }
+
+  /*=====  End ofTable Meta  ======*/
+}
