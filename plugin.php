@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WSU Scholarships
-Version: 0.2.1
+Version: 0.2.2
 Description: A WordPress plugin for managing a collection of scholarships.
 Author: washingtonstateuniversity, philcable
 Author URI: https://web.wsu.edu/
