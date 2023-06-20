@@ -202,7 +202,7 @@ function sanitize_state( $state ) {
 	return $state;
 }
 
-if ( 1 === (int) get_option( 'wsu_scholarships_plugin_enable_post_type', 0 ) ) {
+if ( defined( 'ISWDS' ) && 1 === (int) get_option( 'wsu_scholarships_plugin_enable_post_type', 0 ) ) {
 	add_action( 'init', 'WSU\Scholarships\Post_Type\register_post_type', 12 );
 }
 /**
